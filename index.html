@@ -1,0 +1,930 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1F5C46">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Tikrar Online</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Reem+Kufi:wght@500;700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: one-column phone app — header, view content, big sticky dock at the bottom of each view */
+:root{color-scheme:light;
+  --paper:#EDF1EB; --surface:#F9FBF7; --ink:#13241D; --muted:#56675F; --line:#CFD9D1;
+  --accent:#A86F14; --accent-ink:#FFFFFF; --leaf:#1F5C46; --leaf-soft:#D5E7DC; --danger:#A23A2A;
+  --seg-a:#CFE3D7; --seg-b:#E7DDC6; --wave:#7D9488;
+  --f-quran:"Amiri Quran","Amiri","Noto Naskh Arabic","Scheherazade New",serif;
+  --f-display:"Reem Kufi","Hanken Grotesk",system-ui,sans-serif;
+  --f-ui:"Hanken Grotesk",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root{
+  --paper:#0E1512; --surface:#16201B; --ink:#E5ECE7; --muted:#97A79E; --line:#2C3A33;
+  --accent:#E0A64A; --accent-ink:#1B1206; --leaf:#78C9A6; --leaf-soft:#1E3A2E; --danger:#E5826F;
+  --seg-a:#1F3A2E; --seg-b:#3A3020; --wave:#7E968A; color-scheme:dark}}
+[hidden]{display:none!important}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{font-size:16px}
+html,body{height:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-ui);line-height:1.5}
+.app{max-width:560px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-top:calc(14px + env(safe-area-inset-top,0px))}
+button,input,textarea{font:inherit;color:inherit}
+button,label.btn{cursor:pointer;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:baseline;gap:10px;min-width:0}
+.brand .ar{font-family:var(--f-display);font-weight:700;font-size:2rem;color:var(--leaf);line-height:1}
+.brand .en{font-size:.75rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}
+.btn{border:1.5px solid var(--line);background:var(--surface);border-radius:14px;padding:.6rem 1rem;font-weight:700;font-size:1rem;
+  display:inline-flex;align-items:center;justify-content:center;gap:.45rem;min-height:52px;transition:background .12s}
+.btn:active{background:var(--leaf-soft)}
+.btn.primary:active{filter:brightness(.92);background:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.leaf{background:var(--leaf);border-color:var(--leaf);color:var(--paper)}
+.btn.ghost{background:transparent;border-color:transparent;padding-inline:.6rem}
+.btn.danger{color:var(--danger);border-color:color-mix(in srgb,var(--danger) 45%,transparent);background:transparent}
+.btn:disabled{opacity:.4;cursor:default;transform:none}
+.btn.small{min-height:44px;font-size:.9rem;padding:.4rem .8rem}
+main{flex:1;display:flex;flex-direction:column;gap:14px;padding-top:14px}
+.note{font-size:.88rem;color:var(--muted)}
+.banner{font-size:.9rem;padding:.65rem .85rem;border-radius:12px;background:var(--leaf-soft);color:var(--ink)}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row>*{flex:1;min-width:130px}
+.label{font-size:.74rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:700}
+.dock{position:sticky;bottom:0;z-index:5;background:var(--paper);border-top:1px solid var(--line);margin-top:auto;
+  margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)));
+  padding:12px max(16px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));
+  display:flex;gap:8px}
+.dock .btn{flex:1;min-height:60px;padding-inline:.5rem}
+.dock,.dock *,.tapzone{touch-action:none}
+.listdock{position:fixed;left:0;right:0;bottom:0;margin:0;max-width:560px;margin-inline:auto}
+#listView{padding-bottom:100px}
+/* list */
+.list{display:flex;flex-direction:column;gap:10px}
+.item{display:flex;align-items:center;gap:12px;width:100%;text-align:start;background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:14px;min-height:72px}
+.item .meta{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.item .t{font-weight:700;font-size:1.05rem}
+.item .p{font-family:var(--f-quran);font-size:1.3rem;direction:rtl;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--muted)}
+.chip{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;font-weight:700;padding:.2rem .55rem;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.chip.ok{color:var(--leaf);border-color:color-mix(in srgb,var(--leaf) 45%,transparent)}
+.chip.warn{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 45%,transparent)}
+.empty{border:1.5px dashed var(--line);border-radius:16px;padding:18px;text-align:center;color:var(--muted)}
+.hidden-input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+/* player */
+.ph{display:flex;align-items:center;gap:6px}
+.ph h2{flex:1;min-width:0;margin:0;font-size:1.1rem;text-wrap:balance;overflow-wrap:anywhere}
+.tabs{display:flex;border:1.5px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface)}
+.tabs button{flex:1;border:0;background:transparent;font-weight:700;min-height:50px;font-size:1rem}
+.tabs button[aria-selected="true"]{background:var(--leaf);color:var(--paper)}
+.mushaf{background:var(--surface);border:1.5px solid var(--line);border-radius:18px;padding:18px 12px;direction:rtl;text-align:center;
+  font-family:var(--f-quran);font-size:clamp(1.9rem,8vw,2.6rem);line-height:2.3}
+.w{display:inline;border:0;background:transparent;font:inherit;padding:0 .16em;margin:0 .03em;border-radius:.3em;line-height:inherit;color:var(--ink);transition:background .15s,color .15s}
+.w.sel{background:color-mix(in srgb,var(--accent) 24%,transparent)}
+.w.pick{box-shadow:inset 0 0 0 2px var(--accent)}
+.w.now{background:var(--leaf);color:var(--paper)}
+.w.next{box-shadow:inset 0 -4px 0 var(--accent)}
+.status{display:flex;justify-content:center;align-items:center;gap:10px;font-variant-numeric:tabular-nums;font-weight:700;min-height:28px;text-align:center}
+.status .count{color:var(--leaf)}
+.group{display:flex;flex-direction:column;gap:6px}
+.seg{display:flex;border:1.5px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface)}
+.seg button{flex:1;border:0;background:transparent;font-weight:700;min-height:48px;font-variant-numeric:tabular-nums}
+.seg button+button{border-inline-start:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--leaf);color:var(--paper)}
+.toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:.6rem .85rem;min-height:56px}
+.toggle input{width:24px;height:24px;accent-color:var(--leaf);flex:none}
+/* ruler */
+.ruler{position:relative;background:var(--surface);border:1.5px solid var(--line);border-radius:16px;overflow:hidden}
+.ruler canvas{display:block;width:100%;height:150px;touch-action:none}
+.rulerbar{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.wordcard{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:12px}
+.wordhead{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.wordhead .big{font-family:var(--f-quran);font-size:2rem;line-height:1.6;direction:rtl}
+.nudge{display:grid;grid-template-columns:auto 1fr;gap:6px 10px;align-items:center}
+.nudge .ctl{display:grid;grid-template-columns:1fr 1fr 1.3fr 1fr 1fr;gap:6px}
+.nudge .ctl button{min-height:50px;border-radius:12px;border:1.5px solid var(--line);background:var(--paper);font-weight:700;font-size:1.05rem}
+.nudge .ctl button:active{background:var(--leaf-soft)}
+.nudge output{display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;font-weight:700}
+.tapbig{width:100%;min-height:110px;border-radius:20px;font-size:1.2rem}
+/* form */
+form{display:flex;flex-direction:column;gap:14px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field input[type=text],.field textarea{background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:.75rem .85rem;width:100%;font-size:1rem;min-height:52px}
+.field textarea{font-family:var(--f-quran);font-size:1.7rem;line-height:2;direction:rtl;min-height:140px;resize:vertical}
+audio.preview{width:100%}
+.confirm{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:.7rem .85rem;border-radius:14px;border:1.5px solid var(--danger)}
+.rec.on{background:var(--danger);border-color:var(--danger);color:#fff}
+.rec .dot{width:11px;height:11px;border-radius:50%;background:currentColor}
+.rec.on .dot{animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.2}}
+.toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--paper);
+  padding:.65rem 1rem;border-radius:12px;font-weight:600;z-index:20;max-width:calc(100% - 32px);text-align:center}
+@media (prefers-reduced-motion:reduce){.w,.btn{transition:none}.rec.on .dot{animation:none}}
+
+.track{display:flex;align-items:center;gap:10px}
+.track .seg{flex:1}
+.recblock{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:10px}
+.recblock h3{margin:0;font-size:1rem}
+.recblock .row .btn{background:var(--paper)}
+.recblock .row .btn.primary{background:var(--accent)}
+.recblock .row .btn.rec.on{background:var(--danger);border-color:var(--danger);color:#fff}
+.sgroup{display:flex;flex-direction:column;gap:8px}
+.shead{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:4px}
+.shead h3{margin:0;font-family:var(--f-display);font-weight:700;font-size:1.25rem;color:var(--leaf);min-width:0;overflow-wrap:anywhere}
+.shead .btn{min-height:46px}
+.anum{font-family:var(--f-quran);color:var(--accent);font-size:1.15em;white-space:nowrap}
+.ayahs{display:flex;flex-direction:column;gap:8px}
+.acard{display:flex;gap:12px;align-items:flex-start;background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:12px 14px;cursor:pointer}
+.acard.off{opacity:.55}
+.acard.on{border-color:var(--leaf);box-shadow:inset 0 0 0 2px var(--leaf)}
+.acard input{width:26px;height:26px;accent-color:var(--leaf);flex:none;margin-top:8px}
+.acard .atext{flex:1;min-width:0;font-family:var(--f-quran);font-size:1.6rem;line-height:2.1;direction:rtl;text-align:right}
+.acard .atext span.now{background:var(--leaf);color:var(--paper);border-radius:.3em}
+.acard .anote{font-family:var(--f-ui);font-size:.8rem;color:var(--muted);direction:ltr;text-align:left;line-height:1.4}
+.selbar{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.field-row{display:grid;grid-template-columns:1fr 110px;gap:10px}
+.student .admin-only{display:none!important}
+.acct{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.member{display:flex;align-items:center;gap:10px;background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:10px 12px}
+.member .who{flex:1;min-width:0;overflow-wrap:anywhere}
+.member .who b{display:block}
+.role{font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;font-weight:700;color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 45%,transparent);border-radius:999px;padding:.2rem .6rem}
+.panel{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:12px 14px;display:flex;flex-direction:column;gap:10px}
+.checkrow{display:flex;align-items:center;gap:12px;min-height:48px;font-weight:600}
+.checkrow input{width:24px;height:24px;accent-color:var(--leaf);flex:none}
+.istiadha-ar{font-family:var(--f-quran);font-size:1.5rem;direction:rtl;text-align:right;line-height:2}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand"><span class="ar" lang="ar">تكرار</span><span class="en">Tikrar</span></div>
+    <div class="acct"><span class="role" id="roleChip" hidden></span>
+      <button class="btn small" id="teamBtn" type="button" hidden>Team</button>
+      <button class="btn small" id="authBtn" type="button">Teacher sign in</button></div>
+  </header>
+
+  <!-- LIST -->
+  <main id="listView">
+    <div class="banner" id="storeNote" hidden></div>
+    <div class="list" id="list"></div>
+    <div class="recblock admin-only" data-track="istiadha">
+      <h3>A'udhu billahi (said before a surah)</h3>
+      <div class="istiadha-ar" lang="ar">أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ</div>
+      <div class="row">
+        <button class="btn primary rec" type="button"><span class="dot"></span><span class="recLabel">Record</span></button>
+        <label class="btn">Choose file<input class="hidden-input" type="file" accept="audio/*"></label>
+      </div>
+      <span class="note aname"></span>
+      <audio class="preview" controls hidden></audio>
+    </div>
+    <div class="group"><span class="label admin-only" id="shareLabel">Move offline recordings online</span>
+      <div class="row">
+        <button class="btn admin-only" id="exportBtn" type="button" style="display:none">⇪ Export…</button>
+        <label class="btn admin-only" for="importIn">⇪ Upload offline file<input class="hidden-input" type="file" id="importIn" accept=".json,application/json"></label>
+      </div>
+      <div class="panel admin-only" id="exportPanel" hidden>
+        <span class="label">Surahs to export, one file each</span>
+        <div id="exportList"></div>
+        <label class="checkrow" for="exCombined"><input type="checkbox" id="exCombined" checked><span>Also make one combined file with everything</span></label>
+        <div class="row"><button class="btn primary" id="exGo" type="button">Export files</button><button class="btn" id="exCancel" type="button">Cancel</button></div>
+        <span class="note">Each file is named after its surah, like Al-Fatiha.json. A'udhu billahi goes into every file.</span>
+      </div>
+      <span class="note admin-only" id="shareNote">Upload a file exported from the offline Tikrar to put those verses online. Students just open this page and listen.</span>
+    </div>
+    <div class="dock listdock admin-only"><button class="btn primary" id="addBtn" type="button">+ Add verse</button></div>
+  </main>
+
+  <!-- PLAYER -->
+  <main id="playerView" hidden>
+    <div class="ph">
+      <button class="btn ghost" id="backBtn" type="button">← Verses</button>
+      <h2 id="pTitle"></h2>
+      <button class="btn ghost admin-only" id="editBtn" type="button">Edit</button>
+    </div>
+    <div class="tabs" role="tablist">
+      <button type="button" role="tab" id="tabPractice" aria-selected="true">Practice</button>
+      <button type="button" role="tab" id="tabAdjust" class="admin-only" aria-selected="false">Adjust words</button>
+    </div>
+    <div class="group"><span class="label">Recording</span><div class="seg" id="segTrack"></div></div>
+    <span class="note" id="byLine"></span>
+    <div class="banner" id="pNote" hidden></div>
+    <div class="mushaf" id="mushaf" lang="ar"></div>
+    <div class="status" id="status" aria-live="polite"></div>
+
+    <!-- practice -->
+    <section id="practice" class="group" style="gap:14px">
+      <div class="group"><span class="label">Repeat each time</span><div class="seg" id="segRepeat"></div></div>
+      <div class="group"><span class="label">Speed</span><div class="seg" id="segSpeed"></div></div>
+      <div class="group"><span class="label">Pause between repeats</span><div class="seg" id="segGap"></div></div>
+      <label class="toggle" for="rangeTog"><span><b>Range mode</b><br><span class="note">Tap the first word, then the last word</span></span><input type="checkbox" id="rangeTog"></label>
+      <p class="note">Tap a word to repeat just that word. <b>▶ Verse</b> repeats the whole ayah. <b>Teach</b> repeats each word from the slow recording, then the whole ayah from the recitation.</p>
+      <div class="dock">
+        <button class="btn primary" id="playVerse" type="button">▶ Verse</button>
+        <button class="btn leaf" id="playSteps" type="button">Teach</button>
+        <button class="btn" id="stopBtn" type="button" disabled>■ Stop</button>
+      </div>
+    </section>
+
+    <!-- adjust -->
+    <section id="adjust" class="group" style="gap:12px" hidden>
+      <div class="rulerbar"><span class="label">Ruler · drag the handles</span>
+        <button class="btn small" id="zoomBtn" type="button">Zoom in</button></div>
+      <div class="ruler"><canvas id="wave" aria-label="Recording timeline with word sections"></canvas></div>
+      <div class="wordcard">
+        <div class="wordhead"><span class="note" id="wIdx"></span><span class="big" id="wBig" lang="ar"></span></div>
+        <div class="nudge">
+          <span class="label">Start</span>
+          <div class="ctl">
+            <button type="button" data-k="s" data-d="-0.1" aria-label="Start much earlier">‹‹</button>
+            <button type="button" data-k="s" data-d="-0.02" aria-label="Start a little earlier">‹</button>
+            <output id="sOut">0.00</output>
+            <button type="button" data-k="s" data-d="0.02" aria-label="Start a little later">›</button>
+            <button type="button" data-k="s" data-d="0.1" aria-label="Start much later">››</button>
+          </div>
+          <span class="label">End</span>
+          <div class="ctl">
+            <button type="button" data-k="e" data-d="-0.1" aria-label="End much earlier">‹‹</button>
+            <button type="button" data-k="e" data-d="-0.02" aria-label="End a little earlier">‹</button>
+            <output id="eOut">0.00</output>
+            <button type="button" data-k="e" data-d="0.02" aria-label="End a little later">›</button>
+            <button type="button" data-k="e" data-d="0.1" aria-label="End much later">››</button>
+          </div>
+        </div>
+        <span class="note">‹ moves earlier, › moves later. Changes save by themselves.</span>
+        <label class="toggle" for="autoPlay"><span>Play the word after each change</span><input type="checkbox" id="autoPlay" checked></label>
+      </div>
+      <div class="group"><span class="label">Set all words at once</span>
+        <div class="row">
+          <button class="btn" id="autoBtn" type="button">Find words automatically</button>
+          <button class="btn" id="markBtn" type="button">Tap along</button>
+        </div>
+        <span class="note">"Find words" works best on the slow recording, where you pause between words.</span>
+      </div>
+      <div id="markPanel" hidden class="group">
+        <p class="note">Listen, and tap the big button the moment each underlined word begins.</p>
+        <button class="btn primary tapbig tapzone" id="tapBtn" type="button">Start listening</button>
+        <button class="btn" id="markCancel" type="button">Cancel</button>
+      </div>
+      <div class="dock" id="adjDock">
+        <button class="btn" id="prevW" type="button">‹ Prev</button>
+        <button class="btn primary" id="playW" type="button">▶ Play word</button>
+        <button class="btn" id="nextW" type="button">Next ›</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- SURAH -->
+  <main id="surahView" hidden>
+    <div class="ph">
+      <button class="btn ghost" id="sBack" type="button">← Verses</button>
+      <h2 id="sTitle"></h2>
+    </div>
+    <div class="group"><span class="label">Recording</span><div class="seg" id="segSTrack"></div></div>
+    <div class="group"><span class="label">Repeat each ayah before moving on</span><div class="seg" id="segEach"></div></div>
+    <div class="group"><span class="label">Then repeat the selected ayahs</span><div class="seg" id="segRounds"></div></div>
+    <div class="group"><span class="label">Pause between</span><div class="seg" id="segSGap"></div></div>
+    <div class="group"><span class="label">Speed</span><div class="seg" id="segSSpeed"></div></div>
+    <label class="toggle" for="istTog"><span><b>Start with A'udhu billahi</b><br><span class="note" id="istNote">Plays once before the first ayah</span></span><input type="checkbox" id="istTog"></label>
+    <div class="status" id="sStatus" aria-live="polite"></div>
+    <div class="selbar"><span class="label" id="selCount"></span>
+      <div style="display:flex;gap:6px"><button class="btn small" id="selAll" type="button">All</button><button class="btn small" id="selNone" type="button">None</button></div></div>
+    <div class="ayahs" id="ayahs"></div>
+    <div class="dock">
+      <button class="btn primary" id="sPlay" type="button">▶ Play selected</button>
+      <button class="btn" id="sStop" type="button" disabled>■ Stop</button>
+    </div>
+  </main>
+
+  <!-- TEAM -->
+  <main id="teamView" hidden>
+    <div class="ph"><button class="btn ghost" id="teamBack" type="button">← Verses</button><h2>Team</h2></div>
+    <p class="note">Sub-admins can record, edit and adjust words. They sign in with the Google account you add here. Everyone else can only listen.</p>
+    <div class="panel">
+      <div class="field"><label class="label" for="tEmail">Google email</label><input type="text" id="tEmail" inputmode="email" autocomplete="off" placeholder="name@gmail.com"></div>
+      <div class="field"><label class="label" for="tName">Name</label><input type="text" id="tName" autocomplete="off" placeholder="e.g. Ustadh Ahmed"></div>
+      <button class="btn primary" id="tAdd" type="button">Add sub-admin</button>
+    </div>
+    <div class="list" id="teamList"></div>
+  </main>
+
+  <!-- EDIT -->
+  <main id="editView" hidden>
+    <div class="ph"><button class="btn ghost" id="editBack" type="button">← Cancel</button><h2 id="eHead">Add verse</h2></div>
+    <form id="form">
+      <div class="field-row">
+        <div class="field"><label class="label" for="fSurah">Surah</label>
+          <input type="text" id="fSurah" list="surahList" placeholder="e.g. Al-Fatiha" autocomplete="off" required></div>
+        <div class="field"><label class="label" for="fAyah">Ayah no.</label>
+          <input type="text" id="fAyah" inputmode="numeric" placeholder="e.g. 2"></div>
+      </div>
+      <datalist id="surahList"></datalist>
+      <div class="field"><label class="label" for="fText">Verse text (Arabic)</label>
+        <textarea id="fText" lang="ar" dir="rtl" placeholder="اكتب الآية هنا" required></textarea>
+        <span class="note">Put a space between words. Each word becomes tappable.</span></div>
+
+      <div class="recblock" data-track="word">
+        <h3>1 · Word by word (slow)</h3>
+        <span class="note">Say each word on its own with a short pause: الْحَمْدُ … لِلَّهِ … رَبِّ … الْعَالَمِينَ</span>
+        <div class="row">
+          <button class="btn primary rec" type="button"><span class="dot"></span><span class="recLabel">Record</span></button>
+          <label class="btn">Choose file<input class="hidden-input" type="file" accept="audio/*"></label>
+        </div>
+        <span class="note aname"></span>
+        <audio class="preview" controls hidden></audio>
+      </div>
+
+      <div class="recblock" data-track="recite">
+        <h3>2 · Recitation (normal)</h3>
+        <span class="note">Recite the ayah normally, joined the way it is read.</span>
+        <div class="row">
+          <button class="btn primary rec" type="button"><span class="dot"></span><span class="recLabel">Record</span></button>
+          <label class="btn">Choose file<input class="hidden-input" type="file" accept="audio/*"></label>
+        </div>
+        <span class="note aname"></span>
+        <audio class="preview" controls hidden></audio>
+      </div>
+      <span class="note">You can add just one recording now and the other later.</span>
+
+      <div id="delWrap" hidden>
+        <button class="btn danger" id="delBtn" type="button">Delete verse</button>
+        <div class="confirm" id="delConfirm" hidden><span>Delete this verse and its recordings?</span>
+          <button class="btn danger small" id="delYes" type="button">Delete</button><button class="btn small" id="delNo" type="button">Keep</button></div>
+      </div>
+      <div class="dock"><button class="btn primary" type="button" id="saveBtn">Save verse</button></div>
+    </form>
+  </main>
+</div>
+<div class="toast" id="toast" hidden></div>
+<audio id="audio" preload="auto"></audio>
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
+import {getAuth,GoogleAuthProvider,signInWithPopup,signOut,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
+import {getFirestore,collection,doc,getDoc,setDoc,deleteDoc,onSnapshot} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
+import {getStorage,ref,uploadBytes,getDownloadURL,deleteObject} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-storage.js";
+const app=initializeApp({
+  apiKey:"AIzaSyCjuSVBvqZ7Q30d8ZEC4uWkT1K4-N_LLU8",
+  authDomain:"tikrar-5e389.firebaseapp.com",
+  projectId:"tikrar-5e389",
+  storageBucket:"tikrar-5e389.firebasestorage.app",
+  messagingSenderId:"848034650258",
+  appId:"1:848034650258:web:cd2060e7d39ef0da986e4b"
+});
+window.__fb={auth:getAuth(app),db:getFirestore(app),st:getStorage(app),GoogleAuthProvider,signInWithPopup,signOut,onAuthStateChanged,
+  collection,doc,getDoc,setDoc,deleteDoc,onSnapshot,ref,uploadBytes,getDownloadURL,deleteObject};
+window.dispatchEvent(new Event('fb-ready'));
+</script>
+
+<script>
+(function(){
+let STUDENT=true;
+const $=s=>document.querySelector(s);
+document.body.classList.add('student');
+const audio=$('#audio');
+const TRACKS={word:'Word by word',recite:'Recitation'};
+const EXAMPLE={id:'example',title:'Al-Fatiha 1 · example',surah:'Al-Fatiha',ayah:1,text:'بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ',tracks:{word:null,recite:null},example:true,created:0};
+const NO_AUDIO_TXT='No recording yet. Tap Record, or choose an audio file you already have.';
+
+/* Reliable taps: fire on finger-up, even if the finger moved slightly (Chrome otherwise treats it as a scroll and drops the tap) */
+let lastTap={t:0,el:null};
+// After a tap opens a new screen, the browser's delayed "click" can land on whatever is now under the finger. Swallow it.
+document.addEventListener('click',e=>{if(e.isTrusted&&Date.now()-lastTap.t<700&&!(lastTap.el&&lastTap.el.contains(e.target))){e.preventDefault();e.stopPropagation();}},true);
+function onTap(el,fn){if(!el)return;let down=null;
+  el.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse')return;down={x:e.clientX,y:e.clientY};});
+  el.addEventListener('pointercancel',()=>{down=null;});
+  el.addEventListener('pointerup',e=>{if(!down)return;const d=Math.hypot(e.clientX-down.x,e.clientY-down.y);down=null;
+    if(d<40&&!el.disabled){el._t=Date.now();lastTap={t:el._t,el};e.preventDefault();fn(e);}});
+  el.addEventListener('click',e=>{if(el._t&&Date.now()-el._t<800)return;if(!el.disabled)fn(e);});}
+
+function toast(msg){const t=$('#toast');t.textContent=msg;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>t.hidden=true,2600);}
+
+/* ---------- cloud storage (Firebase) ---------- */
+let FB=null,me=null,role='guest';const urlCache={};
+const fbReady=new Promise(r=>{if(window.__fb)return r(window.__fb);window.addEventListener('fb-ready',()=>r(window.__fb),{once:true});setTimeout(()=>r(window.__fb||null),20000);});
+function storeWarn(msg){const n=$('#storeNote');n.hidden=false;n.textContent=msg||"Can't reach Tikrar online right now. Check your internet connection and reload.";}
+function vdoc(id){return FB.doc(FB.db,'verses',id);}
+function envInts(env){if(!env||!env.length)return null;let p=0;for(const x of env)if(x>p)p=x;p=p||1;return Array.from(env,x=>Math.round(x/p*255));}
+function trackToDoc(t){if(!t||!t.path)return null;return{path:t.path,duration:t.duration||0,env:t.envInts||(t.env?envInts(t.env):null),marks:t.marks||null,approx:!!t.approx,by:t.by||null,at:t.at||null,contentType:t.contentType||''};}
+function trackFromDoc(t){if(!t||!t.path)return null;return{...t,envInts:t.env||null,env:t.env?Float32Array.from(t.env,x=>x/255):null};}
+function verseToDoc(v){return{surah:v.surah||'',ayah:v.ayah??null,title:v.title||'',text:v.text||'',created:v.created||Date.now(),updated:Date.now(),
+  updatedBy:me?{uid:me.uid,name:me.displayName||me.email,email:me.email}:null,tracks:{word:trackToDoc(v.tracks.word),recite:trackToDoc(v.tracks.recite)}};}
+function verseFromDoc(id,d){return{id,surah:d.surah,ayah:d.ayah??null,title:d.title,text:d.text||'',created:d.created||0,tracks:{word:trackFromDoc(d.tracks&&d.tracks.word),recite:trackFromDoc(d.tracks&&d.tracks.recite)}};}
+async function trackUrl(t){if(!t)throw 0;if(!urlCache[t.path])urlCache[t.path]=await FB.getDownloadURL(FB.ref(FB.st,t.path));return urlCache[t.path];}
+async function putVerse(v){if(STUDENT||!FB)return;try{await FB.setDoc(vdoc(v.id),verseToDoc(v));}catch(e){toast("Couldn't save online: "+(e.code||'error'));throw e;}}
+async function delVerse(id){const v=verses.find(x=>x.id===id);await FB.deleteDoc(vdoc(id));
+  if(v)for(const k of ['word','recite'])if(v.tracks[k])try{await FB.deleteObject(FB.ref(FB.st,v.tracks[k].path))}catch(e){}}
+function extOf(type){return /wav/.test(type)?'wav':/mpeg|mp3/.test(type)?'mp3':/ogg/.test(type)?'ogg':/webm/.test(type)?'webm':/aac/.test(type)?'aac':'m4a';}
+async function resample(buf,sr){if(buf.sampleRate<=sr||!window.OfflineAudioContext)return buf;try{const oc=new OfflineAudioContext(1,Math.ceil(buf.duration*sr),sr);
+  const src=oc.createBufferSource();src.buffer=buf;src.connect(oc.destination);src.start();return await oc.startRendering();}catch(e){return buf;}}
+async function uploadTrack(vid,k,blob){
+  let a=blob,buf=await decode(blob);
+  if(blob.recorded&&buf){buf=await resample(buf,24000);a=toWav(buf);} // recorded clips become WAV so word jumps are exact
+  const env=buf?envelope(buf):null;let duration=buf?buf.duration:0;
+  if(!duration){const u=URL.createObjectURL(a);duration=await probeDuration(u);URL.revokeObjectURL(u);}
+  const type=a.type||'audio/mp4',path='audio/'+vid+'/'+k+'-'+Date.now()+'.'+extOf(type);
+  await FB.uploadBytes(FB.ref(FB.st,path),a,{contentType:type,cacheControl:'public,max-age=31536000'});
+  return{path,duration,env,envInts:envInts(env),marks:null,approx:true,by:{uid:me.uid,name:me.displayName||me.email,email:me.email},at:Date.now(),contentType:type};}
+function byText(t){if(!t||!t.by)return '';const d=t.at?new Date(t.at).toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'}):'';return 'Recorded by '+(t.by.name||t.by.email)+(d?' · '+d:'');}
+async function roleOf(u){if(!u)return 'guest';const e=(u.email||'').toLowerCase();
+  try{if((await FB.getDoc(FB.doc(FB.db,'admins',e))).exists())return 'admin';}catch(err){}
+  try{const d=await FB.getDoc(FB.doc(FB.db,'team',e));return d.exists()?'recorder':'listener';}catch(err){return 'listener';}}
+function applyRole(){STUDENT=!(role==='admin'||role==='recorder');document.body.classList.toggle('student',STUDENT);
+  const chip=$('#roleChip');chip.hidden=role==='guest';chip.textContent={admin:'Admin',recorder:'Sub-admin',listener:'Listener'}[role]||'';
+  $('#authBtn').textContent=me?'Sign out':'Teacher sign in';$('#teamBtn').hidden=role!=='admin';
+  if(STUDENT&&!$('#editView').hidden)show('listView');if(STUDENT&&!$('#teamView').hidden)show('listView');
+  if(STUDENT&&tab==='adjust')setTab('practice');
+  if(role==='listener')toast((me.email||'This account')+" isn't on the team, so it can only listen.");
+  renderList();renderIstiadha();if(cur)notes();}
+let unsubTeam=null;
+async function cloudInit(){
+  FB=await fbReady;if(!FB){storeWarn();return;}
+  FB.onAuthStateChanged(FB.auth,async u=>{me=u;role=await roleOf(u);applyRole();watchTeam();});
+  FB.onSnapshot(FB.collection(FB.db,'verses'),snap=>{const list=[];snap.forEach(d=>list.push(verseFromDoc(d.id,d.data())));
+      verses=list.sort((a,b)=>a.created-b.created);$('#storeNote').hidden=true;renderList();if(!$('#surahView').hidden&&!playing&&sName)renderAyahs();},
+    err=>storeWarn("Couldn't load the recordings ("+(err.code||'error')+")."));
+  FB.onSnapshot(FB.doc(FB.db,'meta','istiadha'),d=>{const t=d.exists()?trackFromDoc(d.data().track):null;istiadha=t?{id:'istiadha',text:IST_TEXT,tracks:{word:null,recite:t}}:null;renderIstiadha();},()=>{});
+}
+onTap($('#authBtn'),async()=>{if(!FB)return storeWarn();
+  if(me){await FB.signOut(FB.auth);toast('Signed out');return;}
+  try{await FB.signInWithPopup(FB.auth,new FB.GoogleAuthProvider());}
+  catch(e){if(e&&e.code!=='auth/popup-closed-by-user'&&e.code!=='auth/cancelled-popup-request')toast('Sign-in failed: '+(e.code||'error'));}});
+
+/* team (admin only) */
+function watchTeam(){if(unsubTeam){unsubTeam();unsubTeam=null;}if(role!=='admin')return;
+  unsubTeam=FB.onSnapshot(FB.collection(FB.db,'team'),snap=>{const box=$('#teamList');box.innerHTML='';
+    if(snap.empty){const e=document.createElement('div');e.className='empty';e.textContent='No sub-admins yet. Add one above.';box.append(e);}
+    snap.forEach(d=>{const m=d.data();const row=document.createElement('div');row.className='member';
+      const who=document.createElement('div');who.className='who';const b=document.createElement('b');b.textContent=m.name||m.email||d.id;const em=document.createElement('span');em.className='note';em.textContent=d.id;who.append(b,em);
+      const rm=document.createElement('button');rm.type='button';rm.className='btn danger small';rm.textContent='Remove';
+      onTap(rm,async()=>{if(rm.dataset.sure!=='1'){rm.dataset.sure='1';rm.textContent='Tap again to remove';setTimeout(()=>{rm.dataset.sure='';rm.textContent='Remove';},3000);return;}
+        try{await FB.deleteDoc(FB.doc(FB.db,'team',d.id));toast('Removed '+d.id);}catch(e){toast("Couldn't remove: "+(e.code||'error'));}});
+      row.append(who,rm);box.append(row);});});}
+onTap($('#teamBtn'),()=>{if(role==='admin')show('teamView');});
+onTap($('#teamBack'),()=>show('listView'));
+onTap($('#tAdd'),async()=>{const email=$('#tEmail').value.trim().toLowerCase(),name=$('#tName').value.trim();
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){toast('Type a full email address.');return;}
+  try{await FB.setDoc(FB.doc(FB.db,'team',email),{email,name:name||email,addedAt:Date.now(),addedBy:me.email});$('#tEmail').value='';$('#tName').value='';toast('Added '+email);}
+  catch(e){toast("Couldn't add: "+(e.code||'error'));}});
+
+const prefs={repeat:3,speed:1,gap:1,autoPlay:true};
+try{Object.assign(prefs,JSON.parse(localStorage.getItem('tikrar-online-prefs')||'{}'))}catch(e){}
+function savePrefs(){try{localStorage.setItem('tikrar-online-prefs',JSON.stringify(prefs))}catch(e){}}
+
+/* ---------- words & data ---------- */
+const MARK_ONLY=/^[ۖ-ۭ؀-؅]+$/;
+function words(text){const out=[];for(const t of text.trim().split(/\s+/)){if(!t)continue;if(out.length&&MARK_ONLY.test(t))out[out.length-1]+=' '+t;else out.push(t);}return out;}
+function normMarks(t){if(t&&Array.isArray(t.marks)&&t.marks.length&&typeof t.marks[0]==='number'){const st=t.marks;t.marks=st.map((s,i)=>({s,e:i+1<st.length?st[i+1]:null}));}}
+function migrate(v){ // older versions had one recording; it becomes the word-by-word one
+  if(!v.tracks){v.tracks={word:v.audio?{audio:v.audio,marks:v.marks||null,approx:!!v.approx}:null,recite:null};delete v.audio;delete v.marks;delete v.approx;}
+  normMarks(v.tracks.word);normMarks(v.tracks.recite);setSurah(v);return v;}
+const AR_DIG='٠١٢٣٤٥٦٧٨٩';
+function arNum(n){return String(n).replace(/\d/g,d=>AR_DIG[d]);}
+function parseTitle(t){t=(t||'').replace(/\s*·\s*example$/i,'').trim();const m=t.match(/^(.*?)[\s:·#-]*(\d+)$/);
+  return m&&m[1].trim()?{surah:m[1].trim(),ayah:parseInt(m[2],10)}:{surah:t||'Verses',ayah:null};}
+function setSurah(v){if(v.surah===undefined){const p=parseTitle(v.title);v.surah=p.surah;v.ayah=p.ayah;}return v;}
+function hasAny(v){return !!(v.tracks&&(v.tracks.word||v.tracks.recite));}
+function evenSplit(a,b,n){return Array.from({length:n},(_,i)=>({s:a+(b-a)*i/n,e:a+(b-a)*(i+1)/n}));}
+
+const FD=0.02;
+function envelope(buf){const ch=buf.numberOfChannels,sr=buf.sampleRate,step=Math.max(1,Math.round(sr*FD)),n=Math.floor(buf.length/step);
+  const data=[];for(let c=0;c<ch;c++)data.push(buf.getChannelData(c));const env=new Float32Array(n);
+  for(let i=0;i<n;i++){let sum=0;for(let j=i*step;j<(i+1)*step;j++){let x=0;for(let c=0;c<ch;c++)x+=data[c][j];x/=ch;sum+=x*x;}env[i]=Math.sqrt(sum/step);}return env;}
+function autoFind(env,dur,n){
+  if(!env||!env.length)return evenSplit(0,dur,n);
+  let peak=0;for(const x of env)if(x>peak)peak=x;
+  const sorted=Array.from(env).sort((a,b)=>a-b);const noise=sorted[Math.floor(sorted.length*0.1)];
+  const thr=Math.max(noise*2.5,peak*0.07);
+  let first=-1,last=-1;for(let i=0;i<env.length;i++)if(env[i]>thr){if(first<0)first=i;last=i;}
+  if(first<0)return evenSplit(0,dur,n);
+  const gaps=[];for(let i=first;i<=last;){if(env[i]<=thr){let j=i;while(j<=last&&env[j]<=thr)j++;gaps.push({a:i,b:j,len:j-i});i=j;}else i++;}
+  const cand=gaps.filter(g=>g.len>=3).sort((x,y)=>y.len-x.len).slice(0,n-1).sort((x,y)=>x.a-y.a);
+  const segs=[];let s=first;for(const g of cand){segs.push([s,g.a]);s=g.b;}segs.push([s,last+1]);
+  while(segs.length<n){let k=0;segs.forEach((g,i)=>{if(g[1]-g[0]>segs[k][1]-segs[k][0])k=i});const [a,b]=segs[k];const m=Math.round((a+b)/2);segs.splice(k,1,[a,m],[m,b]);}
+  return segs.map(([a,b])=>({s:Math.max(0,a*FD-0.04),e:Math.min(dur,b*FD+0.06)}));
+}
+
+/* ---------- audio helpers ---------- */
+const AC=window.AudioContext||window.webkitAudioContext;
+async function decode(blob){if(!AC)return null;try{const ctx=new AC();const ab=await blob.arrayBuffer();
+  const buf=await new Promise((res,rej)=>{const p=ctx.decodeAudioData(ab,res,rej);if(p&&p.then)p.then(res,rej);});try{ctx.close()}catch(e){}return buf;}catch(e){return null}}
+function toWav(buf){const sr=buf.sampleRate,n=buf.length,ch=buf.numberOfChannels;const out=new DataView(new ArrayBuffer(44+n*2));
+  const ws=(o,s)=>{for(let i=0;i<s.length;i++)out.setUint8(o+i,s.charCodeAt(i))};
+  ws(0,'RIFF');out.setUint32(4,36+n*2,true);ws(8,'WAVE');ws(12,'fmt ');out.setUint32(16,16,true);out.setUint16(20,1,true);out.setUint16(22,1,true);
+  out.setUint32(24,sr,true);out.setUint32(28,sr*2,true);out.setUint16(32,2,true);out.setUint16(34,16,true);ws(36,'data');out.setUint32(40,n*2,true);
+  const d=[];for(let c=0;c<ch;c++)d.push(buf.getChannelData(c));
+  for(let i=0;i<n;i++){let x=0;for(let c=0;c<ch;c++)x+=d[c][i];x=Math.max(-1,Math.min(1,x/ch));out.setInt16(44+i*2,x<0?x*0x8000:x*0x7FFF,true);}
+  return new Blob([out],{type:'audio/wav'});}
+function probeDuration(u){return new Promise(res=>{const a=new Audio();a.preload='metadata';a.src=u;
+  const done=()=>{if(isFinite(a.duration)&&a.duration>0)return res(a.duration);const fix=()=>{a.removeEventListener('timeupdate',fix);res(isFinite(a.duration)?a.duration:0)};a.addEventListener('timeupdate',fix);a.currentTime=1e7;};
+  a.addEventListener('loadedmetadata',done,{once:true});a.addEventListener('error',()=>res(0),{once:true});});}
+
+/* ---------- state ---------- */
+let istiadha=null,verses=[],cur=null,info={},tk='word',run=0,playing=false,sel=null,rangeA=null,marking=null,wake=null,tab='practice',wi=0,zoom=false,saveT=null,loadedSrc=null;
+function T(k){return cur&&cur.tracks[k||tk];}
+function I(k){return info[k||tk]||{};}
+function segs(k){const t=T(k);return t&&t.marks?t.marks:[];}
+
+function load(){renderList();cloudInit();}
+function show(view){for(const id of ['listView','playerView','surahView','teamView','editView'])$('#'+id).hidden=id!==view;window.scrollTo(0,0);}
+
+function bySurah(list){const groups=new Map();for(const v of list){const k=v.surah||'Verses';if(!groups.has(k))groups.set(k,[]);groups.get(k).push(v);}
+  for(const g of groups.values())g.sort((a,b)=>(a.ayah??1e9)-(b.ayah??1e9)||a.created-b.created);return groups;}
+function renderList(){
+  const list=$('#list');list.innerHTML='';
+  const shown=verses.length?verses:[EXAMPLE];
+  const dl=$('#surahList');dl.innerHTML='';
+  for(const [name,group] of bySurah(shown)){
+    const o=document.createElement('option');o.value=name;dl.append(o);
+    const sec=document.createElement('section');sec.className='sgroup';
+    const head=document.createElement('div');head.className='shead';
+    const h=document.createElement('h3');h.textContent=name;
+    const pb=document.createElement('button');pb.type='button';pb.className='btn leaf';pb.textContent='▶ Surah';
+    pb.disabled=!group.some(hasAny)||!!group[0].example;onTap(pb,()=>openSurah(name));
+    head.append(h,pb);sec.append(head);
+    for(const v of group){
+      const b=document.createElement('button');b.type='button';b.className='item';
+      const meta=document.createElement('div');meta.className='meta';
+      const t=document.createElement('span');t.className='t';t.textContent=v.example?v.title:(v.ayah!=null?'Ayah '+v.ayah:v.title);
+      const p=document.createElement('span');p.className='p';p.lang='ar';p.textContent=v.text;meta.append(t,p);
+      const c=document.createElement('span');c.className='chip';
+      const tw=v.tracks.word,tr=v.tracks.recite;
+      if(v.example)c.textContent='Example';
+      else if(!tw&&!tr){c.textContent='No audio';c.classList.add('warn');}
+      else if((tw&&tw.approx)||(tr&&tr.approx)){c.textContent='Check words';c.classList.add('warn');}
+      else{c.textContent=tw&&tr?'2 recordings':tw?'Slow only':'Recitation only';c.classList.add('ok');}
+      if(STUDENT&&!v.example&&(tw||tr))c.hidden=true;
+      b.append(meta,c);onTap(b,()=>openPlayer(v));sec.append(b);}
+    list.append(sec);
+  }
+  if(!verses.length){const e=document.createElement('div');e.className='empty';e.textContent=STUDENT?(FB?'No recordings have been added yet.':'Loading recordings…'):'This is an example. Tap "+ Add verse" to add your own recordings and text.';list.append(e);}
+  $('#exportBtn').disabled=!verses.length;
+}
+
+/* ---------- player ---------- */
+function freeInfo(){info={};loadedSrc=null;audio.removeAttribute('src');}
+async function prepTrack(v,k){const t=v.tracks[k];if(!t)return;let u;try{u=await trackUrl(t);}catch(e){return;}
+  info[k]={url:u,duration:t.duration||0,env:t.env||null};if(!info[k].duration)info[k].duration=await probeDuration(u);
+  const d=info[k].duration,n=words(v.text).length;
+  if(!t.marks||t.marks.length!==n){t.marks=autoFind(info[k].env,d,n);t.approx=true;v._dirty=true;}
+  t.marks.forEach(m=>{if(m.e==null||m.e>d)m.e=d;});}
+async function openPlayer(v){
+  stop();endMark(true);freeInfo();cur=v;sel=null;rangeA=null;wi=0;zoom=false;
+  $('#pTitle').textContent=v.title;$('#editBtn').hidden=!!v.example;$('#status').textContent='';
+  tk=v.tracks.word?'word':'recite';
+  renderWords();renderTrackSeg();practiceSegs();setTab('practice');show('playerView');
+  const has=hasAny(v);for(const id of ['#playVerse','#playSteps','#tabAdjust'])$(id).disabled=!has;
+  if(!has){notes();return;}
+  $('#status').textContent='Loading recordings…';
+  await Promise.all(['word','recite'].map(k=>prepTrack(v,k)));if(cur!==v)return;
+  if(!STUDENT&&v._dirty){v._dirty=false;putVerse(v).catch(()=>{});}$('#status').textContent='';notes();drawWave();updateCard();
+}
+function notes(){const n=$('#pNote');const t=T();$('#byLine').textContent=byText(t);
+  if(!hasAny(cur)){n.hidden=false;n.textContent=cur.example?'Example verse with no recording. Add your own verse to hear it repeat.':'No recording yet. Tap Edit to add one.';return;}
+  if(!t){n.hidden=false;n.textContent='This verse has no '+TRACKS[tk].toLowerCase()+' recording yet. Tap Edit to add it.';return;}
+  if(t.approx){n.hidden=false;n.textContent='Word timing for the '+TRACKS[tk].toLowerCase()+' was found automatically. If a word cuts off, fix it in Adjust words.';return;}
+  n.hidden=true;}
+function renderTrackSeg(){const box=$('#segTrack');box.innerHTML='';
+  for(const k of ['word','recite']){const b=document.createElement('button');b.type='button';b.textContent=TRACKS[k]+(cur&&!cur.tracks[k]?' (none)':'');
+    b.setAttribute('aria-pressed',tk===k);onTap(b,()=>{if(tk===k)return;stop();endMark(true);tk=k;wi=0;zoom=false;renderTrackSeg();notes();paint(-1);drawWave();updateCard();
+      $('#tabAdjust').disabled=!T();if(tab==='adjust'&&!T())setTab('practice');});box.append(b);}}
+function renderWords(){const m=$('#mushaf');m.innerHTML='';
+  words(cur.text).forEach((w,i)=>{const b=document.createElement('button');b.type='button';b.className='w';b.textContent=w;onTap(b,()=>onWord(i));m.append(b,document.createTextNode(' '));});paint(-1);}
+function paint(now){document.querySelectorAll('#mushaf .w').forEach((el,i)=>{
+  el.classList.toggle('now',i===now);
+  el.classList.toggle('sel',tab==='practice'&&((!!sel&&i>=sel[0]&&i<=sel[1]&&i!==now)||(rangeA!==null&&i===rangeA)));
+  el.classList.toggle('pick',tab==='adjust'&&!marking&&i===wi&&i!==now);
+  el.classList.toggle('next',!!marking&&i===marking.i);});}
+
+function setTab(t){tab=t;$('#tabPractice').setAttribute('aria-selected',t==='practice');$('#tabAdjust').setAttribute('aria-selected',t==='adjust');
+  $('#practice').hidden=t!=='practice';$('#adjust').hidden=t!=='adjust';stop();endMark(true);paint(-1);if(t==='adjust'){drawWave();updateCard();}}
+onTap($('#tabPractice'),()=>setTab('practice'));
+onTap($('#tabAdjust'),()=>{if(STUDENT)return;if(T()&&I().duration)setTab('adjust');else toast('Add a '+TRACKS[tk].toLowerCase()+' recording first (Edit).');});
+
+function onWord(i){
+  if(marking)return;
+  if(!T()||!I().duration){toast('No '+TRACKS[tk].toLowerCase()+' recording. Switch recording or tap Edit.');return;}
+  if(tab==='adjust'){wi=i;updateCard();drawWave();playOnce();return;}
+  if($('#rangeTog').checked){
+    if(rangeA===null){rangeA=i;sel=null;paint(-1);$('#status').textContent='Now tap the last word';return;}
+    const a=Math.min(rangeA,i),b=Math.max(rangeA,i);rangeA=null;playSeq([item(a,b,prefs.repeat)]);
+  }else playSeq([item(i,i,prefs.repeat)]);
+}
+function item(a,b,count,k){k=k||tk;const s=segs(k);const n=s.length;
+  return{track:k,start:s[a].s,end:s[b].e,sel:[a,b],count,label:a===b?words(cur.text)[a]:(a===0&&b===n-1?'Whole verse':'Words '+(a+1)+'–'+(b+1)),tag:TRACKS[k]};}
+onTap($('#playVerse'),()=>{if(!T())return toast('No '+TRACKS[tk].toLowerCase()+' recording.');rangeA=null;playSeq([item(0,segs().length-1,prefs.repeat)]);});
+onTap($('#playSteps'),()=>{rangeA=null;
+  const wk=cur.tracks.word?'word':'recite',vk=cur.tracks.recite?'recite':'word';if(!cur.tracks[wk])return;
+  const n=segs(wk).length;const list=[];for(let i=0;i<n;i++)list.push(item(i,i,prefs.repeat,wk));list.push(item(0,n-1,prefs.repeat,vk));playSeq(list);});
+onTap($('#stopBtn'),()=>{stop();$('#status').textContent='';});
+
+async function useTrack(k){const u=info[k]&&info[k].url;if(!u)throw 0;return useSrc(u);}
+async function useSrc(u){if(loadedSrc===u)return;audio.src=u;loadedSrc=u;
+  await new Promise(r=>{if(audio.readyState>=1)return r();audio.addEventListener('loadedmetadata',r,{once:true});audio.addEventListener('error',r,{once:true});audio.load();});}
+const sleep=(ms,tok)=>new Promise(r=>{const t0=Date.now();const f=()=>{if(tok!==run||Date.now()-t0>=ms)return r();setTimeout(f,40)};f();});
+function waitEnd(it,tok){return new Promise(r=>{const ms=segs(it.track);const f=()=>{
+  if(tok!==run)return r();const t=audio.currentTime;
+  paint(ms.findIndex(s=>t>=s.s+0.03&&t<s.e));if(tab==='adjust'&&it.track===tk)drawWave(t);
+  if(t>=it.end-0.01||audio.ended||(audio.paused&&!audio.seeking))return r();setTimeout(f,20);};setTimeout(f,60);});}
+async function playSeq(items){
+  stop();const tok=++run;playing=true;$('#stopBtn').disabled=false;
+  try{if(navigator.wakeLock)wake=await navigator.wakeLock.request('screen')}catch(e){wake=null}
+  let total=0;
+  for(const it of items){
+    sel=it.sel;const cnt=it.count===0?Infinity:it.count;let n=0;
+    try{await useTrack(it.track)}catch(e){continue;}
+    while(n<cnt&&tok===run){
+      if(tab==='practice'){const st=$('#status');st.innerHTML='';const a=document.createElement('span');a.textContent=it.label;
+        if(/[؀-ۿ]/.test(it.label)){a.style.fontFamily='var(--f-quran)';a.style.fontSize='1.4rem';}
+        const g=document.createElement('span');g.className='note';g.textContent=it.tag;
+        const c=document.createElement('span');c.className='count';c.textContent=(n+1)+' / '+(cnt===Infinity?'∞':cnt);st.append(a,g,c);}
+      audio.playbackRate=prefs.speed;audio.currentTime=it.start;
+      try{await audio.play()}catch(e){$('#status').textContent='Could not play this recording. Try another audio file.';stop();return;}
+      await waitEnd(it,tok);if(tok!==run)return;audio.pause();n++;total++;
+      if(n<cnt&&prefs.gap)await sleep(prefs.gap*1000,tok);
+    }
+    if(tok!==run)return;if(prefs.gap&&it!==items[items.length-1])await sleep(prefs.gap*1000,tok);
+  }
+  if(tok===run){playing=false;$('#stopBtn').disabled=true;sel=null;paint(-1);releaseWake();if(tab==='adjust')drawWave();
+    if(tab==='practice')$('#status').textContent='Done · '+total+(total===1?' repeat':' repeats');}
+}
+function stop(){run++;playing=false;try{audio.pause()}catch(e){}$('#stopBtn').disabled=true;$('#sStop').disabled=true;$('#sPlay').disabled=!sChecked.size;if(!marking)paint(-1);releaseWake();}
+function releaseWake(){try{wake&&wake.release()}catch(e){}wake=null;}
+
+/* ---------- practice settings ---------- */
+function seg(el,opts,key,cb){const box=$(el);box.innerHTML='';for(const [val,lab] of opts){const b=document.createElement('button');b.type='button';b.textContent=lab;
+  b.setAttribute('aria-pressed',prefs[key]===val);onTap(b,()=>{prefs[key]=val;savePrefs();seg(el,opts,key,cb);if(key==='speed')audio.playbackRate=val;cb&&cb(val);});box.append(b);}}
+function practiceSegs(){seg('#segRepeat',[[1,'1×'],[3,'3×'],[5,'5×'],[10,'10×'],[0,'∞']],'repeat');
+seg('#segSpeed',[[0.6,'0.6×'],[0.8,'0.8×'],[1,'1×'],[1.25,'1.25×']],'speed');
+seg('#segGap',[[0,'None'],[1,'1 s'],[2,'2 s'],[4,'4 s']],'gap');}
+practiceSegs();
+$('#rangeTog').onchange=()=>{rangeA=null;sel=null;paint(-1);$('#status').textContent=$('#rangeTog').checked?'Tap the first word':'';};
+
+/* ---------- ruler ---------- */
+const cv=$('#wave');let drag=null;
+function view(){const d=I().duration||0;if(!zoom||!segs()[wi])return[0,d];const m=segs()[wi];return[Math.max(0,m.s-0.7),Math.min(d,m.e+0.7)];}
+function css(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();}
+function drawWave(playT){
+  const d=I().duration;if(tab!=='adjust'||!d)return;const env=I().env;
+  const dpr=window.devicePixelRatio||1,W=cv.clientWidth,H=cv.clientHeight;if(!W)return;
+  if(cv.width!==Math.round(W*dpr)||cv.height!==Math.round(H*dpr)){cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);}
+  const c=cv.getContext('2d');c.setTransform(dpr,0,0,dpr,0,0);c.clearRect(0,0,W,H);
+  const [v0,v1]=view();const X=t=>(t-v0)/(v1-v0)*W;const top=30,bot=H-22,mid=(top+bot)/2;
+  segs().forEach((m,i)=>{const x0=X(m.s),x1=X(m.e);if(x1<0||x0>W)return;
+    c.fillStyle=css(i%2?'--seg-b':'--seg-a');c.globalAlpha=i===wi?1:.55;c.fillRect(x0,top,x1-x0,bot-top);c.globalAlpha=1;
+    c.save();c.beginPath();c.rect(x0,0,x1-x0,top);c.clip();c.fillStyle=css(i===wi?'--ink':'--muted');c.font=(i===wi?'700 ':'')+'18px "Amiri Quran","Noto Naskh Arabic",serif';
+    c.textAlign='center';c.direction='rtl';c.fillText(words(cur.text)[i],(x0+x1)/2,22);c.restore();});
+  if(env){c.fillStyle=css('--wave');let peak=0;for(const x of env)if(x>peak)peak=x;peak=peak||1;
+    for(let px=0;px<W;px+=2){const t=v0+(px/W)*(v1-v0);const a=Math.floor(t/FD),b=Math.max(a+1,Math.floor((v0+((px+2)/W)*(v1-v0))/FD));let mx=0;
+      for(let k=a;k<b&&k<env.length;k++)if(env[k]>mx)mx=env[k];const h=Math.max(1,(mx/peak)*(bot-top)/2*0.95);c.fillRect(px,mid-h,1.5,h*2);}}
+  else{c.fillStyle=css('--muted');c.font='14px system-ui';c.textAlign='center';c.fillText('Waveform not available for this file',W/2,mid);}
+  c.fillStyle=css('--muted');c.font='11px system-ui';c.textAlign='center';const span=v1-v0;const step=span>8?2:span>3?1:span>1.2?0.5:0.25;
+  for(let t=Math.ceil(v0/step)*step;t<=v1;t+=step){const x=X(t);c.fillRect(x,bot,1,5);c.fillText((Math.round(t*100)/100)+'s',Math.min(W-14,Math.max(14,x)),H-4);}
+  const m=segs()[wi];if(m){c.fillStyle=css('--accent');for(const t of [m.s,m.e]){const x=X(t);c.fillRect(x-1.5,top,3,bot-top);c.beginPath();c.arc(x,bot-12,9,0,Math.PI*2);c.fill();}}
+  if(playT!=null){c.fillStyle=css('--danger');c.fillRect(X(playT)-1,top,2,bot-top);}
+}
+function tAt(ev){const r=cv.getBoundingClientRect();const [v0,v1]=view();return v0+(ev.clientX-r.left)/r.width*(v1-v0);}
+cv.addEventListener('pointerdown',ev=>{if(!I().duration||marking)return;const r=cv.getBoundingClientRect();const [v0,v1]=view();const X=t=>(t-v0)/(v1-v0)*r.width;const x=ev.clientX-r.left;
+  const m=segs()[wi];
+  if(m){const ds=Math.abs(x-X(m.s)),de=Math.abs(x-X(m.e));if(Math.min(ds,de)<26){drag=ds<=de?'s':'e';cv.setPointerCapture(ev.pointerId);stop();return;}}
+  const t=tAt(ev);let k=segs().findIndex(s=>t>=s.s&&t<=s.e);
+  if(k<0){let best=1e9;segs().forEach((s,i)=>{const d=Math.abs((s.s+s.e)/2-t);if(d<best){best=d;k=i}});}
+  if(k>=0){wi=k;updateCard();drawWave();playOnce();}});
+cv.addEventListener('pointermove',ev=>{if(!drag)return;setEdge(segs()[wi],drag,tAt(ev));updateCard();drawWave();});
+const endDrag=()=>{if(!drag)return;drag=null;changed();};
+cv.addEventListener('pointerup',endDrag);cv.addEventListener('pointercancel',endDrag);
+window.addEventListener('resize',()=>drawWave());
+
+function setEdge(m,k,t){t=Math.max(0,Math.min(I().duration,t));if(k==='s')m.s=Math.min(t,m.e-0.05);else m.e=Math.max(t,m.s+0.05);}
+function updateCard(){const m=segs()[wi];if(!m)return;const ws=words(cur.text);
+  $('#wIdx').textContent=TRACKS[tk]+' · word '+(wi+1)+' of '+ws.length;$('#wBig').textContent=ws[wi];
+  $('#sOut').textContent=m.s.toFixed(2)+' s';$('#eOut').textContent=m.e.toFixed(2)+' s';
+  $('#prevW').disabled=wi===0;$('#nextW').disabled=wi>=ws.length-1;$('#zoomBtn').textContent=zoom?'Show all':'Zoom in';paint(-1);}
+document.querySelectorAll('.nudge .ctl button').forEach(b=>onTap(b,()=>{const m=segs()[wi];if(!m)return;stop();
+  setEdge(m,b.dataset.k,m[b.dataset.k]+parseFloat(b.dataset.d));updateCard();drawWave();changed();}));
+let apT=null;
+function changed(){const t=T();if(!t)return;t.approx=false;notes();clearTimeout(saveT);const v=cur;saveT=setTimeout(()=>{putVerse(v).catch(()=>{});},600);
+  if(prefs.autoPlay){clearTimeout(apT);apT=setTimeout(playOnce,550);}}
+function playOnce(){if(!segs()[wi])return;playSeq([item(wi,wi,1)]);}
+onTap($('#playW'),playOnce);
+onTap($('#prevW'),()=>{if(wi>0){wi--;updateCard();drawWave();playOnce();}});
+onTap($('#nextW'),()=>{if(wi<segs().length-1){wi++;updateCard();drawWave();playOnce();}});
+onTap($('#zoomBtn'),()=>{zoom=!zoom;updateCard();drawWave();});
+$('#autoPlay').checked=prefs.autoPlay!==false;$('#autoPlay').onchange=e=>{prefs.autoPlay=e.target.checked;savePrefs();};
+onTap($('#autoBtn'),()=>{if(!T())return;stop();T().marks=autoFind(I().env,I().duration,words(cur.text).length);wi=0;updateCard();drawWave();changed();toast('Words found. Tap each one to check it.');});
+
+/* tap along */
+onTap($('#markBtn'),()=>{if(!T())return;stop();marking={i:0,starts:[]};$('#markPanel').hidden=false;$('#adjDock').hidden=true;$('#tapBtn').textContent='Start listening';paint(-1);
+  $('#markPanel').scrollIntoView({block:'center',behavior:'smooth'});});
+onTap($('#tapBtn'),async()=>{
+  if(!marking)return;
+  if(!marking.started){marking.started=true;await useTrack(tk);audio.playbackRate=Math.min(prefs.speed,1);audio.currentTime=0;try{await audio.play()}catch(e){}
+    $('#tapBtn').textContent='Tap: word 1 begins';audio.onended=()=>{if(marking)finishMark();};
+    const tick=()=>{if(!marking)return;drawWave(audio.currentTime);requestAnimationFrame(tick)};tick();return;}
+  const n=words(cur.text).length;marking.starts.push(audio.currentTime);marking.i++;paint(marking.i-1);
+  if(marking.i>=n){finishMark();return;}
+  $('#tapBtn').textContent='Tap: word '+(marking.i+1)+' begins';});
+function finishMark(){const n=words(cur.text).length;const st=marking.starts;
+  if(st.length===n){T().marks=st.map((s,i)=>({s:Math.max(0,s-0.06),e:i+1<n?st[i+1]:I().duration}));endMark();wi=0;updateCard();drawWave();changed();toast('Word timing saved');}
+  else{endMark();toast('The recording ended before all words were tapped. Try again.');}}
+function endMark(silent){if(!marking&&silent)return;marking=null;audio.onended=null;try{audio.pause()}catch(e){}$('#markPanel').hidden=true;$('#adjDock').hidden=false;paint(-1);drawWave();}
+onTap($('#markCancel'),()=>endMark());
+
+/* ---------- edit form ---------- */
+let lastSurah='';
+function nextAyah(name){if(!name)return '';const g=verses.filter(v=>v.surah===name&&v.ayah!=null);return g.length?Math.max(...g.map(v=>v.ayah))+1:'';}
+let editing=null;const pending={word:null,recite:null};const purls={};
+const block=k=>document.querySelector('.recblock[data-track="'+k+'"]');
+const b0=k=>block(k).querySelector('.aname');
+function setPreview(k,blob,name){const b=block(k),p=b.querySelector('audio');if(purls[k]){URL.revokeObjectURL(purls[k]);purls[k]=null;}
+  if(typeof blob==='string'){p.src=blob;p.hidden=false;b.querySelector('.aname').textContent=name;}
+  else if(blob){purls[k]=URL.createObjectURL(blob);p.src=purls[k];p.hidden=false;b.querySelector('.aname').textContent=name;}
+  else{p.hidden=true;p.removeAttribute('src');b.querySelector('.aname').textContent=NO_AUDIO_TXT;}}
+function openEdit(v){if(STUDENT)return;stop();stopRec();editing=v||null;pending.word=pending.recite=null;
+  $('#eHead').textContent=v?'Edit verse':'Add verse';$('#fSurah').value=v?(v.surah||''):(lastSurah||'');$('#fAyah').value=v&&v.ayah!=null?v.ayah:(v?'':nextAyah(lastSurah));$('#fText').value=v?v.text:'';
+  for(const k of ['word','recite']){const t=v&&v.tracks[k];block(k).querySelector('.recLabel').textContent=t?'Record again':'Record';setPreview(k,null,'');if(t){b0(k).textContent='Loading current recording…';trackUrl(t).then(u=>{if(editing===v)setPreview(k,u,'Current recording. '+byText(t));}).catch(()=>{});}}
+  $('#delWrap').hidden=!v;$('#delConfirm').hidden=true;$('#delBtn').hidden=false;show('editView');}
+for(const k of ['word','recite']){const b=block(k);
+  b.querySelector('input[type=file]').onchange=e=>{const f=e.target.files&&e.target.files[0];if(!f)return;pending[k]=f;setPreview(k,f,(f.name||'Chosen file')+'. Tap Save verse to keep it.');e.target.value='';};
+  onTap(b.querySelector('.rec'),()=>{if(rec)stopRec();else startRec(k);});}
+onTap($('#addBtn'),()=>openEdit(null));
+onTap($('#editBtn'),()=>{if(cur&&!cur.example)openEdit(cur);});
+onTap($('#backBtn'),()=>{stop();endMark(true);show('listView');});
+onTap($('#editBack'),()=>{stopRec();if(editing)openPlayer(editing);else show('listView');});
+$('#form').addEventListener('submit',e=>{e.preventDefault();save();});
+let saving=false;
+onTap($('#saveBtn'),save);
+async function save(){
+  if(saving)return;
+  const surah=$('#fSurah').value.trim(),ayahRaw=$('#fAyah').value.replace(/[٠-٩]/g,d=>AR_DIG.indexOf(d)).trim(),text=$('#fText').value.trim();
+  if(!surah){toast('Type the surah name.');$('#fSurah').focus();return;}
+  if(ayahRaw&&!/^\d+$/.test(ayahRaw)){toast('Ayah number should be a number, like 2.');$('#fAyah').focus();return;}
+  const ayah=ayahRaw?parseInt(ayahRaw,10):null;const title=ayah!=null?surah+' '+ayah:surah;
+  if(!text){toast('Type the Arabic text of the verse.');$('#fText').focus();return;}
+  saving=true;$('#saveBtn').disabled=true;$('#saveBtn').textContent='Saving…';
+  try{
+    if(rec){stopRec();await new Promise(r=>setTimeout(r,500));}
+    const v=editing?{...editing,tracks:{...editing.tracks}}:{id:'v'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),created:Date.now(),tracks:{word:null,recite:null}};
+    const reword=editing&&words(editing.text).join(' ')!==words(text).join(' ');
+    for(const k of ['word','recite']){
+      if(pending[k]){$('#saveBtn').textContent='Uploading '+TRACKS[k].toLowerCase()+'…';const old=v.tracks[k];v.tracks[k]=await uploadTrack(v.id,k,pending[k]);
+        if(old&&old.path)FB.deleteObject(FB.ref(FB.st,old.path)).catch(()=>{});}
+      else if(reword&&v.tracks[k])v.tracks[k]={...v.tracks[k],marks:null};}
+    v.title=title;v.surah=surah;v.ayah=ayah;v.text=text;lastSurah=surah;await putVerse(v);pending.word=pending.recite=null;
+    const i=verses.findIndex(x=>x.id===v.id);if(i>=0)verses[i]=v;else verses.push(v);renderList();openPlayer(v);
+  }catch(e){toast('Save failed: '+(e&&e.code||'check your internet')+'. Nothing was lost on this screen; try again.');}
+  finally{saving=false;$('#saveBtn').disabled=false;$('#saveBtn').textContent='Save verse';}}
+onTap($('#delBtn'),()=>{$('#delConfirm').hidden=false;$('#delBtn').hidden=true;});
+onTap($('#delNo'),()=>{$('#delConfirm').hidden=true;$('#delBtn').hidden=false;});
+onTap($('#delYes'),async()=>{if(!editing)return;try{await delVerse(editing.id);}catch(e){toast("Couldn't delete: "+(e.code||'error'));return;}verses=verses.filter(x=>x.id!==editing.id);editing=null;renderList();show('listView');});
+
+/* microphone */
+let rec=null,recK=null,recStream=null,recChunks=[],recT0=0,recTimer=null;
+function fmt(s){s=Math.floor(s);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+async function startRec(k){
+  const b=block(k),name=b.querySelector('.aname'),lab=b.querySelector('.recLabel'),btn=b.querySelector('.rec');
+  if(!window.isSecureContext||!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia||!window.MediaRecorder){
+    name.textContent='Recording only works when Tikrar is opened from its https:// web link. For now, record in a voice recorder app and use Choose file.';return;}
+  try{recStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:true}});}
+  catch(e){name.textContent='Microphone is blocked. Tap the lock icon in Chrome\'s address bar, allow Microphone, then try again.';return;}
+  let t='';for(const x of ['audio/webm;codecs=opus','audio/mp4','audio/webm','audio/ogg'])if(MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported(x)){t=x;break;}
+  recChunks=[];recK=k;rec=new MediaRecorder(recStream,t?{mimeType:t}:undefined);
+  rec.ondataavailable=e=>{if(e.data&&e.data.size)recChunks.push(e.data)};
+  rec.onstop=()=>{const blob=new Blob(recChunks,{type:((rec&&rec.mimeType)||t||'audio/webm').split(';')[0]});blob.recorded=true;
+    recStream.getTracks().forEach(x=>x.stop());rec=null;clearInterval(recTimer);btn.classList.remove('on');lab.textContent='Record again';
+    if(blob.size){if(k==='istiadha'){b0('istiadha').textContent='Uploading…';saveIstiadha(blob).catch(err=>toast("Couldn't upload: "+(err.code||'error')));return;}pending[k]=blob;setPreview(k,blob,'New recording · '+fmt((Date.now()-recT0)/1000)+'. Tap Save verse to keep it.');}};
+  rec.start(250);recT0=Date.now();btn.classList.add('on');lab.textContent='Stop · 0:00';
+  name.textContent=k==='istiadha'?'Recording… say A\'udhu billahi, then tap Stop.':k==='word'?'Recording… say each word with a short pause, then tap Stop.':'Recording… recite normally, then tap Stop.';
+  recTimer=setInterval(()=>{lab.textContent='Stop · '+fmt((Date.now()-recT0)/1000)},250);}
+function stopRec(){if(rec&&rec.state!=='inactive')rec.stop();}
+
+/* ---------- export / import ---------- */
+function b64(blob){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(',')[1]||'');r.onerror=()=>rej(r.error);r.readAsDataURL(blob);});}
+function unb64(s,type){const bin=atob(s);const u=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);return new Blob([u],{type});}
+async function packTrack(t){return t?{marks:t.marks,approx:!!t.approx,audio:{type:t.audio.type||'audio/mp4',data:await b64(t.audio)}}:null;}
+function unpackTrack(t){return t&&t.audio&&t.audio.data?{audio:unb64(t.audio.data,t.audio.type||'audio/mp4'),marks:t.marks||null,approx:!!t.approx}:null;}
+function safeName(n){return (n||'Verses').replace(/[\\/:*?"<>|]+/g,'-').trim()||'Verses';}
+async function packVerse(v){return{id:v.id,title:v.title,surah:v.surah,ayah:v.ayah,text:v.text,created:v.created,tracks:{word:await packTrack(v.tracks.word),recite:await packTrack(v.tracks.recite)}};}
+async function makeFile(name,list){const out=[];for(const v of list)out.push(await packVerse(v));
+  const ist=istiadha&&istiadha.tracks&&istiadha.tracks.recite?await packTrack(istiadha.tracks.recite):null;
+  return new File([JSON.stringify({app:'tikrar',version:4,exported:new Date().toISOString(),istiadha:ist,verses:out})],name,{type:'application/json'});}
+onTap($('#exportBtn'),()=>{if(!verses.length)return;const box=$('#exportList');box.innerHTML='';
+  for(const [name,g] of bySurah(verses)){const id='ex-'+name.replace(/\W+/g,'_');const l=document.createElement('label');l.className='checkrow';l.htmlFor=id;
+    const cb=document.createElement('input');cb.type='checkbox';cb.id=id;cb.checked=true;cb.dataset.surah=name;
+    const sp=document.createElement('span');sp.textContent=name+' · '+g.length+(g.length===1?' ayah':' ayahs');l.append(cb,sp);box.append(l);}
+  $('#exportPanel').hidden=false;$('#exportPanel').scrollIntoView({block:'center',behavior:'smooth'});});
+onTap($('#exCancel'),()=>{$('#exportPanel').hidden=true;});
+onTap($('#exGo'),async()=>{
+  const names=[...document.querySelectorAll('#exportList input:checked')].map(x=>x.dataset.surah);const combined=$('#exCombined').checked;
+  if(!names.length&&!combined){toast('Tick at least one surah or the combined file.');return;}
+  $('#exGo').disabled=true;$('#exGo').textContent='Preparing…';
+  try{const groups=bySurah(verses);const files=[];
+    for(const n of names)files.push(await makeFile(safeName(n)+'.json',groups.get(n)));
+    if(combined)files.push(await makeFile('Tikrar-all-surahs.json',verses));
+    if(navigator.canShare&&navigator.canShare({files})){try{await navigator.share({files,title:'Tikrar'});toast('Shared '+files.length+(files.length===1?' file':' files'));$('#exportPanel').hidden=true;return;}catch(e){if(e&&e.name==='AbortError')return;}}
+    for(let i=0;i<files.length;i++){const a=document.createElement('a');a.href=URL.createObjectURL(files[i]);a.download=files[i].name;document.body.append(a);a.click();
+      const h=a.href;setTimeout(()=>{URL.revokeObjectURL(h);a.remove();},6000);if(i<files.length-1)await new Promise(r=>setTimeout(r,700));}
+    toast('Saved '+files.length+(files.length===1?' file':' files')+' to Downloads');$('#exportPanel').hidden=true;
+  }catch(e){toast('Export failed. Try again.');}
+  finally{$('#exGo').disabled=false;$('#exGo').textContent='Export files';}});
+$('#importIn').onchange=async e=>{const f=e.target.files&&e.target.files[0];e.target.value='';if(!f)return;
+  try{const data=JSON.parse(await f.text());if(!data||data.app!=='tikrar'||!Array.isArray(data.verses))throw 0;
+    let added=0,updated=0;
+    if(STUDENT||!me)throw 1;let done=0;const total=data.verses.length;
+    if(data.istiadha&&data.istiadha.audio){const t=unpackTrack(data.istiadha);if(t){toast("Uploading A'udhu billahi…");await saveIstiadha(t.audio,true);}}
+    for(const x of data.verses){if(!x||!x.text)continue;
+      let tracks;
+      if(x.tracks)tracks={word:unpackTrack(x.tracks.word),recite:unpackTrack(x.tracks.recite)};
+      else tracks={word:unpackTrack({audio:x.audio,marks:x.marks,approx:x.approx}),recite:null}; // older export
+      const v=migrate({id:x.id||('v'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)),title:x.title||'Verse',surah:x.surah,ayah:x.ayah??null,text:x.text,created:x.created||Date.now(),tracks});
+      for(const k of ['word','recite']){const t=v.tracks[k];if(t&&t.audio){const up=await uploadTrack(v.id,k,t.audio);up.marks=t.marks;up.approx=t.approx;v.tracks[k]=up;}}
+      toast('Uploading '+(++done)+' of '+total+'…');
+      const i=verses.findIndex(y=>y.id===v.id);if(i>=0)updated++;else added++;await putVerse(v);}
+    toast('Uploaded '+added+' new'+(updated?', updated '+updated:'')+(added+updated===1?' verse':' verses'));
+  }catch(err){toast(err===1?'Sign in as a teacher first.':(err&&err.code)?'Upload stopped: '+err.code:"That file isn't a Tikrar export.");}};
+
+/* ---------- A'udhu billahi ---------- */
+const IST_TEXT='أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ';
+async function saveIstiadha(blob,quiet){if(STUDENT||!me)return;const old=istiadha&&istiadha.tracks.recite;
+  const t=await uploadTrack('istiadha','recite',blob);await FB.setDoc(FB.doc(FB.db,'meta','istiadha'),{track:trackToDoc(t),updated:Date.now()});
+  if(old&&old.path&&old.path!==t.path)FB.deleteObject(FB.ref(FB.st,old.path)).catch(()=>{});if(!quiet)toast("A'udhu billahi saved");}
+function renderIstiadha(){const has=!!(istiadha&&istiadha.tracks.recite);
+  setPreview('istiadha',null,'');b0('istiadha').textContent=has?'Recorded. '+byText(istiadha.tracks.recite):"Not recorded yet. Record it once and Surah mode can play it first.";
+  if(has){const t=istiadha.tracks.recite;trackUrl(t).then(u=>setPreview('istiadha',u,'Recorded. '+byText(t)+'. It can play before each surah.')).catch(()=>{});}
+  block('istiadha').querySelector('.recLabel').textContent=has?'Record again':'Record';}
+{const b=block('istiadha');b.querySelector('input[type=file]').onchange=e=>{const f=e.target.files&&e.target.files[0];e.target.value='';if(f){b0('istiadha').textContent='Uploading…';saveIstiadha(f).catch(err=>toast("Couldn't upload: "+(err.code||'error')));}};
+  onTap(b.querySelector('.rec'),()=>{if(rec)stopRec();else startRec('istiadha');});}
+
+/* ---------- surah mode ---------- */
+let sName=null,sChecked=new Set(),sUrls={};
+prefs.sEach=prefs.sEach||3;if(prefs.sIst===undefined)prefs.sIst=true;prefs.sRounds=prefs.sRounds??1;prefs.sTrack=prefs.sTrack||'recite';
+function sVerses(){return (bySurah(verses).get(sName)||[]);}
+function freeSUrls(){loadedSrc=null;}
+function urlFor(v,k){return trackUrl(v.tracks[k]);}
+function pickTrack(v){const k=prefs.sTrack;if(v.tracks[k])return k;const o=k==='word'?'recite':'word';return v.tracks[o]?o:null;}
+function openSurah(name){stop();freeInfo();freeSUrls();sName=name;cur=null;
+  $('#sTitle').textContent=name;sSegs();
+  const hasIst=!!(istiadha&&istiadha.tracks.recite);$('#istTog').disabled=!hasIst;$('#istTog').checked=hasIst&&prefs.sIst;
+  $('#istNote').textContent=hasIst?'Plays once before the first ayah':(STUDENT?'Not recorded yet':'Record it first on the main page');sChecked=new Set(sVerses().filter(hasAny).map(v=>v.id));renderAyahs();$('#sStatus').textContent='';show('surahView');}
+function renderAyahs(){const box=$('#ayahs');box.innerHTML='';
+  for(const v of sVerses()){
+    const card=document.createElement('label');card.className='acard';card.dataset.id=v.id;
+    const cb=document.createElement('input');cb.type='checkbox';cb.id='ay-'+v.id;cb.checked=sChecked.has(v.id);cb.disabled=!hasAny(v);
+    cb.onchange=()=>{if(cb.checked)sChecked.add(v.id);else sChecked.delete(v.id);card.classList.toggle('off',!cb.checked);selCount();};
+    const tx=document.createElement('div');tx.className='atext';tx.lang='ar';
+    words(v.text).forEach(w=>{const sp=document.createElement('span');sp.textContent=w;tx.append(sp,document.createTextNode(' '));});
+    if(v.ayah!=null){const n=document.createElement('span');n.className='anum';n.textContent='﴿'+arNum(v.ayah)+'﴾';tx.append(n);}
+    const nt=document.createElement('div');nt.className='anote';const k=pickTrack(v);
+    nt.textContent=!k?'No recording yet':(k!==prefs.sTrack?'Only the '+TRACKS[k].toLowerCase()+' recording exists, so that one plays':'');
+    if(nt.textContent)tx.append(nt);
+    card.classList.toggle('off',!cb.checked);card.append(cb,tx);box.append(card);}
+  selCount();}
+function selCount(){const n=sChecked.size,all=sVerses().filter(hasAny).length;$('#selCount').textContent=n+' of '+all+' ayahs selected';$('#sPlay').disabled=!n||playing;}
+onTap($('#selAll'),()=>{sChecked=new Set(sVerses().filter(hasAny).map(v=>v.id));renderAyahs();});
+onTap($('#selNone'),()=>{sChecked.clear();renderAyahs();});
+onTap($('#sBack'),()=>{stop();freeSUrls();show('listView');});
+function sSegs(){
+  seg('#segSTrack',[['recite','Recitation'],['word','Word by word']],'sTrack',()=>{if(sName&&!playing)renderAyahs();});
+  seg('#segEach',[[1,'1×'],[2,'2×'],[3,'3×'],[5,'5×'],[10,'10×']],'sEach');
+  seg('#segRounds',[[1,'Once'],[2,'2×'],[3,'3×'],[0,'∞']],'sRounds');
+  seg('#segSGap',[[0,'None'],[1,'1 s'],[2,'2 s'],[4,'4 s']],'gap');
+  seg('#segSSpeed',[[0.6,'0.6×'],[0.8,'0.8×'],[1,'1×'],[1.25,'1.25×']],'speed');}
+sSegs();
+function waitTo(end,tok,onT){return new Promise(r=>{const f=()=>{if(tok!==run)return r();const t=audio.currentTime;onT&&onT(t);
+  if(t>=end-0.01||audio.ended||(audio.paused&&!audio.seeking))return r();setTimeout(f,20);};setTimeout(f,60);});}
+function sPaint(id,marks,t){document.querySelectorAll('#ayahs .acard').forEach(c=>{const on=c.dataset.id===id;c.classList.toggle('on',on);
+  c.querySelectorAll('.atext > span:not(.anum)').forEach((sp,i)=>sp.classList.toggle('now',on&&!!marks&&t!=null&&!!marks[i]&&t>=marks[i].s+0.03&&t<marks[i].e));});}
+$('#istTog').onchange=e=>{prefs.sIst=e.target.checked;savePrefs();};
+onTap($('#sStop'),()=>{stop();sPaint(null);$('#sStatus').textContent='';});
+onTap($('#sPlay'),async()=>{
+  const list=sVerses().filter(v=>sChecked.has(v.id)&&pickTrack(v));if(!list.length)return;
+  stop();const tok=++run;playing=true;$('#sStop').disabled=false;$('#sPlay').disabled=true;
+  try{if(navigator.wakeLock)wake=await navigator.wakeLock.request('screen')}catch(e){wake=null}
+  const rounds=prefs.sRounds===0?Infinity:prefs.sRounds,each=prefs.sEach;
+  if($('#istTog').checked&&istiadha&&istiadha.tracks.recite){
+    try{await useSrc(await urlFor(istiadha,'recite'));sPaint(null);$('#sStatus').textContent="A'udhu billahi";audio.playbackRate=prefs.speed;audio.currentTime=0;await audio.play();
+      await waitTo(Infinity,tok);if(tok!==run)return;audio.pause();if(prefs.gap)await sleep(prefs.gap*1000,tok);}catch(e){}}
+  for(let r=0;r<rounds&&tok===run;r++){
+    for(let a=0;a<list.length&&tok===run;a++){
+      const v=list[a],k=pickTrack(v),m=v.tracks[k].marks;
+      const start=m&&m.length?m[0].s:0,end=m&&m.length&&m[m.length-1].e?m[m.length-1].e:Infinity;
+      try{await useSrc(await urlFor(v,k))}catch(e){continue;}
+      const card=document.querySelector('#ayahs .acard[data-id="'+v.id+'"]');if(card)card.scrollIntoView({block:'center',behavior:'smooth'});
+      for(let n=0;n<each&&tok===run;n++){
+        $('#sStatus').textContent=(v.ayah!=null?'Ayah '+v.ayah:v.title)+' · '+(n+1)+' / '+each+(rounds>1?' · round '+(r+1)+(rounds===Infinity?'':' of '+rounds):'');
+        audio.playbackRate=prefs.speed;audio.currentTime=start;
+        try{await audio.play()}catch(e){$('#sStatus').textContent='Could not play the recording for '+v.title+'.';stop();return;}
+        await waitTo(end,tok,t=>sPaint(v.id,m,t));if(tok!==run)return;audio.pause();
+        if(prefs.gap&&!(n===each-1&&a===list.length-1&&r===rounds-1))await sleep(prefs.gap*1000,tok);
+      }
+    }
+  }
+  if(tok===run){stop();sPaint(null);$('#sStatus').textContent='Done';}
+});
+
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&playing&&!wake&&navigator.wakeLock)navigator.wakeLock.request('screen').then(w=>wake=w).catch(()=>{});});
+load();
+})();
+</script>
+</body>
+</html>
