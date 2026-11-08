@@ -144,6 +144,17 @@ audio.preview{width:100%}
 .acard .anote{font-family:var(--f-ui);font-size:.8rem;color:var(--muted);direction:ltr;text-align:left;line-height:1.4}
 .selbar{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .field-row{display:grid;grid-template-columns:1fr 110px;gap:10px}
+.sname{font-family:var(--f-display);font-weight:700;font-size:1.3rem;color:var(--leaf);line-height:1.3}
+.acard{padding:0;align-items:stretch;gap:0;cursor:default}
+.acheck{display:flex;align-items:flex-start;padding:16px 6px 12px 14px}
+.acheck input{margin-top:6px}
+.abody{flex:1;min-width:0;border:0;background:transparent;text-align:start;padding:10px 14px 10px 6px;display:flex;flex-direction:column;gap:2px;font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
+.abody .anote{display:flex;justify-content:space-between;gap:8px}
+details.panel>summary{cursor:pointer;list-style:none;min-height:44px;display:flex;flex-direction:column;justify-content:center}
+details.panel>summary::-webkit-details-marker{display:none}
+details.panel>summary::after{content:"▾";position:absolute;right:16px;color:var(--muted)}
+details.panel{position:relative}
+details.panel[open]>summary::after{content:"▴"}
 .student .admin-only{display:none!important}
 .acct{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
 .member{display:flex;align-items:center;gap:10px;background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:10px 12px}
@@ -169,29 +180,44 @@ audio.preview{width:100%}
   <main id="listView">
     <div class="banner" id="storeNote" hidden></div>
     <div class="list" id="list"></div>
-    <div class="recblock admin-only" data-track="istiadha">
-      <h3>A'udhu billahi (said before a surah)</h3>
-      <div class="istiadha-ar" lang="ar">أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ</div>
-      <div class="row">
-        <button class="btn primary rec" type="button"><span class="dot"></span><span class="recLabel">Record</span></button>
-        <label class="btn">Choose file<input class="hidden-input" type="file" accept="audio/*"></label>
+    <details class="panel admin-only" id="openersPanel">
+      <summary><b>Opening recitations</b><span class="note">A'udhu billahi and Bismillah, recorded once</span></summary>
+      <div class="group" style="gap:10px;margin-top:10px">
+        <div class="recblock" data-track="istiadha">
+          <h3>A'udhu billahi</h3>
+          <div class="istiadha-ar" lang="ar">أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ</div>
+          <div class="row">
+            <button class="btn primary rec" type="button"><span class="dot"></span><span class="recLabel">Record</span></button>
+            <label class="btn">Choose file<input class="hidden-input" type="file" accept="audio/*"></label>
+          </div>
+          <span class="note aname"></span>
+          <audio class="preview" controls hidden></audio>
+        </div>
+        <div class="recblock" data-track="basmala">
+          <h3>Bismillah</h3>
+          <div class="istiadha-ar" lang="ar">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+          <div class="row">
+            <button class="btn primary rec" type="button"><span class="dot"></span><span class="recLabel">Record</span></button>
+            <label class="btn">Choose file<input class="hidden-input" type="file" accept="audio/*"></label>
+          </div>
+          <span class="note aname"></span>
+          <audio class="preview" controls hidden></audio>
+        </div>
       </div>
-      <span class="note aname"></span>
-      <audio class="preview" controls hidden></audio>
-    </div>
-    <div class="group"><span class="label admin-only" id="shareLabel">Move offline recordings online</span>
+    </details>
+    <div class="group"><span class="label admin-only" id="shareLabel">Files</span>
       <div class="row">
-        <button class="btn admin-only" id="exportBtn" type="button" style="display:none">⇪ Export…</button>
+        <button class="btn admin-only" id="exportBtn" type="button">⇪ Export…</button>
         <label class="btn admin-only" for="importIn">⇪ Upload offline file<input class="hidden-input" type="file" id="importIn" accept=".json,application/json"></label>
       </div>
       <div class="panel admin-only" id="exportPanel" hidden>
         <span class="label">Surahs to export, one file each</span>
         <div id="exportList"></div>
-        <label class="checkrow" for="exCombined"><input type="checkbox" id="exCombined" checked><span>Also make one combined file with everything</span></label>
+        <label class="checkrow" for="exCombined"><input type="checkbox" id="exCombined" checked><span>Also make one combined file (tikrar-library.json)</span></label>
         <div class="row"><button class="btn primary" id="exGo" type="button">Export files</button><button class="btn" id="exCancel" type="button">Cancel</button></div>
-        <span class="note">Each file is named after its surah, like Al-Fatiha.json. A'udhu billahi goes into every file.</span>
+        <span class="note">Each file is named after its surah, like Al-Fatiha.json. The combined file is tikrar-library.json, ready for GitHub. A'udhu billahi and Bismillah go into every file.</span>
       </div>
-      <span class="note admin-only" id="shareNote">Upload a file exported from the offline Tikrar to put those verses online. Students just open this page and listen.</span>
+      <span class="note admin-only" id="shareNote">Export makes JSON files for the offline and student versions. Upload offline file puts recordings from the offline Tikrar online. Students just open this page and listen.</span>
     </div>
     <div class="dock listdock admin-only"><button class="btn primary" id="addBtn" type="button">+ Add verse</button></div>
   </main>
@@ -278,22 +304,42 @@ audio.preview{width:100%}
   <!-- SURAH -->
   <main id="surahView" hidden>
     <div class="ph">
-      <button class="btn ghost" id="sBack" type="button">← Verses</button>
-      <h2 id="sTitle"></h2>
+      <button class="btn ghost" id="sBack" type="button">← Surahs</button>
+      <h2 id="sTitle" class="sname"></h2>
+      <button class="btn ghost admin-only" id="sAdd" type="button">+ Ayah</button>
     </div>
-    <div class="group"><span class="label">Recording</span><div class="seg" id="segSTrack"></div></div>
-    <div class="group"><span class="label">Repeat each ayah before moving on</span><div class="seg" id="segEach"></div></div>
-    <div class="group"><span class="label">Then repeat the selected ayahs</span><div class="seg" id="segRounds"></div></div>
-    <div class="group"><span class="label">Pause between</span><div class="seg" id="segSGap"></div></div>
-    <div class="group"><span class="label">Speed</span><div class="seg" id="segSSpeed"></div></div>
-    <label class="toggle" for="istTog"><span><b>Start with A'udhu billahi</b><br><span class="note" id="istNote">Plays once before the first ayah</span></span><input type="checkbox" id="istTog"></label>
-    <div class="status" id="sStatus" aria-live="polite"></div>
     <div class="selbar"><span class="label" id="selCount"></span>
       <div style="display:flex;gap:6px"><button class="btn small" id="selAll" type="button">All</button><button class="btn small" id="selNone" type="button">None</button></div></div>
+    <p class="note" style="margin:0">Tick the ayahs to play together. Tap an ayah's text to practise it word by word.</p>
     <div class="ayahs" id="ayahs"></div>
+    <label class="toggle" for="istTog"><span><b>Start with A'udhu billahi</b><br><span class="note"></span></span><input type="checkbox" id="istTog"></label>
+    <label class="toggle" for="basTog"><span><b>Then Bismillah</b><br><span class="note"></span></span><input type="checkbox" id="basTog"></label>
+    <details class="panel" id="sSettings">
+      <summary><b>Repeat settings</b><span class="note" id="sSum"></span></summary>
+      <div class="group" style="gap:12px;margin-top:10px">
+        <div class="group"><span class="label">Recording</span><div class="seg" id="segSTrack"></div></div>
+        <div class="group"><span class="label">Repeat each ayah before moving on</span><div class="seg" id="segEach"></div></div>
+        <div class="group"><span class="label">Then repeat the selected ayahs</span><div class="seg" id="segRounds"></div></div>
+        <div class="group"><span class="label">Pause between</span><div class="seg" id="segSGap"></div></div>
+        <div class="group"><span class="label">Speed</span><div class="seg" id="segSSpeed"></div></div>
+      </div>
+    </details>
+    <div class="status" id="sStatus" aria-live="polite"></div>
     <div class="dock">
       <button class="btn primary" id="sPlay" type="button">▶ Play selected</button>
       <button class="btn" id="sStop" type="button" disabled>■ Stop</button>
+    </div>
+  </main>
+
+  <!-- PASSCODE GATE -->
+  <main id="gateView" hidden>
+    <div class="panel" style="margin-top:24px;gap:14px">
+      <h2 class="sname" style="margin:0">Welcome to Tikrar</h2>
+      <p class="note" id="gateMsg" style="margin:0">Enter the passcode your teacher gave you.</p>
+      <div class="field"><label class="label" for="gateCode">Passcode</label>
+        <input type="text" id="gateCode" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Passcode" style="font-size:1.2rem;letter-spacing:.08em"></div>
+      <button class="btn primary" id="gateGo" type="button">Open Tikrar</button>
+      <p class="note" style="margin:0">Teachers: tap <b>Teacher sign in</b> at the top.</p>
     </div>
   </main>
 
@@ -307,6 +353,13 @@ audio.preview{width:100%}
       <button class="btn primary" id="tAdd" type="button">Add sub-admin</button>
     </div>
     <div class="list" id="teamList"></div>
+    <div class="panel" style="margin-top:8px">
+      <span class="label">Student passcode</span>
+      <p class="note" style="margin:0" id="codeNow">Loading…</p>
+      <div class="field"><label class="label" for="newCode">New passcode</label><input type="text" id="newCode" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="At least 4 characters"></div>
+      <button class="btn primary" id="codeSave" type="button">Change passcode</button>
+      <p class="note" style="margin:0">Changing it locks out everyone who used the old one until they enter the new one. Sub-admins don't need it.</p>
+    </div>
   </main>
 
   <!-- EDIT -->
@@ -360,7 +413,7 @@ audio.preview{width:100%}
 <audio id="audio" preload="auto"></audio>
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
-import {getAuth,GoogleAuthProvider,signInWithPopup,signOut,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
+import {getAuth,GoogleAuthProvider,signInWithPopup,signInAnonymously,signOut,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
 import {getFirestore,collection,doc,getDoc,setDoc,deleteDoc,onSnapshot} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
 import {getStorage,ref,uploadBytes,getDownloadURL,deleteObject} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-storage.js";
 const app=initializeApp({
@@ -371,7 +424,7 @@ const app=initializeApp({
   messagingSenderId:"848034650258",
   appId:"1:848034650258:web:cd2060e7d39ef0da986e4b"
 });
-window.__fb={auth:getAuth(app),db:getFirestore(app),st:getStorage(app),GoogleAuthProvider,signInWithPopup,signOut,onAuthStateChanged,
+window.__fb={auth:getAuth(app),db:getFirestore(app),st:getStorage(app),GoogleAuthProvider,signInWithPopup,signInAnonymously,signOut,onAuthStateChanged,
   collection,doc,getDoc,setDoc,deleteDoc,onSnapshot,ref,uploadBytes,getDownloadURL,deleteObject};
 window.dispatchEvent(new Event('fb-ready'));
 </script>
@@ -379,6 +432,7 @@ window.dispatchEvent(new Event('fb-ready'));
 <script>
 (function(){
 let STUDENT=true;
+const CLOUD=true;
 const $=s=>document.querySelector(s);
 document.body.classList.add('student');
 const audio=$('#audio');
@@ -426,27 +480,44 @@ async function uploadTrack(vid,k,blob){
   await FB.uploadBytes(FB.ref(FB.st,path),a,{contentType:type,cacheControl:'public,max-age=31536000'});
   return{path,duration,env,envInts:envInts(env),marks:null,approx:true,by:{uid:me.uid,name:me.displayName||me.email,email:me.email},at:Date.now(),contentType:type};}
 function byText(t){if(!t||!t.by)return '';const d=t.at?new Date(t.at).toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'}):'';return 'Recorded by '+(t.by.name||t.by.email)+(d?' · '+d:'');}
-async function roleOf(u){if(!u)return 'guest';const e=(u.email||'').toLowerCase();
+async function roleOf(u){if(!u)return 'guest';if(u.isAnonymous)return 'member';const e=(u.email||'').toLowerCase();
   try{if((await FB.getDoc(FB.doc(FB.db,'admins',e))).exists())return 'admin';}catch(err){}
   try{const d=await FB.getDoc(FB.doc(FB.db,'team',e));return d.exists()?'recorder':'listener';}catch(err){return 'listener';}}
 function applyRole(){STUDENT=!(role==='admin'||role==='recorder');document.body.classList.toggle('student',STUDENT);
-  const chip=$('#roleChip');chip.hidden=role==='guest';chip.textContent={admin:'Admin',recorder:'Sub-admin',listener:'Listener'}[role]||'';
-  $('#authBtn').textContent=me?'Sign out':'Teacher sign in';$('#teamBtn').hidden=role!=='admin';
+  const chip=$('#roleChip');chip.hidden=role==='guest'||role==='member';chip.textContent={admin:'Admin',recorder:'Sub-admin',listener:'Listener'}[role]||'';
+  $('#authBtn').textContent=me&&!me.isAnonymous?'Sign out':'Teacher sign in';$('#teamBtn').hidden=role!=='admin';
   if(STUDENT&&!$('#editView').hidden)show('listView');if(STUDENT&&!$('#teamView').hidden)show('listView');
   if(STUDENT&&tab==='adjust')setTab('practice');
-  if(role==='listener')toast((me.email||'This account')+" isn't on the team, so it can only listen.");
-  renderList();renderIstiadha();if(cur)notes();}
+  renderList();renderOpeners();if(cur)notes();}
 let unsubTeam=null;
 async function cloudInit(){
   FB=await fbReady;if(!FB){storeWarn();return;}
-  FB.onAuthStateChanged(FB.auth,async u=>{me=u;role=await roleOf(u);applyRole();watchTeam();});
-  FB.onSnapshot(FB.collection(FB.db,'verses'),snap=>{const list=[];snap.forEach(d=>list.push(verseFromDoc(d.id,d.data())));
-      verses=list.sort((a,b)=>a.created-b.created);$('#storeNote').hidden=true;renderList();if(!$('#surahView').hidden&&!playing&&sName)renderAyahs();},
-    err=>storeWarn("Couldn't load the recordings ("+(err.code||'error')+")."));
-  FB.onSnapshot(FB.doc(FB.db,'meta','istiadha'),d=>{const t=d.exists()?trackFromDoc(d.data().track):null;istiadha=t?{id:'istiadha',text:IST_TEXT,tracks:{word:null,recite:t}}:null;renderIstiadha();},()=>{});
+  FB.onAuthStateChanged(FB.auth,async u=>{me=u;role=await roleOf(u);applyRole();watchTeam();if(!joining)startData();});
 }
+/* data is only readable by the team or by someone who entered the current passcode (checked by Firebase rules) */
+let unsubData=[],joining=false,dataOk=false;
+function stopData(){unsubData.forEach(f=>f());unsubData=[];dataOk=false;}
+function lockOut(msg){stopData();stop();verses=[];OP.istiadha=OP.basmala=null;$('#gateMsg').textContent=msg||'Enter the passcode your teacher gave you.';show('gateView');}
+function startData(){stopData();
+  if(!me)return lockOut();
+  unsubData.push(FB.onSnapshot(FB.collection(FB.db,'verses'),snap=>{const list=[];snap.forEach(d=>list.push(verseFromDoc(d.id,d.data())));
+      const first=!dataOk;dataOk=true;verses=list.sort((a,b)=>a.created-b.created);$('#storeNote').hidden=true;
+      if(first&&!$('#gateView').hidden)show('listView');renderList();if(!$('#surahView').hidden&&!playing&&sName)renderAyahs();},
+    err=>{if(err.code==='permission-denied')lockOut(role==='listener'||role==='member'?(lastCodeWorked()?'The passcode has changed. Ask your teacher for the new one.':'Enter the passcode your teacher gave you.'):undefined);else storeWarn("Couldn't load the recordings ("+(err.code||'error')+").");}));
+  for(const key of ['istiadha','basmala'])unsubData.push(FB.onSnapshot(FB.doc(FB.db,'meta',key),d=>{const t=d.exists()?trackFromDoc(d.data().track):null;OP[key]=t?{id:key,text:OPENERS[key].text,tracks:{word:null,recite:t}}:null;renderOpeners();if(!$('#surahView').hidden)openerToggles();},()=>{}));
+}
+function lastCodeWorked(){try{return localStorage.getItem('tikrar-joined')==='1'}catch(e){return false}}
+async function joinWithCode(){const code=$('#gateCode').value.trim();if(!code){toast('Type the passcode.');return;}
+  if(!FB)return storeWarn();joining=true;$('#gateGo').disabled=true;$('#gateGo').textContent='Checking…';
+  try{if(!FB.auth.currentUser)await FB.signInAnonymously(FB.auth);
+    const u=FB.auth.currentUser;await FB.setDoc(FB.doc(FB.db,'members',u.uid),{code,at:Date.now(),google:u.isAnonymous?null:(u.email||null)});
+    try{localStorage.setItem('tikrar-joined','1')}catch(e){}$('#gateCode').value='';me=u;role=await roleOf(u);applyRole();startData();toast('Welcome');}
+  catch(e){toast(e&&e.code==='permission-denied'?'That passcode is not right. Check it with your teacher.':'Could not check the passcode: '+(e&&e.code||'no internet'));}
+  finally{joining=false;$('#gateGo').disabled=false;$('#gateGo').textContent='Open Tikrar';}}
+onTap($('#gateGo'),joinWithCode);
+$('#gateCode').addEventListener('keydown',e=>{if(e.key==='Enter')joinWithCode();});
 onTap($('#authBtn'),async()=>{if(!FB)return storeWarn();
-  if(me){await FB.signOut(FB.auth);toast('Signed out');return;}
+  if(me&&!me.isAnonymous){await FB.signOut(FB.auth);toast('Signed out');return;}
   try{await FB.signInWithPopup(FB.auth,new FB.GoogleAuthProvider());}
   catch(e){if(e&&e.code!=='auth/popup-closed-by-user'&&e.code!=='auth/cancelled-popup-request')toast('Sign-in failed: '+(e.code||'error'));}});
 
@@ -460,7 +531,12 @@ function watchTeam(){if(unsubTeam){unsubTeam();unsubTeam=null;}if(role!=='admin'
       onTap(rm,async()=>{if(rm.dataset.sure!=='1'){rm.dataset.sure='1';rm.textContent='Tap again to remove';setTimeout(()=>{rm.dataset.sure='';rm.textContent='Remove';},3000);return;}
         try{await FB.deleteDoc(FB.doc(FB.db,'team',d.id));toast('Removed '+d.id);}catch(e){toast("Couldn't remove: "+(e.code||'error'));}});
       row.append(who,rm);box.append(row);});});}
-onTap($('#teamBtn'),()=>{if(role==='admin')show('teamView');});
+async function loadCode(){try{const d=await FB.getDoc(FB.doc(FB.db,'config','access'));$('#codeNow').textContent=d.exists()?'Current passcode: '+d.data().code:'No passcode set yet, so only you and your team can open Tikrar. Set one below.';}
+  catch(e){$('#codeNow').textContent="Couldn't read the passcode ("+(e.code||'error')+').';}}
+onTap($('#teamBtn'),()=>{if(role==='admin'){show('teamView');loadCode();}});
+onTap($('#codeSave'),async()=>{const c=$('#newCode').value.trim();if(c.length<4){toast('Use at least 4 characters.');return;}
+  try{await FB.setDoc(FB.doc(FB.db,'config','access'),{code:c,updated:Date.now()});$('#newCode').value='';loadCode();toast('Passcode changed');}
+  catch(e){toast("Couldn't change it: "+(e.code||'error'));}});
 onTap($('#teamBack'),()=>show('listView'));
 onTap($('#tAdd'),async()=>{const email=$('#tEmail').value.trim().toLowerCase(),name=$('#tName').value.trim();
   if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){toast('Type a full email address.');return;}
@@ -520,45 +596,42 @@ function probeDuration(u){return new Promise(res=>{const a=new Audio();a.preload
   a.addEventListener('loadedmetadata',done,{once:true});a.addEventListener('error',()=>res(0),{once:true});});}
 
 /* ---------- state ---------- */
-let istiadha=null,verses=[],cur=null,info={},tk='word',run=0,playing=false,sel=null,rangeA=null,marking=null,wake=null,tab='practice',wi=0,zoom=false,saveT=null,loadedSrc=null;
+let OP={istiadha:null,basmala:null},verses=[],cur=null,info={},tk='word',run=0,playing=false,sel=null,rangeA=null,marking=null,wake=null,tab='practice',wi=0,zoom=false,saveT=null,loadedSrc=null;
 function T(k){return cur&&cur.tracks[k||tk];}
 function I(k){return info[k||tk]||{};}
 function segs(k){const t=T(k);return t&&t.marks?t.marks:[];}
 
 function load(){renderList();cloudInit();}
-function show(view){for(const id of ['listView','playerView','surahView','teamView','editView'])$('#'+id).hidden=id!==view;window.scrollTo(0,0);}
+function show(view){for(const id of ['listView','playerView','surahView','teamView','editView','gateView'])$('#'+id).hidden=id!==view;window.scrollTo(0,0);}
 
 function bySurah(list){const groups=new Map();for(const v of list){const k=v.surah||'Verses';if(!groups.has(k))groups.set(k,[]);groups.get(k).push(v);}
   for(const g of groups.values())g.sort((a,b)=>(a.ayah??1e9)-(b.ayah??1e9)||a.created-b.created);return groups;}
 function renderList(){
-  const list=$('#list');list.innerHTML='';
-  const shown=verses.length?verses:[EXAMPLE];
-  const dl=$('#surahList');dl.innerHTML='';
-  for(const [name,group] of bySurah(shown)){
+  const list=$('#list');list.innerHTML='';const dl=$('#surahList');dl.innerHTML='';
+  const groups=bySurah(verses);
+  for(const [name,group] of groups){
     const o=document.createElement('option');o.value=name;dl.append(o);
-    const sec=document.createElement('section');sec.className='sgroup';
-    const head=document.createElement('div');head.className='shead';
-    const h=document.createElement('h3');h.textContent=name;
-    const pb=document.createElement('button');pb.type='button';pb.className='btn leaf';pb.textContent='▶ Surah';
-    pb.disabled=!group.some(hasAny)||!!group[0].example;onTap(pb,()=>openSurah(name));
-    head.append(h,pb);sec.append(head);
-    for(const v of group){
-      const b=document.createElement('button');b.type='button';b.className='item';
-      const meta=document.createElement('div');meta.className='meta';
-      const t=document.createElement('span');t.className='t';t.textContent=v.example?v.title:(v.ayah!=null?'Ayah '+v.ayah:v.title);
-      const p=document.createElement('span');p.className='p';p.lang='ar';p.textContent=v.text;meta.append(t,p);
-      const c=document.createElement('span');c.className='chip';
-      const tw=v.tracks.word,tr=v.tracks.recite;
-      if(v.example)c.textContent='Example';
-      else if(!tw&&!tr){c.textContent='No audio';c.classList.add('warn');}
-      else if((tw&&tw.approx)||(tr&&tr.approx)){c.textContent='Check words';c.classList.add('warn');}
-      else{c.textContent=tw&&tr?'2 recordings':tw?'Slow only':'Recitation only';c.classList.add('ok');}
-      if(STUDENT&&!v.example&&(tw||tr))c.hidden=true;
-      b.append(meta,c);onTap(b,()=>openPlayer(v));sec.append(b);}
-    list.append(sec);
+    const b=document.createElement('button');b.type='button';b.className='item';
+    const meta=document.createElement('div');meta.className='meta';
+    const t=document.createElement('span');t.className='sname';t.textContent=name;
+    const p=document.createElement('span');p.className='p';p.lang='ar';p.textContent=group[0].text;meta.append(t,p);
+    const right=document.createElement('div');right.style.cssText='display:flex;flex-direction:column;align-items:flex-end;gap:6px';
+    const c=document.createElement('span');c.className='chip ok';c.textContent=group.length+(group.length===1?' ayah':' ayahs');right.append(c);
+    if(!STUDENT){const bad=group.filter(v=>!hasAny(v)||(v.tracks.word&&v.tracks.word.approx)||(v.tracks.recite&&v.tracks.recite.approx)).length;
+      if(bad){const w=document.createElement('span');w.className='chip warn';w.textContent=bad+' to check';right.append(w);}}
+    b.append(meta,right);onTap(b,()=>openSurah(name));list.append(b);
   }
-  if(!verses.length){const e=document.createElement('div');e.className='empty';e.textContent=STUDENT?(FB?'No recordings have been added yet.':'Loading recordings…'):'This is an example. Tap "+ Add verse" to add your own recordings and text.';list.append(e);}
+  if(!verses.length){
+    const b=document.createElement('button');b.type='button';b.className='item';
+    const meta=document.createElement('div');meta.className='meta';
+    const t=document.createElement('span');t.className='t';t.textContent=EXAMPLE.title;
+    const p=document.createElement('span');p.className='p';p.lang='ar';p.textContent=EXAMPLE.text;meta.append(t,p);
+    const c=document.createElement('span');c.className='chip';c.textContent='Example';b.append(meta,c);onTap(b,()=>openPlayer(EXAMPLE));list.append(b);
+    const e=document.createElement('div');e.className='empty';
+    e.textContent=!STUDENT?'This is an example. Tap "+ Add verse" to add your first ayah.':(CLOUD?(typeof FB!=='undefined'&&FB?'No recordings have been added yet.':'Loading recordings…'):'Ask your teacher for the Tikrar file or library link, then tap Import or Library link.');
+    list.append(e);}
   $('#exportBtn').disabled=!verses.length;
+  if(!$('#surahView').hidden&&!playing&&sName)renderAyahs();
 }
 
 /* ---------- player ---------- */
@@ -749,8 +822,8 @@ for(const k of ['word','recite']){const b=block(k);
   onTap(b.querySelector('.rec'),()=>{if(rec)stopRec();else startRec(k);});}
 onTap($('#addBtn'),()=>openEdit(null));
 onTap($('#editBtn'),()=>{if(cur&&!cur.example)openEdit(cur);});
-onTap($('#backBtn'),()=>{stop();endMark(true);show('listView');});
-onTap($('#editBack'),()=>{stopRec();if(editing)openPlayer(editing);else show('listView');});
+onTap($('#backBtn'),()=>{stop();endMark(true);if(cur&&!cur.example&&bySurah(verses).has(cur.surah))openSurah(cur.surah);else show('listView');});
+onTap($('#editBack'),()=>{stopRec();if(editing)openPlayer(editing);else if(sName&&bySurah(verses).has(sName))openSurah(sName);else show('listView');});
 $('#form').addEventListener('submit',e=>{e.preventDefault();save();});
 let saving=false;
 onTap($('#saveBtn'),save);
@@ -776,7 +849,7 @@ async function save(){
   finally{saving=false;$('#saveBtn').disabled=false;$('#saveBtn').textContent='Save verse';}}
 onTap($('#delBtn'),()=>{$('#delConfirm').hidden=false;$('#delBtn').hidden=true;});
 onTap($('#delNo'),()=>{$('#delConfirm').hidden=true;$('#delBtn').hidden=false;});
-onTap($('#delYes'),async()=>{if(!editing)return;try{await delVerse(editing.id);}catch(e){toast("Couldn't delete: "+(e.code||'error'));return;}verses=verses.filter(x=>x.id!==editing.id);editing=null;renderList();show('listView');});
+onTap($('#delYes'),async()=>{if(!editing)return;try{await delVerse(editing.id);}catch(e){toast("Couldn't delete: "+(e.code||'error'));return;}verses=verses.filter(x=>x.id!==editing.id);const sn=editing.surah;editing=null;renderList();if(bySurah(verses).has(sn))openSurah(sn);else show('listView');});
 
 /* microphone */
 let rec=null,recK=null,recStream=null,recChunks=[],recT0=0,recTimer=null;
@@ -792,22 +865,24 @@ async function startRec(k){
   rec.ondataavailable=e=>{if(e.data&&e.data.size)recChunks.push(e.data)};
   rec.onstop=()=>{const blob=new Blob(recChunks,{type:((rec&&rec.mimeType)||t||'audio/webm').split(';')[0]});blob.recorded=true;
     recStream.getTracks().forEach(x=>x.stop());rec=null;clearInterval(recTimer);btn.classList.remove('on');lab.textContent='Record again';
-    if(blob.size){if(k==='istiadha'){b0('istiadha').textContent='Uploading…';saveIstiadha(blob).catch(err=>toast("Couldn't upload: "+(err.code||'error')));return;}pending[k]=blob;setPreview(k,blob,'New recording · '+fmt((Date.now()-recT0)/1000)+'. Tap Save verse to keep it.');}};
+    if(blob.size){if(OPENERS[k]){b0(k).textContent='Uploading…';saveOpener(k,blob).catch(err=>toast("Couldn't upload: "+(err&&err.code||'error')));return;}pending[k]=blob;setPreview(k,blob,'New recording · '+fmt((Date.now()-recT0)/1000)+'. Tap Save verse to keep it.');}};
   rec.start(250);recT0=Date.now();btn.classList.add('on');lab.textContent='Stop · 0:00';
-  name.textContent=k==='istiadha'?'Recording… say A\'udhu billahi, then tap Stop.':k==='word'?'Recording… say each word with a short pause, then tap Stop.':'Recording… recite normally, then tap Stop.';
+  name.textContent=OPENERS[k]?'Recording… say '+OPENERS[k].name+', then tap Stop.':k==='word'?'Recording… say each word with a short pause, then tap Stop.':'Recording… recite normally, then tap Stop.';
   recTimer=setInterval(()=>{lab.textContent='Stop · '+fmt((Date.now()-recT0)/1000)},250);}
 function stopRec(){if(rec&&rec.state!=='inactive')rec.stop();}
 
 /* ---------- export / import ---------- */
 function b64(blob){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(',')[1]||'');r.onerror=()=>rej(r.error);r.readAsDataURL(blob);});}
 function unb64(s,type){const bin=atob(s);const u=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);return new Blob([u],{type});}
-async function packTrack(t){return t?{marks:t.marks,approx:!!t.approx,audio:{type:t.audio.type||'audio/mp4',data:await b64(t.audio)}}:null;}
+async function packTrack(t){if(!t)return null;let blob=t.audio;
+  if(!blob){const r=await fetch(await trackUrl(t));if(!r.ok)throw new TypeError('download '+r.status);blob=await r.blob();}
+  return{marks:t.marks||null,approx:!!t.approx,audio:{type:t.contentType||blob.type||'audio/mp4',data:await b64(blob)}};}
 function unpackTrack(t){return t&&t.audio&&t.audio.data?{audio:unb64(t.audio.data,t.audio.type||'audio/mp4'),marks:t.marks||null,approx:!!t.approx}:null;}
 function safeName(n){return (n||'Verses').replace(/[\\/:*?"<>|]+/g,'-').trim()||'Verses';}
 async function packVerse(v){return{id:v.id,title:v.title,surah:v.surah,ayah:v.ayah,text:v.text,created:v.created,tracks:{word:await packTrack(v.tracks.word),recite:await packTrack(v.tracks.recite)}};}
 async function makeFile(name,list){const out=[];for(const v of list)out.push(await packVerse(v));
-  const ist=istiadha&&istiadha.tracks&&istiadha.tracks.recite?await packTrack(istiadha.tracks.recite):null;
-  return new File([JSON.stringify({app:'tikrar',version:4,exported:new Date().toISOString(),istiadha:ist,verses:out})],name,{type:'application/json'});}
+  const op={};for(const k of ['istiadha','basmala'])op[k]=OP[k]&&OP[k].tracks.recite?await packTrack(OP[k].tracks.recite):null;
+  return new File([JSON.stringify({app:'tikrar',version:4,exported:new Date().toISOString(),istiadha:op.istiadha,basmala:op.basmala,verses:out})],name,{type:'application/json'});}
 onTap($('#exportBtn'),()=>{if(!verses.length)return;const box=$('#exportList');box.innerHTML='';
   for(const [name,g] of bySurah(verses)){const id='ex-'+name.replace(/\W+/g,'_');const l=document.createElement('label');l.className='checkrow';l.htmlFor=id;
     const cb=document.createElement('input');cb.type='checkbox';cb.id=id;cb.checked=true;cb.dataset.surah=name;
@@ -820,18 +895,18 @@ onTap($('#exGo'),async()=>{
   $('#exGo').disabled=true;$('#exGo').textContent='Preparing…';
   try{const groups=bySurah(verses);const files=[];
     for(const n of names)files.push(await makeFile(safeName(n)+'.json',groups.get(n)));
-    if(combined)files.push(await makeFile('Tikrar-all-surahs.json',verses));
+    if(combined)files.push(await makeFile('tikrar-library.json',verses));
     if(navigator.canShare&&navigator.canShare({files})){try{await navigator.share({files,title:'Tikrar'});toast('Shared '+files.length+(files.length===1?' file':' files'));$('#exportPanel').hidden=true;return;}catch(e){if(e&&e.name==='AbortError')return;}}
     for(let i=0;i<files.length;i++){const a=document.createElement('a');a.href=URL.createObjectURL(files[i]);a.download=files[i].name;document.body.append(a);a.click();
       const h=a.href;setTimeout(()=>{URL.revokeObjectURL(h);a.remove();},6000);if(i<files.length-1)await new Promise(r=>setTimeout(r,700));}
     toast('Saved '+files.length+(files.length===1?' file':' files')+' to Downloads');$('#exportPanel').hidden=true;
-  }catch(e){toast('Export failed. Try again.');}
+  }catch(e){toast(CLOUD&&e instanceof TypeError?"Export couldn't download the recordings. It needs the one-time download setup.":'Export failed. Try again.');}
   finally{$('#exGo').disabled=false;$('#exGo').textContent='Export files';}});
 $('#importIn').onchange=async e=>{const f=e.target.files&&e.target.files[0];e.target.value='';if(!f)return;
   try{const data=JSON.parse(await f.text());if(!data||data.app!=='tikrar'||!Array.isArray(data.verses))throw 0;
     let added=0,updated=0;
     if(STUDENT||!me)throw 1;let done=0;const total=data.verses.length;
-    if(data.istiadha&&data.istiadha.audio){const t=unpackTrack(data.istiadha);if(t){toast("Uploading A'udhu billahi…");await saveIstiadha(t.audio,true);}}
+    for(const key of ['istiadha','basmala'])if(data[key]&&data[key].audio){const t=unpackTrack(data[key]);if(t){toast('Uploading '+OPENERS[key].name+'…');await saveOpener(key,t.audio,true);}}
     for(const x of data.verses){if(!x||!x.text)continue;
       let tracks;
       if(x.tracks)tracks={word:unpackTrack(x.tracks.word),recite:unpackTrack(x.tracks.recite)};
@@ -843,66 +918,86 @@ $('#importIn').onchange=async e=>{const f=e.target.files&&e.target.files[0];e.ta
     toast('Uploaded '+added+' new'+(updated?', updated '+updated:'')+(added+updated===1?' verse':' verses'));
   }catch(err){toast(err===1?'Sign in as a teacher first.':(err&&err.code)?'Upload stopped: '+err.code:"That file isn't a Tikrar export.");}};
 
-/* ---------- A'udhu billahi ---------- */
-const IST_TEXT='أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ';
-async function saveIstiadha(blob,quiet){if(STUDENT||!me)return;const old=istiadha&&istiadha.tracks.recite;
-  const t=await uploadTrack('istiadha','recite',blob);await FB.setDoc(FB.doc(FB.db,'meta','istiadha'),{track:trackToDoc(t),updated:Date.now()});
-  if(old&&old.path&&old.path!==t.path)FB.deleteObject(FB.ref(FB.st,old.path)).catch(()=>{});if(!quiet)toast("A'udhu billahi saved");}
-function renderIstiadha(){const has=!!(istiadha&&istiadha.tracks.recite);
-  setPreview('istiadha',null,'');b0('istiadha').textContent=has?'Recorded. '+byText(istiadha.tracks.recite):"Not recorded yet. Record it once and Surah mode can play it first.";
-  if(has){const t=istiadha.tracks.recite;trackUrl(t).then(u=>setPreview('istiadha',u,'Recorded. '+byText(t)+'. It can play before each surah.')).catch(()=>{});}
-  block('istiadha').querySelector('.recLabel').textContent=has?'Record again':'Record';}
-{const b=block('istiadha');b.querySelector('input[type=file]').onchange=e=>{const f=e.target.files&&e.target.files[0];e.target.value='';if(f){b0('istiadha').textContent='Uploading…';saveIstiadha(f).catch(err=>toast("Couldn't upload: "+(err.code||'error')));}};
-  onTap(b.querySelector('.rec'),()=>{if(rec)stopRec();else startRec('istiadha');});}
+/* ---------- opening recitations ---------- */
+const OPENERS={istiadha:{name:"A'udhu billahi",text:'أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ'},basmala:{name:'Bismillah',text:'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ'}};
+async function saveOpener(key,blob,quiet){
+  if(CLOUD){if(STUDENT||!me)return;const old=OP[key]&&OP[key].tracks.recite;const t=await uploadTrack(key,'recite',blob);
+    await FB.setDoc(FB.doc(FB.db,'meta',key),{track:trackToDoc(t),updated:Date.now()});
+    if(old&&old.path&&old.path!==t.path)FB.deleteObject(FB.ref(FB.st,old.path)).catch(()=>{});}
+  else{let a=blob;if(blob.recorded){const buf=await decode(blob);if(buf)a=toWav(buf);}
+    OP[key]={id:key,special:true,text:OPENERS[key].text,created:0,tracks:{word:null,recite:{audio:a,marks:null}}};await putVerse(OP[key]);renderOpener(key);}
+  if(!quiet)toast(OPENERS[key].name+' saved');}
+function renderOpener(key){const o=OP[key],has=!!(o&&o.tracks.recite),b=block(key);if(!b)return;
+  b.querySelector('.recLabel').textContent=has?'Record again':'Record';
+  const msg=has?'Recorded'+(CLOUD?'. '+byText(o.tracks.recite):'')+'. It can play before a surah.':'Not recorded yet. Record it once and Surah mode can play it first.';
+  if(!has){setPreview(key,null,'');b0(key).textContent=msg;return;}
+  if(CLOUD){setPreview(key,null,'');b0(key).textContent=msg;trackUrl(o.tracks.recite).then(u=>setPreview(key,u,msg)).catch(()=>{});}
+  else setPreview(key,o.tracks.recite.audio,msg);}
+function renderOpeners(){renderOpener('istiadha');renderOpener('basmala');}
+for(const key of ['istiadha','basmala']){const b=block(key);
+  b.querySelector('input[type=file]').onchange=e=>{const f=e.target.files&&e.target.files[0];e.target.value='';
+    if(f){b0(key).textContent='Saving…';saveOpener(key,f).catch(err=>toast("Couldn't save: "+(err&&err.code||'error')));}};
+  onTap(b.querySelector('.rec'),()=>{if(rec)stopRec();else startRec(key);});}
 
 /* ---------- surah mode ---------- */
-let sName=null,sChecked=new Set(),sUrls={};
-prefs.sEach=prefs.sEach||3;if(prefs.sIst===undefined)prefs.sIst=true;prefs.sRounds=prefs.sRounds??1;prefs.sTrack=prefs.sTrack||'recite';
-function sVerses(){return (bySurah(verses).get(sName)||[]);}
-function freeSUrls(){loadedSrc=null;}
-function urlFor(v,k){return trackUrl(v.tracks[k]);}
+let sName=null,sChecked=new Set(),sKnown=new Set(),sUrls={};
+prefs.sEach=prefs.sEach||3;if(prefs.sRounds===undefined)prefs.sRounds=1;prefs.sTrack=prefs.sTrack||'recite';
+if(prefs.sIst===undefined)prefs.sIst=true;if(prefs.sBas===undefined)prefs.sBas=true;
+function sVerses(){return bySurah(verses).get(sName)||[];}
+function freeSUrls(){if(!CLOUD)for(const k in sUrls)URL.revokeObjectURL(sUrls[k]);sUrls={};loadedSrc=null;}
+async function urlFor(v,k){if(CLOUD)return trackUrl(v.tracks[k]);const key=v.id+'|'+k;if(!sUrls[key])sUrls[key]=URL.createObjectURL(v.tracks[k].audio);return sUrls[key];}
 function pickTrack(v){const k=prefs.sTrack;if(v.tracks[k])return k;const o=k==='word'?'recite':'word';return v.tracks[o]?o:null;}
-function openSurah(name){stop();freeInfo();freeSUrls();sName=name;cur=null;
-  $('#sTitle').textContent=name;sSegs();
-  const hasIst=!!(istiadha&&istiadha.tracks.recite);$('#istTog').disabled=!hasIst;$('#istTog').checked=hasIst&&prefs.sIst;
-  $('#istNote').textContent=hasIst?'Plays once before the first ayah':(STUDENT?'Not recorded yet':'Record it first on the main page');sChecked=new Set(sVerses().filter(hasAny).map(v=>v.id));renderAyahs();$('#sStatus').textContent='';show('surahView');}
-function renderAyahs(){const box=$('#ayahs');box.innerHTML='';
-  for(const v of sVerses()){
-    const card=document.createElement('label');card.className='acard';card.dataset.id=v.id;
-    const cb=document.createElement('input');cb.type='checkbox';cb.id='ay-'+v.id;cb.checked=sChecked.has(v.id);cb.disabled=!hasAny(v);
-    cb.onchange=()=>{if(cb.checked)sChecked.add(v.id);else sChecked.delete(v.id);card.classList.toggle('off',!cb.checked);selCount();};
+function openSurah(name){stop();freeInfo();if(sName!==name){freeSUrls();sChecked=new Set();sKnown=new Set();}sName=name;cur=null;
+  $('#sTitle').textContent=name;sSegs();openerToggles();renderAyahs();$('#sStatus').textContent='';show('surahView');}
+function openerToggles(){for(const [key,id,pk] of [['istiadha','#istTog','sIst'],['basmala','#basTog','sBas']]){
+  const has=!!(OP[key]&&OP[key].tracks.recite),t=$(id);t.disabled=!has;t.checked=has&&prefs[pk];
+  t.closest('.toggle').querySelector('.note').textContent=has?'Plays before the first ayah':(STUDENT?'Not recorded yet':'Record it first on the main page, under Opening recitations');}}
+$('#istTog').onchange=e=>{prefs.sIst=e.target.checked;savePrefs();};
+$('#basTog').onchange=e=>{prefs.sBas=e.target.checked;savePrefs();};
+function renderAyahs(){const box=$('#ayahs');box.innerHTML='';const list=sVerses();
+  for(const v of list)if(hasAny(v)&&!sKnown.has(v.id)){sKnown.add(v.id);sChecked.add(v.id);}
+  for(const v of list){
+    const card=document.createElement('div');card.className='acard';card.dataset.id=v.id;
+    const lab=document.createElement('label');lab.className='acheck';
+    const cb=document.createElement('input');cb.type='checkbox';cb.id='ay-'+v.id;cb.checked=sChecked.has(v.id);cb.disabled=!hasAny(v);cb.setAttribute('aria-label','Include ayah '+(v.ayah??''));
+    cb.onchange=()=>{if(cb.checked)sChecked.add(v.id);else sChecked.delete(v.id);card.classList.toggle('off',!cb.checked);selCount();};lab.append(cb);
+    const body=document.createElement('button');body.type='button';body.className='abody';
     const tx=document.createElement('div');tx.className='atext';tx.lang='ar';
     words(v.text).forEach(w=>{const sp=document.createElement('span');sp.textContent=w;tx.append(sp,document.createTextNode(' '));});
     if(v.ayah!=null){const n=document.createElement('span');n.className='anum';n.textContent='﴿'+arNum(v.ayah)+'﴾';tx.append(n);}
     const nt=document.createElement('div');nt.className='anote';const k=pickTrack(v);
-    nt.textContent=!k?'No recording yet':(k!==prefs.sTrack?'Only the '+TRACKS[k].toLowerCase()+' recording exists, so that one plays':'');
-    if(nt.textContent)tx.append(nt);
-    card.classList.toggle('off',!cb.checked);card.append(cb,tx);box.append(card);}
+    const l=document.createElement('span');l.textContent=(v.ayah!=null?'Ayah '+v.ayah:v.title)+(!k?' · no recording yet':(k!==prefs.sTrack?' · only '+TRACKS[k].toLowerCase()+' recorded':''));
+    const r=document.createElement('span');r.textContent='Practise ›';nt.append(l,r);
+    body.append(tx,nt);onTap(body,()=>openPlayer(v));
+    card.classList.toggle('off',!cb.checked);card.append(lab,body);box.append(card);}
+  if(!list.length){const e=document.createElement('div');e.className='empty';e.textContent='No ayahs in this surah yet.';box.append(e);}
   selCount();}
 function selCount(){const n=sChecked.size,all=sVerses().filter(hasAny).length;$('#selCount').textContent=n+' of '+all+' ayahs selected';$('#sPlay').disabled=!n||playing;}
 onTap($('#selAll'),()=>{sChecked=new Set(sVerses().filter(hasAny).map(v=>v.id));renderAyahs();});
 onTap($('#selNone'),()=>{sChecked.clear();renderAyahs();});
-onTap($('#sBack'),()=>{stop();freeSUrls();show('listView');});
+onTap($('#sBack'),()=>{stop();show('listView');});
+onTap($('#sAdd'),()=>{lastSurah=sName;openEdit(null);});
+function sSummary(){$('#sSum').textContent=(prefs.sTrack==='word'?'Word by word':'Recitation')+' · each ayah '+prefs.sEach+'× · '+({1:'once through',2:'2 rounds',3:'3 rounds',0:'non-stop'}[prefs.sRounds])+' · '+(prefs.gap?prefs.gap+' s pause':'no pause')+' · '+prefs.speed+'× speed';}
 function sSegs(){
-  seg('#segSTrack',[['recite','Recitation'],['word','Word by word']],'sTrack',()=>{if(sName&&!playing)renderAyahs();});
-  seg('#segEach',[[1,'1×'],[2,'2×'],[3,'3×'],[5,'5×'],[10,'10×']],'sEach');
-  seg('#segRounds',[[1,'Once'],[2,'2×'],[3,'3×'],[0,'∞']],'sRounds');
-  seg('#segSGap',[[0,'None'],[1,'1 s'],[2,'2 s'],[4,'4 s']],'gap');
-  seg('#segSSpeed',[[0.6,'0.6×'],[0.8,'0.8×'],[1,'1×'],[1.25,'1.25×']],'speed');}
+  seg('#segSTrack',[['recite','Recitation'],['word','Word by word']],'sTrack',()=>{sSummary();if(sName&&!playing)renderAyahs();});
+  seg('#segEach',[[1,'1×'],[2,'2×'],[3,'3×'],[5,'5×'],[10,'10×']],'sEach',sSummary);
+  seg('#segRounds',[[1,'Once'],[2,'2×'],[3,'3×'],[0,'∞']],'sRounds',sSummary);
+  seg('#segSGap',[[0,'None'],[1,'1 s'],[2,'2 s'],[4,'4 s']],'gap',sSummary);
+  seg('#segSSpeed',[[0.6,'0.6×'],[0.8,'0.8×'],[1,'1×'],[1.25,'1.25×']],'speed',sSummary);sSummary();}
 sSegs();
 function waitTo(end,tok,onT){return new Promise(r=>{const f=()=>{if(tok!==run)return r();const t=audio.currentTime;onT&&onT(t);
   if(t>=end-0.01||audio.ended||(audio.paused&&!audio.seeking))return r();setTimeout(f,20);};setTimeout(f,60);});}
 function sPaint(id,marks,t){document.querySelectorAll('#ayahs .acard').forEach(c=>{const on=c.dataset.id===id;c.classList.toggle('on',on);
   c.querySelectorAll('.atext > span:not(.anum)').forEach((sp,i)=>sp.classList.toggle('now',on&&!!marks&&t!=null&&!!marks[i]&&t>=marks[i].s+0.03&&t<marks[i].e));});}
-$('#istTog').onchange=e=>{prefs.sIst=e.target.checked;savePrefs();};
 onTap($('#sStop'),()=>{stop();sPaint(null);$('#sStatus').textContent='';});
 onTap($('#sPlay'),async()=>{
   const list=sVerses().filter(v=>sChecked.has(v.id)&&pickTrack(v));if(!list.length)return;
   stop();const tok=++run;playing=true;$('#sStop').disabled=false;$('#sPlay').disabled=true;
   try{if(navigator.wakeLock)wake=await navigator.wakeLock.request('screen')}catch(e){wake=null}
   const rounds=prefs.sRounds===0?Infinity:prefs.sRounds,each=prefs.sEach;
-  if($('#istTog').checked&&istiadha&&istiadha.tracks.recite){
-    try{await useSrc(await urlFor(istiadha,'recite'));sPaint(null);$('#sStatus').textContent="A'udhu billahi";audio.playbackRate=prefs.speed;audio.currentTime=0;await audio.play();
+  for(const [key,on] of [['istiadha',$('#istTog').checked],['basmala',$('#basTog').checked]]){
+    if(!on||!OP[key]||!OP[key].tracks.recite)continue;if(tok!==run)return;
+    try{await useSrc(await urlFor(OP[key],'recite'));sPaint(null);$('#sStatus').textContent=OPENERS[key].name;audio.playbackRate=prefs.speed;audio.currentTime=0;await audio.play();
       await waitTo(Infinity,tok);if(tok!==run)return;audio.pause();if(prefs.gap)await sleep(prefs.gap*1000,tok);}catch(e){}}
   for(let r=0;r<rounds&&tok===run;r++){
     for(let a=0;a<list.length&&tok===run;a++){
