@@ -165,6 +165,62 @@ details.panel[open]>summary::after{content:"▴"}
 .checkrow{display:flex;align-items:center;gap:12px;min-height:48px;font-weight:600}
 .checkrow input{width:24px;height:24px;accent-color:var(--leaf);flex:none}
 .istiadha-ar{font-family:var(--f-quran);font-size:1.5rem;direction:rtl;text-align:right;line-height:2}
+.recorder .admin-strict,.student .admin-strict{display:none!important}
+.field-row{grid-template-columns:1fr 78px 78px}
+/* juz */
+.jnum{width:54px;height:54px;border-radius:16px;background:var(--leaf);color:var(--paper);display:grid;place-items:center;font-family:var(--f-display);font-weight:700;font-size:1.45rem;flex:none;font-variant-numeric:tabular-nums}
+.item .sub{font-size:.85rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chips{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.jar{font-family:var(--f-quran);font-size:1.35rem;color:var(--muted);line-height:1.6}
+.status .sub{display:block;font-weight:500;font-size:.82rem;color:var(--muted)}
+.status.stack{flex-direction:column;gap:0}
+/* panel */
+.ptabs button{font-size:.86rem;min-height:46px;padding:0 4px}
+.filters{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.filters select{min-height:48px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);padding:0 .6rem;font:inherit;width:100%;min-width:0}
+.rrow{background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:8px}
+.rrow.wait{border-color:color-mix(in srgb,var(--accent) 55%,var(--line))}
+.rtop{display:flex;align-items:center;gap:10px}
+.rplay{width:46px;height:46px;border-radius:50%;border:0;background:var(--leaf);color:var(--paper);font-size:1rem;flex:none;touch-action:manipulation}
+.rmeta{flex:1;min-width:0;overflow-wrap:anywhere}
+.rmeta b{display:block}
+.ractions{display:flex;gap:8px;flex-wrap:wrap}
+.ractions .btn{flex:1;min-height:44px;font-size:.9rem;min-width:0;padding-inline:.4rem}
+.gaphead{font-family:var(--f-display);font-weight:700;color:var(--leaf);font-size:1.1rem;margin-top:6px}
+.gaprow{display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%;text-align:start;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;min-height:52px;font:inherit;color:inherit}
+.sjrow{display:flex;align-items:center;gap:10px;min-height:48px}
+.sjrow span{flex:1;min-width:0;font-weight:600}
+.sjrow input{width:76px;min-height:46px;border-radius:12px;border:1.5px solid var(--line);background:var(--paper);text-align:center;font:inherit;color:inherit}
+/* kids */
+.kid-hello{display:flex;flex-direction:column;align-items:center;gap:0;padding:6px 0 2px}
+.kid-salam{font-family:var(--f-quran);font-size:2rem;color:var(--leaf);line-height:1.8}
+.kidlist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.kjuz{grid-column:1/-1;display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-top:6px;font-family:var(--f-display);font-weight:700;color:var(--leaf);font-size:1.15rem}
+.kjuz .ar{font-family:var(--f-quran);font-weight:400;font-size:1.3rem}
+.kcard{border:0;border-radius:24px;padding:16px 10px 14px;background:var(--seg-a);color:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;min-height:138px;font:inherit;touch-action:manipulation}
+.kcard.alt{background:var(--seg-b)}
+.kcard:active{filter:brightness(.95)}
+.kcard .ar{font-family:var(--f-quran);font-size:2.2rem;line-height:1.7}
+.kcard .en{font-weight:700;font-size:1rem}
+.kcard .n{font-size:.8rem;color:var(--muted)}
+.kid-head{display:flex;align-items:center;gap:6px}
+.kid-titles{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;padding-right:72px}
+.kid-title{font-family:var(--f-quran);font-weight:400;font-size:2.1rem;line-height:1.6;margin:0;color:var(--leaf)}
+.kid-count{text-align:center;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums}
+.kid-ayah{background:var(--surface);border:1.5px solid var(--line);border-radius:26px;padding:22px 12px;direction:rtl;text-align:center;font-family:var(--f-quran);font-size:clamp(2.3rem,10.5vw,3.3rem);line-height:2.35}
+.kid-ayah .w{padding:0 .18em}
+.kid-hint{text-align:center;margin:0}
+.kid-nav{display:flex;gap:10px}
+.kid-nav .btn{flex:1;min-height:58px;font-size:1.05rem;border-radius:18px}
+.kid-dock .btn{min-height:76px;font-size:1.25rem;border-radius:22px}
+.kid-rec{display:flex;flex-direction:column;align-items:center;gap:6px}
+.kid-rec .seg{width:100%}
+.kid-who{text-align:center;margin:0;font-weight:600}
+.lblrow{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.reclist{display:flex;flex-direction:column;gap:8px}
+.recitem{display:flex;align-items:center;gap:10px;background:var(--paper);border:1.5px solid var(--line);border-radius:12px;padding:10px 12px}
+.recitem .who{flex:1;min-width:0}
+.recitem .who b{display:block}
 </style>
 </head>
 <body>
@@ -172,7 +228,7 @@ details.panel[open]>summary::after{content:"▴"}
   <header class="top">
     <div class="brand"><span class="ar" lang="ar">تكرار</span><span class="en">Tikrar</span></div>
     <div class="acct"><span class="role" id="roleChip" hidden></span>
-      <button class="btn small" id="teamBtn" type="button" hidden>Team</button>
+      <button class="btn small" id="teamBtn" type="button" hidden>Panel</button>
       <button class="btn small" id="authBtn" type="button">Teacher sign in</button></div>
   </header>
 
@@ -180,7 +236,7 @@ details.panel[open]>summary::after{content:"▴"}
   <main id="listView">
     <div class="banner" id="storeNote" hidden></div>
     <div class="list" id="list"></div>
-    <details class="panel admin-only" id="openersPanel">
+    <details class="panel admin-only admin-strict" id="openersPanel">
       <summary><b>Opening recitations</b><span class="note">A'udhu billahi and Bismillah, recorded once</span></summary>
       <div class="group" style="gap:10px;margin-top:10px">
         <div class="recblock" data-track="istiadha">
@@ -205,10 +261,10 @@ details.panel[open]>summary::after{content:"▴"}
         </div>
       </div>
     </details>
-    <div class="group"><span class="label admin-only" id="shareLabel">Files</span>
+    <div class="group"><span class="label admin-only admin-strict" id="shareLabel">Files</span>
       <div class="row">
-        <button class="btn admin-only" id="exportBtn" type="button">⇪ Export…</button>
-        <label class="btn admin-only" for="importIn">⇪ Upload offline file<input class="hidden-input" type="file" id="importIn" accept=".json,application/json"></label>
+        <button class="btn admin-only admin-strict" id="exportBtn" type="button">⇪ Export…</button>
+        <label class="btn admin-only admin-strict" for="importIn">⇪ Upload offline file<input class="hidden-input" type="file" id="importIn" accept=".json,application/json"></label>
       </div>
       <div class="panel admin-only" id="exportPanel" hidden>
         <span class="label">Surahs to export, one file each</span>
@@ -217,7 +273,7 @@ details.panel[open]>summary::after{content:"▴"}
         <div class="row"><button class="btn primary" id="exGo" type="button">Export files</button><button class="btn" id="exCancel" type="button">Cancel</button></div>
         <span class="note">Each file is named after its surah, like Al-Fatiha.json. The combined file is tikrar-library.json, ready for GitHub. A'udhu billahi and Bismillah go into every file.</span>
       </div>
-      <span class="note admin-only" id="shareNote">Export makes JSON files for the offline and student versions. Upload offline file puts recordings from the offline Tikrar online. Students just open this page and listen.</span>
+      <span class="note admin-only admin-strict" id="shareNote">Export makes JSON files for the offline and student versions. Upload offline file puts recordings from the offline Tikrar online. Students just open this page and listen.</span>
     </div>
     <div class="dock listdock admin-only"><button class="btn primary" id="addBtn" type="button">+ Add verse</button></div>
   </main>
@@ -304,7 +360,7 @@ details.panel[open]>summary::after{content:"▴"}
   <!-- SURAH -->
   <main id="surahView" hidden>
     <div class="ph">
-      <button class="btn ghost" id="sBack" type="button">← Surahs</button>
+      <button class="btn ghost" id="sBack" type="button">← Juz</button>
       <h2 id="sTitle" class="sname"></h2>
       <button class="btn ghost admin-only" id="sAdd" type="button">+ Ayah</button>
     </div>
@@ -343,22 +399,134 @@ details.panel[open]>summary::after{content:"▴"}
     </div>
   </main>
 
-  <!-- TEAM -->
-  <main id="teamView" hidden>
-    <div class="ph"><button class="btn ghost" id="teamBack" type="button">← Verses</button><h2>Team</h2></div>
-    <p class="note">Sub-admins can record, edit and adjust words. They sign in with the Google account you add here. Everyone else can only listen.</p>
-    <div class="panel">
-      <div class="field"><label class="label" for="tEmail">Google email</label><input type="text" id="tEmail" inputmode="email" autocomplete="off" placeholder="name@gmail.com"></div>
-      <div class="field"><label class="label" for="tName">Name</label><input type="text" id="tName" autocomplete="off" placeholder="e.g. Ustadh Ahmed"></div>
-      <button class="btn primary" id="tAdd" type="button">Add sub-admin</button>
+  <!-- JUZ -->
+  <main id="juzView" hidden>
+    <div class="ph">
+      <button class="btn ghost" id="jBack" type="button">← All juz</button>
+      <h2 id="jTitle" class="sname"></h2>
     </div>
-    <div class="list" id="teamList"></div>
-    <div class="panel" style="margin-top:8px">
-      <span class="label">Student passcode</span>
-      <p class="note" style="margin:0" id="codeNow">Loading…</p>
-      <div class="field"><label class="label" for="newCode">New passcode</label><input type="text" id="newCode" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="At least 4 characters"></div>
-      <button class="btn primary" id="codeSave" type="button">Change passcode</button>
-      <p class="note" style="margin:0">Changing it locks out everyone who used the old one until they enter the new one. Sub-admins don't need it.</p>
+    <div class="selbar"><span class="label" id="jSelCount"></span>
+      <div style="display:flex;gap:6px"><button class="btn small" id="jAll" type="button">All</button><button class="btn small" id="jNone" type="button">None</button></div></div>
+    <p class="note" style="margin:0">Tick the surahs to play back to back. Tap a surah's name to open its ayahs.</p>
+    <div class="ayahs" id="jSurahs"></div>
+    <label class="toggle" for="jIst"><span><b>Start with A'udhu billahi</b><br><span class="note"></span></span><input type="checkbox" id="jIst"></label>
+    <label class="toggle" for="jBas"><span><b>Bismillah before each surah</b><br><span class="note"></span></span><input type="checkbox" id="jBas"></label>
+    <details class="panel" id="jSettings">
+      <summary><b>Repeat settings</b><span class="note" id="jSum"></span></summary>
+      <div class="group" style="gap:12px;margin-top:10px">
+        <div class="group"><span class="label">Recording</span><div class="seg" id="segJTrack"></div></div>
+        <div class="group"><span class="label">Repeat each ayah before moving on</span><div class="seg" id="segJEach"></div></div>
+        <div class="group"><span class="label">Repeat each surah</span><div class="seg" id="segJSurah"></div></div>
+        <div class="group"><span class="label">Then repeat the whole selection</span><div class="seg" id="segJRounds"></div></div>
+        <div class="group"><span class="label">Pause between</span><div class="seg" id="segJGap"></div></div>
+        <div class="group"><span class="label">Speed</span><div class="seg" id="segJSpeed"></div></div>
+      </div>
+    </details>
+    <div class="status stack" id="jStatus" aria-live="polite"></div>
+    <div class="dock">
+      <button class="btn primary" id="jPlay" type="button">▶ Play selected</button>
+      <button class="btn" id="jStop" type="button" disabled>■ Stop</button>
+    </div>
+  </main>
+
+  <!-- CONTROL PANEL (admin) -->
+  <main id="panelView" hidden>
+    <div class="ph"><button class="btn ghost" id="panelBack" type="button">← All juz</button><h2>Control panel</h2></div>
+    <div class="tabs ptabs" role="tablist">
+      <button type="button" role="tab" id="ptRec" aria-selected="true">Recordings</button>
+      <button type="button" role="tab" id="ptGaps" aria-selected="false">Gaps</button>
+      <button type="button" role="tab" id="ptTeam" aria-selected="false">Team</button>
+      <button type="button" role="tab" id="ptSet" aria-selected="false">Settings</button>
+    </div>
+    <section id="pp-rec" class="group" style="gap:10px">
+      <div class="filters">
+        <select id="fJ" aria-label="Juz"></select>
+        <select id="fS" aria-label="Surah"></select>
+        <select id="fB" aria-label="Recorded by"></select>
+        <select id="fSt" aria-label="Status"></select>
+      </div>
+      <div class="selbar"><span class="label" id="recCount"></span><button class="btn small" id="approveAll" type="button" hidden>Approve all waiting</button></div>
+      <div class="list" id="recList"></div>
+    </section>
+    <section id="pp-gaps" class="group" style="gap:8px" hidden>
+      <p class="note" id="gapSum" style="margin:0"></p>
+      <div class="list" id="gapList"></div>
+    </section>
+    <section id="pp-team" class="group" style="gap:10px" hidden>
+      <p class="note" style="margin:0">Sub-admins sign in with the Google account you add here. They can record and edit, but their new recordings wait for your approval before students hear them.</p>
+      <div class="panel">
+        <div class="field"><label class="label" for="tEmail">Google email</label><input type="text" id="tEmail" inputmode="email" autocomplete="off" placeholder="name@gmail.com"></div>
+        <div class="field"><label class="label" for="tName">Name</label><input type="text" id="tName" autocomplete="off" placeholder="e.g. Ustadh Ahmed"></div>
+        <button class="btn primary" id="tAdd" type="button">Add sub-admin</button>
+      </div>
+      <div class="list" id="teamList"></div>
+    </section>
+    <section id="pp-set" class="group" style="gap:12px" hidden>
+      <div class="panel">
+        <span class="label">Student passcode</span>
+        <p class="note" style="margin:0" id="codeNow">Loading…</p>
+        <div class="field"><label class="label" for="newCode">New passcode</label><input type="text" id="newCode" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="At least 4 characters"></div>
+        <button class="btn primary" id="codeSave" type="button">Change passcode</button>
+        <p class="note" style="margin:0">Changing it locks out everyone who used the old one until they enter the new one. Sub-admins don't need it.</p>
+      </div>
+      <div class="panel">
+        <span class="label">Repeats on the student screen</span>
+        <p class="note" style="margin:0">How many times a word or ayah plays when a student taps it.</p>
+        <div class="seg" id="segKid"></div>
+      </div>
+      <div class="panel">
+        <span class="label">Reciters</span>
+        <p class="note" style="margin:0">Students hear your recordings first. Where you haven't recorded an ayah yet, Al-Husary plays instead, and students can choose Al-Husary for everything.</p>
+        <div class="field"><label class="label" for="ownName">Your name as a reciter</label><input type="text" id="ownName" autocomplete="off" placeholder="e.g. Omar"></div>
+        <button class="btn" id="ownNameSave" type="button">Save name</button>
+        <div class="reclist" id="recList2"></div>
+      </div>
+      <div class="panel">
+        <span class="label">Add surahs automatically</span>
+        <p class="note" style="margin:0">Adds the Arabic text of every ayah you don't have yet. Al-Husary's recitation plays for them until you record your own. Ayahs you already have are not touched.</p>
+        <button class="btn primary" id="addAmma" type="button">Add all of Juz 'Amma (An-Naba to An-Nas)</button>
+        <div class="field"><label class="label" for="addOne">Or add one surah (name or number)</label><input type="text" id="addOne" list="surahList" autocomplete="off" placeholder="e.g. Al-Mulk or 67"></div>
+        <button class="btn" id="addOneBtn" type="button">Add this surah</button>
+        <p class="note" id="addProg" style="margin:0"></p>
+      </div>
+      <div class="panel">
+        <span class="label">Surahs and juz</span>
+        <p class="note" style="margin:0">Change a number to move a surah to another juz.</p>
+        <div id="sjList" class="group"></div>
+      </div>
+      <div class="panel">
+        <span class="label">Backup</span>
+        <p class="note" style="margin:0">Saves every published recording, word timing, A'udhu billahi and Bismillah into one file. Keep it somewhere private, never on GitHub.</p>
+        <button class="btn primary" id="backupBtn" type="button">Back up everything</button>
+      </div>
+      <div class="panel">
+        <span class="label">Student screen</span>
+        <p class="note" style="margin:0">See exactly what students see.</p>
+        <button class="btn" id="previewKid" type="button">Preview student screen</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- KIDS: surah cards -->
+  <main id="kidHome" hidden>
+    <div class="kid-hello"><span class="kid-salam" lang="ar">بِسْمِ اللَّهِ</span><span class="note">Tap a surah to start</span></div>
+    <div class="kid-rec"><span class="label">Reciter</span><div class="seg" id="kidRec"></div></div>
+    <div class="kidlist" id="kidList"></div>
+    <button class="btn admin-only" id="kidExit" type="button">Exit student preview</button>
+  </main>
+
+  <!-- KIDS: one ayah at a time -->
+  <main id="kidSurah" hidden>
+    <div class="kid-head"><button class="btn ghost" id="kBack" type="button">‹ Surahs</button>
+      <div class="kid-titles"><h2 id="kTitle" class="kid-title" lang="ar"></h2><span class="note" id="kSub"></span></div></div>
+    <div class="kid-count" id="kCount"></div>
+    <p class="note kid-who" id="kWho"></p>
+    <div class="kid-ayah" id="kAyah" lang="ar"></div>
+    <p class="note kid-hint">Tap any word to hear it again.</p>
+    <div class="kid-nav"><button class="btn" id="kPrev" type="button">‹ Previous</button><button class="btn" id="kNext" type="button">Next ›</button></div>
+    <div class="dock kid-dock">
+      <button class="btn primary" id="kListen" type="button">▶ Listen</button>
+      <button class="btn leaf" id="kWords" type="button">Word by word</button>
     </div>
   </main>
 
@@ -366,14 +534,17 @@ details.panel[open]>summary::after{content:"▴"}
   <main id="editView" hidden>
     <div class="ph"><button class="btn ghost" id="editBack" type="button">← Cancel</button><h2 id="eHead">Add verse</h2></div>
     <form id="form">
+      <div class="banner" id="draftNote" hidden>Your new recordings are saved as drafts. Students hear them after the admin approves them.</div>
       <div class="field-row">
         <div class="field"><label class="label" for="fSurah">Surah</label>
           <input type="text" id="fSurah" list="surahList" placeholder="e.g. Al-Fatiha" autocomplete="off" required></div>
-        <div class="field"><label class="label" for="fAyah">Ayah no.</label>
-          <input type="text" id="fAyah" inputmode="numeric" placeholder="e.g. 2"></div>
+        <div class="field"><label class="label" for="fAyah">Ayah</label>
+          <input type="text" id="fAyah" inputmode="numeric" placeholder="2"></div>
+        <div class="field"><label class="label" for="fJuz">Juz</label>
+          <input type="text" id="fJuz" inputmode="numeric" placeholder="30"></div>
       </div>
       <datalist id="surahList"></datalist>
-      <div class="field"><label class="label" for="fText">Verse text (Arabic)</label>
+      <div class="field"><div class="lblrow"><label class="label" for="fText">Verse text (Arabic)</label><button class="btn small" id="getText" type="button">Fill in the text</button></div>
         <textarea id="fText" lang="ar" dir="rtl" placeholder="اكتب الآية هنا" required></textarea>
         <span class="note">Put a space between words. Each word becomes tappable.</span></div>
 
@@ -436,7 +607,14 @@ const CLOUD=true;
 const $=s=>document.querySelector(s);
 document.body.classList.add('student');
 const audio=$('#audio');
-const TRACKS={word:'Word by word',recite:'Recitation'};
+const TRACKS={word:'Word by word',recite:'Recitation',hm:'Al-Husary'};
+/* ---------- reciters: your own recordings first, then famous reciters, ayah by ayah ---------- */
+const EXT={hm:{name:"Al-Husary · Mu'allim",short:'Al-Husary',folder:'Husary_Muallim_128kbps'}};
+const AYAH_COUNTS=[7,286,200,176,120,165,206,75,129,109,123,111,43,52,99,128,111,110,98,135,112,78,118,64,77,227,93,88,69,60,34,30,73,54,45,83,182,88,75,85,54,53,89,59,37,35,38,29,18,45,60,49,62,55,78,96,29,22,24,13,14,11,11,18,12,12,30,52,52,44,28,28,20,56,40,31,50,40,46,42,29,19,36,25,22,17,19,26,30,20,15,21,11,8,8,19,5,8,8,11,11,8,3,9,5,4,7,3,6,3,5,4,5,6];
+function pad3(x){return String(x).padStart(3,'0');}
+function extUrl(key,n,a){return 'https://everyayah.com/data/'+EXT[key].folder+'/'+pad3(n)+pad3(a)+'.mp3';}
+function ownName(){return (settings&&settings.ownName)||'Omar';}
+function tname(k){return k==='hm'?'Al-Husary':TRACKS[k].toLowerCase();}
 const EXAMPLE={id:'example',title:'Al-Fatiha 1 · example',surah:'Al-Fatiha',ayah:1,text:'بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ',tracks:{word:null,recite:null},example:true,created:0};
 const NO_AUDIO_TXT='No recording yet. Tap Record, or choose an audio file you already have.';
 
@@ -461,13 +639,33 @@ function vdoc(id){return FB.doc(FB.db,'verses',id);}
 function envInts(env){if(!env||!env.length)return null;let p=0;for(const x of env)if(x>p)p=x;p=p||1;return Array.from(env,x=>Math.round(x/p*255));}
 function trackToDoc(t){if(!t||!t.path)return null;return{path:t.path,duration:t.duration||0,env:t.envInts||(t.env?envInts(t.env):null),marks:t.marks||null,approx:!!t.approx,by:t.by||null,at:t.at||null,contentType:t.contentType||''};}
 function trackFromDoc(t){if(!t||!t.path)return null;return{...t,envInts:t.env||null,env:t.env?Float32Array.from(t.env,x=>x/255):null};}
-function verseToDoc(v){return{surah:v.surah||'',ayah:v.ayah??null,title:v.title||'',text:v.text||'',created:v.created||Date.now(),updated:Date.now(),
+function verseToDoc(v){return{surah:v.surah||'',ayah:v.ayah??null,juz:v.juz||null,extMarks:v.extMarks||null,title:v.title||'',text:v.text||'',created:v.created||Date.now(),updated:Date.now(),
   updatedBy:me?{uid:me.uid,name:me.displayName||me.email,email:me.email}:null,tracks:{word:trackToDoc(v.tracks.word),recite:trackToDoc(v.tracks.recite)}};}
-function verseFromDoc(id,d){return{id,surah:d.surah,ayah:d.ayah??null,title:d.title,text:d.text||'',created:d.created||0,tracks:{word:trackFromDoc(d.tracks&&d.tracks.word),recite:trackFromDoc(d.tracks&&d.tracks.recite)}};}
-async function trackUrl(t){if(!t)throw 0;if(!urlCache[t.path])urlCache[t.path]=await FB.getDownloadURL(FB.ref(FB.st,t.path));return urlCache[t.path];}
+function verseFromDoc(id,d){return{id,surah:d.surah,ayah:d.ayah??null,juz:d.juz||null,extMarks:d.extMarks||null,title:d.title,text:d.text||'',created:d.created||0,tracks:{word:trackFromDoc(d.tracks&&d.tracks.word),recite:trackFromDoc(d.tracks&&d.tracks.recite)}};}
+async function trackUrl(t){if(!t)throw 0;if(t.url)return t.url;if(!urlCache[t.path])urlCache[t.path]=await FB.getDownloadURL(FB.ref(FB.st,t.path));return urlCache[t.path];}
 async function putVerse(v){if(STUDENT||!FB)return;try{await FB.setDoc(vdoc(v.id),verseToDoc(v));}catch(e){toast("Couldn't save online: "+(e.code||'error'));throw e;}}
 async function delVerse(id){const v=verses.find(x=>x.id===id);await FB.deleteDoc(vdoc(id));
-  if(v)for(const k of ['word','recite'])if(v.tracks[k])try{await FB.deleteObject(FB.ref(FB.st,v.tracks[k].path))}catch(e){}}
+  if(v){for(const k of ['word','recite']){if(v.tracks[k])try{await FB.deleteObject(FB.ref(FB.st,v.tracks[k].path))}catch(e){}
+      if(v.drafts&&v.drafts[k])try{await FB.deleteObject(FB.ref(FB.st,v.drafts[k].path))}catch(e){}}
+    if(v.drafts)try{await FB.deleteDoc(FB.doc(FB.db,'drafts',id))}catch(e){}}}
+/* drafts: a sub-admin's new recording waits here until the admin approves it */
+function trk(v,k){if(k==='hm')return extTrack(v,'hm');return (!STUDENT&&v.drafts&&v.drafts[k])||(v.tracks&&v.tracks[k])||null;}
+function extAvail(v){if(!v||v.example)return false;const i=surahInfo(v.surah);return !!(i&&v.ayah!=null&&v.ayah>=1&&v.ayah<=AYAH_COUNTS[i.n-1]);}
+function extTrack(v,key){if(!extAvail(v))return null;v._ext=v._ext||{};if(v._ext[key])return v._ext[key];const i=surahInfo(v.surah),em=v.extMarks||{};
+  return v._ext[key]={ext:key,url:extUrl(key,i.n,v.ayah),marks:em[key]||null,approx:em[key]?!!em[key+'Approx']:true,duration:em[key+'Dur']||0,env:null,by:{name:EXT[key].name}};}
+function bareAr(w){return String(w).normalize('NFKD').replace(/[\u064B-\u065F\u0670\u06D6-\u06ED\u0640]/g,'').replace(/[ٱأإآ]/g,'ا');}
+function lenSplit(d,ws){const wt=ws.map(w=>bareAr(w).replace(/\s/g,'').length+1),tot=wt.reduce((a,b)=>a+b,0)||1;const lead=Math.min(0.25,d*0.03),span=Math.max(0.1,d-lead-0.05);
+  let t=lead;return wt.map(w=>{const s=t;t+=span*w/tot;return{s,e:t};});}
+async function ensureDur(t){if(t&&!t.duration)t.duration=await probeDuration(await trackUrl(t));return t;}
+function isDraft(v,k){return !STUDENT&&!!(v.drafts&&v.drafts[k]);}
+function hasPub(v){return !!(v.tracks&&(v.tracks.word||v.tracks.recite));}
+let draftsMap={};
+function attachDrafts(){for(const v of verses)v.drafts=draftsMap[v.id]||null;}
+async function putDraft(v){const d=v.drafts||{};const doc={word:trackToDoc(d.word),recite:trackToDoc(d.recite)};
+  if(!doc.word&&!doc.recite){await FB.deleteDoc(FB.doc(FB.db,'drafts',v.id));return;}
+  await FB.setDoc(FB.doc(FB.db,'drafts',v.id),{...doc,surah:v.surah||'',ayah:v.ayah??null,updated:Date.now(),by:me?{name:me.displayName||me.email,email:me.email}:null});}
+function saveTrack(v,k){if(k==='hm'){const t=extTrack(v,'hm');if(!t)return Promise.resolve();v.extMarks={...(v.extMarks||{}),hm:t.marks,hmApprox:!!t.approx,hmDur:t.duration||0};}
+  return (isDraft(v,k)?putDraft(v):putVerse(v)).catch(e=>toast("Couldn't save: "+(e&&e.code||'error')));}
 function extOf(type){return /wav/.test(type)?'wav':/mpeg|mp3/.test(type)?'mp3':/ogg/.test(type)?'ogg':/webm/.test(type)?'webm':/aac/.test(type)?'aac':'m4a';}
 async function resample(buf,sr){if(buf.sampleRate<=sr||!window.OfflineAudioContext)return buf;try{const oc=new OfflineAudioContext(1,Math.ceil(buf.duration*sr),sr);
   const src=oc.createBufferSource();src.buffer=buf;src.connect(oc.destination);src.start();return await oc.startRendering();}catch(e){return buf;}}
@@ -479,16 +677,18 @@ async function uploadTrack(vid,k,blob){
   const type=a.type||'audio/mp4',path='audio/'+vid+'/'+k+'-'+Date.now()+'.'+extOf(type);
   await FB.uploadBytes(FB.ref(FB.st,path),a,{contentType:type,cacheControl:'public,max-age=31536000'});
   return{path,duration,env,envInts:envInts(env),marks:null,approx:true,by:{uid:me.uid,name:me.displayName||me.email,email:me.email},at:Date.now(),contentType:type};}
-function byText(t){if(!t||!t.by)return '';const d=t.at?new Date(t.at).toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'}):'';return 'Recorded by '+(t.by.name||t.by.email)+(d?' · '+d:'');}
+function byText(t){if(t&&t.ext)return 'Recited by '+EXT[t.ext].name+' (EveryAyah)';if(!t||!t.by)return '';const d=t.at?new Date(t.at).toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'}):'';return 'Recorded by '+(t.by.name||t.by.email)+(d?' · '+d:'');}
 async function roleOf(u){if(!u)return 'guest';if(u.isAnonymous)return 'member';const e=(u.email||'').toLowerCase();
   try{if((await FB.getDoc(FB.doc(FB.db,'admins',e))).exists())return 'admin';}catch(err){}
   try{const d=await FB.getDoc(FB.doc(FB.db,'team',e));return d.exists()?'recorder':'listener';}catch(err){return 'listener';}}
-function applyRole(){STUDENT=!(role==='admin'||role==='recorder');document.body.classList.toggle('student',STUDENT);
+function applyRole(){STUDENT=!(role==='admin'||role==='recorder');document.body.classList.toggle('student',STUDENT);document.body.classList.toggle('recorder',role==='recorder');if(STUDENT)kidPreview=false;
   const chip=$('#roleChip');chip.hidden=role==='guest'||role==='member';chip.textContent={admin:'Admin',recorder:'Sub-admin',listener:'Listener'}[role]||'';
   $('#authBtn').textContent=me&&!me.isAnonymous?'Sign out':'Teacher sign in';$('#teamBtn').hidden=role!=='admin';
-  if(STUDENT&&!$('#editView').hidden)show('listView');if(STUDENT&&!$('#teamView').hidden)show('listView');
   if(STUDENT&&tab==='adjust')setTab('practice');
-  renderList();renderOpeners();if(cur)notes();}
+  const vis=curView();
+  if(STUDENT&&!['gateView','kidHome','kidSurah'].includes(vis))showHome();
+  else if(!STUDENT&&!kidPreview&&['gateView','kidHome','kidSurah'].includes(vis))showHome();
+  renderList();renderOpeners();if(cur&&!STUDENT)notes();}
 let unsubTeam=null;
 async function cloudInit(){
   FB=await fbReady;if(!FB){storeWarn();return;}
@@ -497,14 +697,17 @@ async function cloudInit(){
 /* data is only readable by the team or by someone who entered the current passcode (checked by Firebase rules) */
 let unsubData=[],joining=false,dataOk=false;
 function stopData(){unsubData.forEach(f=>f());unsubData=[];dataOk=false;}
-function lockOut(msg){stopData();stop();verses=[];OP.istiadha=OP.basmala=null;$('#gateMsg').textContent=msg||'Enter the passcode your teacher gave you.';show('gateView');}
+function lockOut(msg){stopData();stop();verses=[];draftsMap={};OP.istiadha=OP.basmala=null;$('#gateMsg').textContent=msg||'Enter the passcode your teacher gave you.';show('gateView');}
 function startData(){stopData();
   if(!me)return lockOut();
   unsubData.push(FB.onSnapshot(FB.collection(FB.db,'verses'),snap=>{const list=[];snap.forEach(d=>list.push(verseFromDoc(d.id,d.data())));
-      const first=!dataOk;dataOk=true;verses=list.sort((a,b)=>a.created-b.created);$('#storeNote').hidden=true;
-      if(first&&!$('#gateView').hidden)show('listView');renderList();if(!$('#surahView').hidden&&!playing&&sName)renderAyahs();},
+      const first=!dataOk;dataOk=true;verses=list.sort((a,b)=>a.created-b.created);attachDrafts();$('#storeNote').hidden=true;
+      if(first&&curView()==='gateView')showHome();renderList();},
     err=>{if(err.code==='permission-denied')lockOut(role==='listener'||role==='member'?(lastCodeWorked()?'The passcode has changed. Ask your teacher for the new one.':'Enter the passcode your teacher gave you.'):undefined);else storeWarn("Couldn't load the recordings ("+(err.code||'error')+").");}));
-  for(const key of ['istiadha','basmala'])unsubData.push(FB.onSnapshot(FB.doc(FB.db,'meta',key),d=>{const t=d.exists()?trackFromDoc(d.data().track):null;OP[key]=t?{id:key,text:OPENERS[key].text,tracks:{word:null,recite:t}}:null;renderOpeners();if(!$('#surahView').hidden)openerToggles();},()=>{}));
+  for(const key of ['istiadha','basmala'])unsubData.push(FB.onSnapshot(FB.doc(FB.db,'meta',key),d=>{const t=d.exists()?trackFromDoc(d.data().track):null;OP[key]=t?{id:key,text:OPENERS[key].text,tracks:{word:null,recite:t}}:null;renderOpeners();if(!$('#surahView').hidden)openerToggles();if(!$('#juzView').hidden)jOpeners();},()=>{}));
+  unsubData.push(FB.onSnapshot(FB.doc(FB.db,'config','settings'),d=>{settings=Object.assign({kidRepeat:3},d.exists()?d.data():{});if(!$('#panelView').hidden&&pTab==='set')renderSettings();},()=>{}));
+  if(role==='admin'||role==='recorder')unsubData.push(FB.onSnapshot(FB.collection(FB.db,'drafts'),snap=>{draftsMap={};
+    snap.forEach(d=>{const x=d.data();draftsMap[d.id]={word:trackFromDoc(x.word),recite:trackFromDoc(x.recite)};});attachDrafts();renderList();},()=>{}));
 }
 function lastCodeWorked(){try{return localStorage.getItem('tikrar-joined')==='1'}catch(e){return false}}
 async function joinWithCode(){const code=$('#gateCode').value.trim();if(!code){toast('Type the passcode.');return;}
@@ -523,21 +726,14 @@ onTap($('#authBtn'),async()=>{if(!FB)return storeWarn();
 
 /* team (admin only) */
 function watchTeam(){if(unsubTeam){unsubTeam();unsubTeam=null;}if(role!=='admin')return;
-  unsubTeam=FB.onSnapshot(FB.collection(FB.db,'team'),snap=>{const box=$('#teamList');box.innerHTML='';
-    if(snap.empty){const e=document.createElement('div');e.className='empty';e.textContent='No sub-admins yet. Add one above.';box.append(e);}
-    snap.forEach(d=>{const m=d.data();const row=document.createElement('div');row.className='member';
-      const who=document.createElement('div');who.className='who';const b=document.createElement('b');b.textContent=m.name||m.email||d.id;const em=document.createElement('span');em.className='note';em.textContent=d.id;who.append(b,em);
-      const rm=document.createElement('button');rm.type='button';rm.className='btn danger small';rm.textContent='Remove';
-      onTap(rm,async()=>{if(rm.dataset.sure!=='1'){rm.dataset.sure='1';rm.textContent='Tap again to remove';setTimeout(()=>{rm.dataset.sure='';rm.textContent='Remove';},3000);return;}
-        try{await FB.deleteDoc(FB.doc(FB.db,'team',d.id));toast('Removed '+d.id);}catch(e){toast("Couldn't remove: "+(e.code||'error'));}});
-      row.append(who,rm);box.append(row);});});}
+  unsubTeam=FB.onSnapshot(FB.collection(FB.db,'team'),snap=>{teamDocs=[];snap.forEach(d=>teamDocs.push({id:d.id,...d.data()}));if(!$('#panelView').hidden&&pTab==='team')renderTeam();},()=>{});}
 async function loadCode(){try{const d=await FB.getDoc(FB.doc(FB.db,'config','access'));$('#codeNow').textContent=d.exists()?'Current passcode: '+d.data().code:'No passcode set yet, so only you and your team can open Tikrar. Set one below.';}
   catch(e){$('#codeNow').textContent="Couldn't read the passcode ("+(e.code||'error')+').';}}
-onTap($('#teamBtn'),()=>{if(role==='admin'){show('teamView');loadCode();}});
+onTap($('#teamBtn'),openPanel);
 onTap($('#codeSave'),async()=>{const c=$('#newCode').value.trim();if(c.length<4){toast('Use at least 4 characters.');return;}
   try{await FB.setDoc(FB.doc(FB.db,'config','access'),{code:c,updated:Date.now()});$('#newCode').value='';loadCode();toast('Passcode changed');}
   catch(e){toast("Couldn't change it: "+(e.code||'error'));}});
-onTap($('#teamBack'),()=>show('listView'));
+onTap($('#panelBack'),()=>{stop();show('listView');});
 onTap($('#tAdd'),async()=>{const email=$('#tEmail').value.trim().toLowerCase(),name=$('#tName').value.trim();
   if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){toast('Type a full email address.');return;}
   try{await FB.setDoc(FB.doc(FB.db,'team',email),{email,name:name||email,addedAt:Date.now(),addedBy:me.email});$('#tEmail').value='';$('#tName').value='';toast('Added '+email);}
@@ -559,7 +755,7 @@ function arNum(n){return String(n).replace(/\d/g,d=>AR_DIG[d]);}
 function parseTitle(t){t=(t||'').replace(/\s*·\s*example$/i,'').trim();const m=t.match(/^(.*?)[\s:·#-]*(\d+)$/);
   return m&&m[1].trim()?{surah:m[1].trim(),ayah:parseInt(m[2],10)}:{surah:t||'Verses',ayah:null};}
 function setSurah(v){if(v.surah===undefined){const p=parseTitle(v.title);v.surah=p.surah;v.ayah=p.ayah;}return v;}
-function hasAny(v){return !!(v.tracks&&(v.tracks.word||v.tracks.recite));}
+function hasAny(v){return !!(trk(v,'word')||trk(v,'recite')||extAvail(v));}
 function evenSplit(a,b,n){return Array.from({length:n},(_,i)=>({s:a+(b-a)*i/n,e:a+(b-a)*(i+1)/n}));}
 
 const FD=0.02;
@@ -596,30 +792,41 @@ function probeDuration(u){return new Promise(res=>{const a=new Audio();a.preload
   a.addEventListener('loadedmetadata',done,{once:true});a.addEventListener('error',()=>res(0),{once:true});});}
 
 /* ---------- state ---------- */
+let jNum=null,jChecked=new Set(),jKnown=new Set(),pTab='rec',pf={juz:'',surah:'',by:'',status:''},teamDocs=[],settings={kidRepeat:3},kidPreview=false,pPlayingBtn=null,kName=null,kIdx=0,kMode=null,jTouched=false;
 let OP={istiadha:null,basmala:null},verses=[],cur=null,info={},tk='word',run=0,playing=false,sel=null,rangeA=null,marking=null,wake=null,tab='practice',wi=0,zoom=false,saveT=null,loadedSrc=null;
-function T(k){return cur&&cur.tracks[k||tk];}
+function T(k){return cur&&trk(cur,k||tk);}
 function I(k){return info[k||tk]||{};}
 function segs(k){const t=T(k);return t&&t.marks?t.marks:[];}
 
 function load(){renderList();cloudInit();}
-function show(view){for(const id of ['listView','playerView','surahView','teamView','editView','gateView'])$('#'+id).hidden=id!==view;window.scrollTo(0,0);}
+const VIEWS=['listView','playerView','surahView','juzView','panelView','editView','gateView','kidHome','kidSurah'];
+function show(view){for(const id of VIEWS)$('#'+id).hidden=id!==view;window.scrollTo(0,0);}
+function curView(){return VIEWS.find(id=>!$('#'+id).hidden)||'';}
+function showHome(){if(STUDENT||kidPreview){renderKidHome();show('kidHome');}else show('listView');}
 
 function bySurah(list){const groups=new Map();for(const v of list){const k=v.surah||'Verses';if(!groups.has(k))groups.set(k,[]);groups.get(k).push(v);}
   for(const g of groups.values())g.sort((a,b)=>(a.ayah??1e9)-(b.ayah??1e9)||a.created-b.created);return groups;}
 function renderList(){
+  indexData();
   const list=$('#list');list.innerHTML='';const dl=$('#surahList');dl.innerHTML='';
-  const groups=bySurah(verses);
-  for(const [name,group] of groups){
-    const o=document.createElement('option');o.value=name;dl.append(o);
+  const have=new Set(bySurah(verses).keys());
+  for(const n of have){const o=document.createElement('option');o.value=n;dl.append(o);}
+  for(const x of SURAHS)if(!have.has(x.en)){const o=document.createElement('option');o.value=x.en;dl.append(o);}
+  for(const [j,names] of byJuz(verses)){
     const b=document.createElement('button');b.type='button';b.className='item';
+    const num=document.createElement('span');num.className='jnum';num.textContent=j||'…';
     const meta=document.createElement('div');meta.className='meta';
-    const t=document.createElement('span');t.className='sname';t.textContent=name;
-    const p=document.createElement('span');p.className='p';p.lang='ar';p.textContent=group[0].text;meta.append(t,p);
-    const right=document.createElement('div');right.style.cssText='display:flex;flex-direction:column;align-items:flex-end;gap:6px';
-    const c=document.createElement('span');c.className='chip ok';c.textContent=group.length+(group.length===1?' ayah':' ayahs');right.append(c);
-    if(!STUDENT){const bad=group.filter(v=>!hasAny(v)||(v.tracks.word&&v.tracks.word.approx)||(v.tracks.recite&&v.tracks.recite.approx)).length;
-      if(bad){const w=document.createElement('span');w.className='chip warn';w.textContent=bad+' to check';right.append(w);}}
-    b.append(meta,right);onTap(b,()=>openSurah(name));list.append(b);
+    const t=document.createElement('span');t.className='sname';t.textContent=juzName(j);
+    const sub=document.createElement('span');sub.className='sub';sub.textContent=names.join(' · ');meta.append(t,sub);
+    const right=document.createElement('div');right.className='chips';
+    const ay=names.reduce((n,x)=>n+(bySurah(verses).get(x)||[]).length,0);
+    const c=document.createElement('span');c.className='chip ok';c.textContent=names.length+(names.length===1?' surah':' surahs')+' · '+ay+(ay===1?' ayah':' ayahs');right.append(c);
+    if(!STUDENT){const g=names.flatMap(x=>bySurah(verses).get(x)||[]);
+      const bad=g.filter(v=>!hasAny(v)||(trk(v,'word')&&trk(v,'word').approx)||(trk(v,'recite')&&trk(v,'recite').approx)).length;
+      const dr=g.filter(v=>v.drafts&&(v.drafts.word||v.drafts.recite)).length;
+      if(dr){const w=document.createElement('span');w.className='chip warn';w.textContent=dr+' waiting';right.append(w);}
+      else if(bad){const w=document.createElement('span');w.className='chip warn';w.textContent=bad+' to check';right.append(w);}}
+    b.append(num,meta,right);onTap(b,()=>openJuz(j));list.append(b);
   }
   if(!verses.length){
     const b=document.createElement('button');b.type='button';b.className='item';
@@ -628,37 +835,49 @@ function renderList(){
     const p=document.createElement('span');p.className='p';p.lang='ar';p.textContent=EXAMPLE.text;meta.append(t,p);
     const c=document.createElement('span');c.className='chip';c.textContent='Example';b.append(meta,c);onTap(b,()=>openPlayer(EXAMPLE));list.append(b);
     const e=document.createElement('div');e.className='empty';
-    e.textContent=!STUDENT?'This is an example. Tap "+ Add verse" to add your first ayah.':(CLOUD?(typeof FB!=='undefined'&&FB?'No recordings have been added yet.':'Loading recordings…'):'Ask your teacher for the Tikrar file or library link, then tap Import or Library link.');
+    e.textContent=!STUDENT?'This is an example. Tap "+ Add verse" to add your first ayah.':(FB?'No recordings have been added yet.':'Loading recordings…');
     list.append(e);}
   $('#exportBtn').disabled=!verses.length;
   if(!$('#surahView').hidden&&!playing&&sName)renderAyahs();
+  if(!$('#juzView').hidden&&!playing&&jNum!==null)renderJuz();
+  if(!$('#kidHome').hidden)renderKidHome();
+  if(!$('#kidSurah').hidden&&!playing&&kName)renderKid();
+  if(!$('#panelView').hidden&&!playing)renderPanel();
+  updatePanelBadge();
 }
 
 /* ---------- player ---------- */
 function freeInfo(){info={};loadedSrc=null;audio.removeAttribute('src');}
-async function prepTrack(v,k){const t=v.tracks[k];if(!t)return;let u;try{u=await trackUrl(t);}catch(e){return;}
+async function prepTrack(v,k){const t=trk(v,k);if(!t)return;if(t.ext)return prepExt(v,k,t);let u;try{u=await trackUrl(t);}catch(e){return;}
   info[k]={url:u,duration:t.duration||0,env:t.env||null};if(!info[k].duration)info[k].duration=await probeDuration(u);
   const d=info[k].duration,n=words(v.text).length;
-  if(!t.marks||t.marks.length!==n){t.marks=autoFind(info[k].env,d,n);t.approx=true;v._dirty=true;}
+  if(!t.marks||t.marks.length!==n){t.marks=autoFind(info[k].env,d,n);t.approx=true;(v._dk=v._dk||new Set()).add(k);}
   t.marks.forEach(m=>{if(m.e==null||m.e>d)m.e=d;});}
+async function prepExt(v,k,t){info[k]={url:t.url,duration:t.duration||0,env:t.env||null};
+  if(!t.env){try{const ctl=new AbortController(),tm=setTimeout(()=>ctl.abort(),6000);const r=await fetch(t.url,{signal:ctl.signal});clearTimeout(tm);
+    if(r.ok){const buf=await decode(await r.blob());if(buf){t.env=envelope(buf);t.duration=buf.duration;}}}catch(e){}}
+  if(!t.duration)t.duration=await probeDuration(t.url);info[k].duration=t.duration;info[k].env=t.env;
+  const n=words(v.text).length;if(!t.marks||t.marks.length!==n){t.marks=t.env?autoFind(t.env,t.duration,n):lenSplit(t.duration,words(v.text));t.approx=true;(v._dk=v._dk||new Set()).add(k);}
+  t.marks.forEach(m=>{if(m.e==null||m.e>t.duration)m.e=t.duration;});}
 async function openPlayer(v){
   stop();endMark(true);freeInfo();cur=v;sel=null;rangeA=null;wi=0;zoom=false;
   $('#pTitle').textContent=v.title;$('#editBtn').hidden=!!v.example;$('#status').textContent='';
-  tk=v.tracks.word?'word':'recite';
+  tk=trk(v,'word')?'word':trk(v,'recite')?'recite':extAvail(v)?'hm':'recite';
   renderWords();renderTrackSeg();practiceSegs();setTab('practice');show('playerView');
   const has=hasAny(v);for(const id of ['#playVerse','#playSteps','#tabAdjust'])$(id).disabled=!has;
   if(!has){notes();return;}
   $('#status').textContent='Loading recordings…';
-  await Promise.all(['word','recite'].map(k=>prepTrack(v,k)));if(cur!==v)return;
-  if(!STUDENT&&v._dirty){v._dirty=false;putVerse(v).catch(()=>{});}$('#status').textContent='';notes();drawWave();updateCard();
+  await Promise.all(['word','recite','hm'].map(k=>prepTrack(v,k)));if(cur!==v)return;
+  if(!STUDENT&&v._dk&&!v.example){for(const k of v._dk)saveTrack(v,k);v._dk=null;}$('#status').textContent='';notes();drawWave();updateCard();
 }
 function notes(){const n=$('#pNote');const t=T();$('#byLine').textContent=byText(t);
+  if(t&&isDraft(cur,tk)){n.hidden=false;n.textContent="Draft · waiting for approval, so students can't hear it yet."+(role==='admin'?' Approve it in the Panel.':'')+(t.approx?' Word timing was found automatically; check it in Adjust words.':'');return;}
   if(!hasAny(cur)){n.hidden=false;n.textContent=cur.example?'Example verse with no recording. Add your own verse to hear it repeat.':'No recording yet. Tap Edit to add one.';return;}
-  if(!t){n.hidden=false;n.textContent='This verse has no '+TRACKS[tk].toLowerCase()+' recording yet. Tap Edit to add it.';return;}
-  if(t.approx){n.hidden=false;n.textContent='Word timing for the '+TRACKS[tk].toLowerCase()+' was found automatically. If a word cuts off, fix it in Adjust words.';return;}
+  if(!t){n.hidden=false;n.textContent='This verse has no '+tname(tk)+' recording yet. Tap Edit to add it.';return;}
+  if(t.approx){n.hidden=false;n.textContent='Word timing for '+(tk==='hm'?'Al-Husary':'the '+tname(tk))+' was found automatically. If a word cuts off, fix it in Adjust words.';return;}
   n.hidden=true;}
 function renderTrackSeg(){const box=$('#segTrack');box.innerHTML='';
-  for(const k of ['word','recite']){const b=document.createElement('button');b.type='button';b.textContent=TRACKS[k]+(cur&&!cur.tracks[k]?' (none)':'');
+  for(const k of (cur&&extAvail(cur)?['word','recite','hm']:['word','recite'])){const b=document.createElement('button');b.type='button';b.textContent=TRACKS[k]+(cur&&!trk(cur,k)?' (none)':isDraft(cur,k)?' (draft)':'');
     b.setAttribute('aria-pressed',tk===k);onTap(b,()=>{if(tk===k)return;stop();endMark(true);tk=k;wi=0;zoom=false;renderTrackSeg();notes();paint(-1);drawWave();updateCard();
       $('#tabAdjust').disabled=!T();if(tab==='adjust'&&!T())setTab('practice');});box.append(b);}}
 function renderWords(){const m=$('#mushaf');m.innerHTML='';
@@ -672,11 +891,11 @@ function paint(now){document.querySelectorAll('#mushaf .w').forEach((el,i)=>{
 function setTab(t){tab=t;$('#tabPractice').setAttribute('aria-selected',t==='practice');$('#tabAdjust').setAttribute('aria-selected',t==='adjust');
   $('#practice').hidden=t!=='practice';$('#adjust').hidden=t!=='adjust';stop();endMark(true);paint(-1);if(t==='adjust'){drawWave();updateCard();}}
 onTap($('#tabPractice'),()=>setTab('practice'));
-onTap($('#tabAdjust'),()=>{if(STUDENT)return;if(T()&&I().duration)setTab('adjust');else toast('Add a '+TRACKS[tk].toLowerCase()+' recording first (Edit).');});
+onTap($('#tabAdjust'),()=>{if(STUDENT)return;if(T()&&I().duration)setTab('adjust');else toast('Add a '+tname(tk)+' recording first (Edit).');});
 
 function onWord(i){
   if(marking)return;
-  if(!T()||!I().duration){toast('No '+TRACKS[tk].toLowerCase()+' recording. Switch recording or tap Edit.');return;}
+  if(!T()||!I().duration){toast('No '+tname(tk)+' recording. Switch recording or tap Edit.');return;}
   if(tab==='adjust'){wi=i;updateCard();drawWave();playOnce();return;}
   if($('#rangeTog').checked){
     if(rangeA===null){rangeA=i;sel=null;paint(-1);$('#status').textContent='Now tap the last word';return;}
@@ -685,9 +904,9 @@ function onWord(i){
 }
 function item(a,b,count,k){k=k||tk;const s=segs(k);const n=s.length;
   return{track:k,start:s[a].s,end:s[b].e,sel:[a,b],count,label:a===b?words(cur.text)[a]:(a===0&&b===n-1?'Whole verse':'Words '+(a+1)+'–'+(b+1)),tag:TRACKS[k]};}
-onTap($('#playVerse'),()=>{if(!T())return toast('No '+TRACKS[tk].toLowerCase()+' recording.');rangeA=null;playSeq([item(0,segs().length-1,prefs.repeat)]);});
+onTap($('#playVerse'),()=>{if(!T())return toast('No '+tname(tk)+' recording.');rangeA=null;playSeq([item(0,segs().length-1,prefs.repeat)]);});
 onTap($('#playSteps'),()=>{rangeA=null;
-  const wk=cur.tracks.word?'word':'recite',vk=cur.tracks.recite?'recite':'word';if(!cur.tracks[wk])return;
+  const wk=tk==='hm'?'hm':trk(cur,'word')?'word':'recite',vk=tk==='hm'?'hm':trk(cur,'recite')?'recite':'word';if(!trk(cur,wk))return;
   const n=segs(wk).length;const list=[];for(let i=0;i<n;i++)list.push(item(i,i,prefs.repeat,wk));list.push(item(0,n-1,prefs.repeat,vk));playSeq(list);});
 onTap($('#stopBtn'),()=>{stop();$('#status').textContent='';});
 
@@ -721,7 +940,7 @@ async function playSeq(items){
   if(tok===run){playing=false;$('#stopBtn').disabled=true;sel=null;paint(-1);releaseWake();if(tab==='adjust')drawWave();
     if(tab==='practice')$('#status').textContent='Done · '+total+(total===1?' repeat':' repeats');}
 }
-function stop(){run++;playing=false;try{audio.pause()}catch(e){}$('#stopBtn').disabled=true;$('#sStop').disabled=true;$('#sPlay').disabled=!sChecked.size;if(!marking)paint(-1);releaseWake();}
+function stop(){run++;playing=false;try{audio.pause()}catch(e){}$('#stopBtn').disabled=true;$('#sStop').disabled=true;$('#sPlay').disabled=!sChecked.size;$('#jStop').disabled=true;$('#jPlay').disabled=!jChecked.size;if(pPlayingBtn){pPlayingBtn.textContent='▶';pPlayingBtn=null;}kIdle();if(!marking)paint(-1);releaseWake();}
 function releaseWake(){try{wake&&wake.release()}catch(e){}wake=null;}
 
 /* ---------- practice settings ---------- */
@@ -776,7 +995,7 @@ function updateCard(){const m=segs()[wi];if(!m)return;const ws=words(cur.text);
 document.querySelectorAll('.nudge .ctl button').forEach(b=>onTap(b,()=>{const m=segs()[wi];if(!m)return;stop();
   setEdge(m,b.dataset.k,m[b.dataset.k]+parseFloat(b.dataset.d));updateCard();drawWave();changed();}));
 let apT=null;
-function changed(){const t=T();if(!t)return;t.approx=false;notes();clearTimeout(saveT);const v=cur;saveT=setTimeout(()=>{putVerse(v).catch(()=>{});},600);
+function changed(){const t=T();if(!t)return;t.approx=false;notes();clearTimeout(saveT);const v=cur,k=tk;saveT=setTimeout(()=>{saveTrack(v,k);},600);
   if(prefs.autoPlay){clearTimeout(apT);apT=setTimeout(playOnce,550);}}
 function playOnce(){if(!segs()[wi])return;playSeq([item(wi,wi,1)]);}
 onTap($('#playW'),playOnce);
@@ -813,14 +1032,19 @@ function setPreview(k,blob,name){const b=block(k),p=b.querySelector('audio');if(
   if(typeof blob==='string'){p.src=blob;p.hidden=false;b.querySelector('.aname').textContent=name;}
   else if(blob){purls[k]=URL.createObjectURL(blob);p.src=purls[k];p.hidden=false;b.querySelector('.aname').textContent=name;}
   else{p.hidden=true;p.removeAttribute('src');b.querySelector('.aname').textContent=NO_AUDIO_TXT;}}
-function openEdit(v){if(STUDENT)return;stop();stopRec();editing=v||null;pending.word=pending.recite=null;
+function openEdit(v){if(STUDENT)return;stop();stopRec();editing=v||null;pending.word=pending.recite=null;jTouched=false;
   $('#eHead').textContent=v?'Edit verse':'Add verse';$('#fSurah').value=v?(v.surah||''):(lastSurah||'');$('#fAyah').value=v&&v.ayah!=null?v.ayah:(v?'':nextAyah(lastSurah));$('#fText').value=v?v.text:'';
-  for(const k of ['word','recite']){const t=v&&v.tracks[k];block(k).querySelector('.recLabel').textContent=t?'Record again':'Record';setPreview(k,null,'');if(t){b0(k).textContent='Loading current recording…';trackUrl(t).then(u=>{if(editing===v)setPreview(k,u,'Current recording. '+byText(t));}).catch(()=>{});}}
-  $('#delWrap').hidden=!v;$('#delConfirm').hidden=true;$('#delBtn').hidden=false;show('editView');}
+  $('#fJuz').value=v?(juzOfSurah(v.surah)||''):(lastSurah&&bySurah(verses).has(lastSurah)?(juzOfSurah(lastSurah)||''):'');$('#draftNote').hidden=role!=='recorder';
+  for(const k of ['word','recite']){const t=v&&trk(v,k),dr=v&&isDraft(v,k);block(k).querySelector('.recLabel').textContent=t?'Record again':'Record';setPreview(k,null,'');if(t){b0(k).textContent='Loading current recording…';trackUrl(t).then(u=>{if(editing===v)setPreview(k,u,(dr?'Draft waiting for approval. ':'Current recording. ')+byText(t));}).catch(()=>{});}}
+  $('#delWrap').hidden=!v||role!=='admin';$('#delConfirm').hidden=true;$('#delBtn').hidden=false;show('editView');}
 for(const k of ['word','recite']){const b=block(k);
   b.querySelector('input[type=file]').onchange=e=>{const f=e.target.files&&e.target.files[0];if(!f)return;pending[k]=f;setPreview(k,f,(f.name||'Chosen file')+'. Tap Save verse to keep it.');e.target.value='';};
   onTap(b.querySelector('.rec'),()=>{if(rec)stopRec();else startRec(k);});}
 onTap($('#addBtn'),()=>openEdit(null));
+$('#fJuz').addEventListener('input',()=>{jTouched=true;});
+function autoJuz(){if(jTouched)return;const n=$('#fSurah').value.trim();if(!n)return;
+  $('#fJuz').value=bySurah(verses).has(n)?(juzOfSurah(n)||''):(defaultJuz(n,parseInt($('#fAyah').value,10)||1)||'');}
+$('#fSurah').addEventListener('input',autoJuz);$('#fSurah').addEventListener('change',autoJuz);$('#fAyah').addEventListener('change',autoJuz);
 onTap($('#editBtn'),()=>{if(cur&&!cur.example)openEdit(cur);});
 onTap($('#backBtn'),()=>{stop();endMark(true);if(cur&&!cur.example&&bySurah(verses).has(cur.surah))openSurah(cur.surah);else show('listView');});
 onTap($('#editBack'),()=>{stopRec();if(editing)openPlayer(editing);else if(sName&&bySurah(verses).has(sName))openSurah(sName);else show('listView');});
@@ -834,16 +1058,24 @@ async function save(){
   if(ayahRaw&&!/^\d+$/.test(ayahRaw)){toast('Ayah number should be a number, like 2.');$('#fAyah').focus();return;}
   const ayah=ayahRaw?parseInt(ayahRaw,10):null;const title=ayah!=null?surah+' '+ayah:surah;
   if(!text){toast('Type the Arabic text of the verse.');$('#fText').focus();return;}
+  const juzRaw=$('#fJuz').value.replace(/[٠-٩]/g,d=>AR_DIG.indexOf(d)).trim();
+  if(juzRaw&&!(/^\d+$/.test(juzRaw)&&+juzRaw>=1&&+juzRaw<=30)){toast('Juz should be a number from 1 to 30.');$('#fJuz').focus();return;}
+  const juz=(juzRaw?+juzRaw:(bySurah(verses).has(surah)?juzOfSurah(surah):defaultJuz(surah,ayah)))||null;
   saving=true;$('#saveBtn').disabled=true;$('#saveBtn').textContent='Saving…';
   try{
     if(rec){stopRec();await new Promise(r=>setTimeout(r,500));}
-    const v=editing?{...editing,tracks:{...editing.tracks}}:{id:'v'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),created:Date.now(),tracks:{word:null,recite:null}};
+    const v=editing?{...editing,tracks:{...editing.tracks},drafts:editing.drafts?{...editing.drafts}:null}:{id:'v'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),created:Date.now(),tracks:{word:null,recite:null},drafts:null};
+    let draftChanged=false;const asDraft=role!=='admin';
     const reword=editing&&words(editing.text).join(' ')!==words(text).join(' ');
     for(const k of ['word','recite']){
-      if(pending[k]){$('#saveBtn').textContent='Uploading '+TRACKS[k].toLowerCase()+'…';const old=v.tracks[k];v.tracks[k]=await uploadTrack(v.id,k,pending[k]);
-        if(old&&old.path)FB.deleteObject(FB.ref(FB.st,old.path)).catch(()=>{});}
-      else if(reword&&v.tracks[k])v.tracks[k]={...v.tracks[k],marks:null};}
-    v.title=title;v.surah=surah;v.ayah=ayah;v.text=text;lastSurah=surah;await putVerse(v);pending.word=pending.recite=null;
+      if(pending[k]){$('#saveBtn').textContent='Uploading '+TRACKS[k].toLowerCase()+'…';const up=await uploadTrack(v.id,k,pending[k]);
+        if(asDraft){v.drafts={...(v.drafts||{}),[k]:up};draftChanged=true;}
+        else{const old=v.tracks[k];v.tracks[k]=up;if(old&&old.path)FB.deleteObject(FB.ref(FB.st,old.path)).catch(()=>{});
+          if(v.drafts&&v.drafts[k]){FB.deleteObject(FB.ref(FB.st,v.drafts[k].path)).catch(()=>{});v.drafts={...v.drafts,[k]:null};draftChanged=true;}}}
+      else if(reword){if(v.tracks[k])v.tracks[k]={...v.tracks[k],marks:null};if(v.drafts&&v.drafts[k]){v.drafts={...v.drafts,[k]:{...v.drafts[k],marks:null}};draftChanged=true;}}}
+    v.title=title;v.surah=surah;v.ayah=ayah;v.text=text;v.juz=juz;lastSurah=surah;await putVerse(v);if(draftChanged)await putDraft(v);pending.word=pending.recite=null;
+    for(const o of verses)if(o.id!==v.id&&o.surah===surah&&(o.juz||null)!==juz){o.juz=juz;putVerse(o).catch(()=>{});}
+    if(asDraft&&draftChanged)toast('Saved as a draft. Students hear it after the admin approves it.');
     const i=verses.findIndex(x=>x.id===v.id);if(i>=0)verses[i]=v;else verses.push(v);renderList();openPlayer(v);
   }catch(e){toast('Save failed: '+(e&&e.code||'check your internet')+'. Nothing was lost on this screen; try again.');}
   finally{saving=false;$('#saveBtn').disabled=false;$('#saveBtn').textContent='Save verse';}}
@@ -879,7 +1111,7 @@ async function packTrack(t){if(!t)return null;let blob=t.audio;
   return{marks:t.marks||null,approx:!!t.approx,audio:{type:t.contentType||blob.type||'audio/mp4',data:await b64(blob)}};}
 function unpackTrack(t){return t&&t.audio&&t.audio.data?{audio:unb64(t.audio.data,t.audio.type||'audio/mp4'),marks:t.marks||null,approx:!!t.approx}:null;}
 function safeName(n){return (n||'Verses').replace(/[\\/:*?"<>|]+/g,'-').trim()||'Verses';}
-async function packVerse(v){return{id:v.id,title:v.title,surah:v.surah,ayah:v.ayah,text:v.text,created:v.created,tracks:{word:await packTrack(v.tracks.word),recite:await packTrack(v.tracks.recite)}};}
+async function packVerse(v){return{id:v.id,title:v.title,surah:v.surah,ayah:v.ayah,juz:v.juz||null,extMarks:v.extMarks||null,text:v.text,created:v.created,tracks:{word:await packTrack(v.tracks.word),recite:await packTrack(v.tracks.recite)}};}
 async function makeFile(name,list){const out=[];for(const v of list)out.push(await packVerse(v));
   const op={};for(const k of ['istiadha','basmala'])op[k]=OP[k]&&OP[k].tracks.recite?await packTrack(OP[k].tracks.recite):null;
   return new File([JSON.stringify({app:'tikrar',version:4,exported:new Date().toISOString(),istiadha:op.istiadha,basmala:op.basmala,verses:out})],name,{type:'application/json'});}
@@ -911,7 +1143,7 @@ $('#importIn').onchange=async e=>{const f=e.target.files&&e.target.files[0];e.ta
       let tracks;
       if(x.tracks)tracks={word:unpackTrack(x.tracks.word),recite:unpackTrack(x.tracks.recite)};
       else tracks={word:unpackTrack({audio:x.audio,marks:x.marks,approx:x.approx}),recite:null}; // older export
-      const v=migrate({id:x.id||('v'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)),title:x.title||'Verse',surah:x.surah,ayah:x.ayah??null,text:x.text,created:x.created||Date.now(),tracks});
+      const v=migrate({id:x.id||('v'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)),title:x.title||'Verse',surah:x.surah,ayah:x.ayah??null,juz:x.juz||null,extMarks:x.extMarks||null,text:x.text,created:x.created||Date.now(),tracks});
       for(const k of ['word','recite']){const t=v.tracks[k];if(t&&t.audio){const up=await uploadTrack(v.id,k,t.audio);up.marks=t.marks;up.approx=t.approx;v.tracks[k]=up;}}
       toast('Uploading '+(++done)+' of '+total+'…');
       const i=verses.findIndex(y=>y.id===v.id);if(i>=0)updated++;else added++;await putVerse(v);}
@@ -945,12 +1177,15 @@ prefs.sEach=prefs.sEach||3;if(prefs.sRounds===undefined)prefs.sRounds=1;prefs.sT
 if(prefs.sIst===undefined)prefs.sIst=true;if(prefs.sBas===undefined)prefs.sBas=true;
 function sVerses(){return bySurah(verses).get(sName)||[];}
 function freeSUrls(){if(!CLOUD)for(const k in sUrls)URL.revokeObjectURL(sUrls[k]);sUrls={};loadedSrc=null;}
-async function urlFor(v,k){if(CLOUD)return trackUrl(v.tracks[k]);const key=v.id+'|'+k;if(!sUrls[key])sUrls[key]=URL.createObjectURL(v.tracks[k].audio);return sUrls[key];}
-function pickTrack(v){const k=prefs.sTrack;if(v.tracks[k])return k;const o=k==='word'?'recite':'word';return v.tracks[o]?o:null;}
+async function urlFor(v,k){if(CLOUD)return trackUrl(trk(v,k));const key=v.id+'|'+k;if(!sUrls[key])sUrls[key]=URL.createObjectURL(v.tracks[k].audio);return sUrls[key];}
+function pickTrack(v){const k=prefs.sTrack;if(trk(v,k))return k;if(k!=='hm'){const o=k==='word'?'recite':'word';if(trk(v,o))return o;}return extAvail(v)?'hm':null;}
+async function openerSrc(key){if(key==='basmala'&&(prefs.sTrack==='hm'||!(OP.basmala&&OP.basmala.tracks.recite)))return extUrl('hm',1,1);
+  return OP[key]&&OP[key].tracks.recite?trackUrl(OP[key].tracks.recite):null;}
+function openerHas(key){return key==='basmala'||!!(OP[key]&&OP[key].tracks.recite);}
 function openSurah(name){stop();freeInfo();if(sName!==name){freeSUrls();sChecked=new Set();sKnown=new Set();}sName=name;cur=null;
   $('#sTitle').textContent=name;sSegs();openerToggles();renderAyahs();$('#sStatus').textContent='';show('surahView');}
 function openerToggles(){for(const [key,id,pk] of [['istiadha','#istTog','sIst'],['basmala','#basTog','sBas']]){
-  const has=!!(OP[key]&&OP[key].tracks.recite),t=$(id);t.disabled=!has;t.checked=has&&prefs[pk];
+  const has=openerHas(key),t=$(id);t.disabled=!has;t.checked=has&&prefs[pk];
   t.closest('.toggle').querySelector('.note').textContent=has?'Plays before the first ayah':(STUDENT?'Not recorded yet':'Record it first on the main page, under Opening recitations');}}
 $('#istTog').onchange=e=>{prefs.sIst=e.target.checked;savePrefs();};
 $('#basTog').onchange=e=>{prefs.sBas=e.target.checked;savePrefs();};
@@ -975,11 +1210,11 @@ function renderAyahs(){const box=$('#ayahs');box.innerHTML='';const list=sVerses
 function selCount(){const n=sChecked.size,all=sVerses().filter(hasAny).length;$('#selCount').textContent=n+' of '+all+' ayahs selected';$('#sPlay').disabled=!n||playing;}
 onTap($('#selAll'),()=>{sChecked=new Set(sVerses().filter(hasAny).map(v=>v.id));renderAyahs();});
 onTap($('#selNone'),()=>{sChecked.clear();renderAyahs();});
-onTap($('#sBack'),()=>{stop();show('listView');});
+onTap($('#sBack'),()=>{stop();openJuz(juzOfSurah(sName));});
 onTap($('#sAdd'),()=>{lastSurah=sName;openEdit(null);});
-function sSummary(){$('#sSum').textContent=(prefs.sTrack==='word'?'Word by word':'Recitation')+' · each ayah '+prefs.sEach+'× · '+({1:'once through',2:'2 rounds',3:'3 rounds',0:'non-stop'}[prefs.sRounds])+' · '+(prefs.gap?prefs.gap+' s pause':'no pause')+' · '+prefs.speed+'× speed';}
+function sSummary(){$('#sSum').textContent=(prefs.sTrack==='hm'?'Al-Husary':prefs.sTrack==='word'?'Word by word':'Recitation')+' · each ayah '+prefs.sEach+'× · '+({1:'once through',2:'2 rounds',3:'3 rounds',0:'non-stop'}[prefs.sRounds])+' · '+(prefs.gap?prefs.gap+' s pause':'no pause')+' · '+prefs.speed+'× speed';}
 function sSegs(){
-  seg('#segSTrack',[['recite','Recitation'],['word','Word by word']],'sTrack',()=>{sSummary();if(sName&&!playing)renderAyahs();});
+  seg('#segSTrack',[['recite','Recitation'],['word','Word by word'],['hm','Al-Husary']],'sTrack',()=>{sSummary();if(sName&&!playing)renderAyahs();});
   seg('#segEach',[[1,'1×'],[2,'2×'],[3,'3×'],[5,'5×'],[10,'10×']],'sEach',sSummary);
   seg('#segRounds',[[1,'Once'],[2,'2×'],[3,'3×'],[0,'∞']],'sRounds',sSummary);
   seg('#segSGap',[[0,'None'],[1,'1 s'],[2,'2 s'],[4,'4 s']],'gap',sSummary);
@@ -996,12 +1231,12 @@ onTap($('#sPlay'),async()=>{
   try{if(navigator.wakeLock)wake=await navigator.wakeLock.request('screen')}catch(e){wake=null}
   const rounds=prefs.sRounds===0?Infinity:prefs.sRounds,each=prefs.sEach;
   for(const [key,on] of [['istiadha',$('#istTog').checked],['basmala',$('#basTog').checked]]){
-    if(!on||!OP[key]||!OP[key].tracks.recite)continue;if(tok!==run)return;
-    try{await useSrc(await urlFor(OP[key],'recite'));sPaint(null);$('#sStatus').textContent=OPENERS[key].name;audio.playbackRate=prefs.speed;audio.currentTime=0;await audio.play();
+    if(!on||!openerHas(key))continue;if(tok!==run)return;
+    try{const src=await openerSrc(key);if(!src)continue;await useSrc(src);sPaint(null);$('#sStatus').textContent=OPENERS[key].name;audio.playbackRate=prefs.speed;audio.currentTime=0;await audio.play();
       await waitTo(Infinity,tok);if(tok!==run)return;audio.pause();if(prefs.gap)await sleep(prefs.gap*1000,tok);}catch(e){}}
   for(let r=0;r<rounds&&tok===run;r++){
     for(let a=0;a<list.length&&tok===run;a++){
-      const v=list[a],k=pickTrack(v),m=v.tracks[k].marks;
+      const v=list[a],k=pickTrack(v),m=trk(v,k).ext?null:trk(v,k).marks;
       const start=m&&m.length?m[0].s:0,end=m&&m.length&&m[m.length-1].e?m[m.length-1].e:Infinity;
       try{await useSrc(await urlFor(v,k))}catch(e){continue;}
       const card=document.querySelector('#ayahs .acard[data-id="'+v.id+'"]');if(card)card.scrollIntoView({block:'center',behavior:'smooth'});
@@ -1016,6 +1251,295 @@ onTap($('#sPlay'),async()=>{
   }
   if(tok===run){stop();sPaint(null);$('#sStatus').textContent='Done';}
 });
+
+/* ---------- surah table & juz ---------- */
+const SURAH_DATA="Al-Fatiha|الفاتحة;Al-Baqarah|البقرة;Aal-Imran|آل عمران;An-Nisa|النساء;Al-Ma'idah|المائدة;Al-An'am|الأنعام;Al-A'raf|الأعراف;Al-Anfal|الأنفال;At-Tawbah|التوبة;Yunus|يونس;Hud|هود;Yusuf|يوسف;Ar-Ra'd|الرعد;Ibrahim|إبراهيم;Al-Hijr|الحجر;An-Nahl|النحل;Al-Isra|الإسراء;Al-Kahf|الكهف;Maryam|مريم;Ta-Ha|طه;Al-Anbiya|الأنبياء;Al-Hajj|الحج;Al-Mu'minun|المؤمنون;An-Nur|النور;Al-Furqan|الفرقان;Ash-Shu'ara|الشعراء;An-Naml|النمل;Al-Qasas|القصص;Al-Ankabut|العنكبوت;Ar-Rum|الروم;Luqman|لقمان;As-Sajdah|السجدة;Al-Ahzab|الأحزاب;Saba|سبأ;Fatir|فاطر;Ya-Sin|يس;As-Saffat|الصافات;Sad|ص;Az-Zumar|الزمر;Ghafir|غافر;Fussilat|فصلت;Ash-Shura|الشورى;Az-Zukhruf|الزخرف;Ad-Dukhan|الدخان;Al-Jathiyah|الجاثية;Al-Ahqaf|الأحقاف;Muhammad|محمد;Al-Fath|الفتح;Al-Hujurat|الحجرات;Qaf|ق;Adh-Dhariyat|الذاريات;At-Tur|الطور;An-Najm|النجم;Al-Qamar|القمر;Ar-Rahman|الرحمن;Al-Waqi'ah|الواقعة;Al-Hadid|الحديد;Al-Mujadilah|المجادلة;Al-Hashr|الحشر;Al-Mumtahanah|الممتحنة;As-Saff|الصف;Al-Jumu'ah|الجمعة;Al-Munafiqun|المنافقون;At-Taghabun|التغابن;At-Talaq|الطلاق;At-Tahrim|التحريم;Al-Mulk|الملك;Al-Qalam|القلم;Al-Haqqah|الحاقة;Al-Ma'arij|المعارج;Nuh|نوح;Al-Jinn|الجن;Al-Muzzammil|المزمل;Al-Muddaththir|المدثر;Al-Qiyamah|القيامة;Al-Insan|الإنسان;Al-Mursalat|المرسلات;An-Naba|النبأ;An-Nazi'at|النازعات;Abasa|عبس;At-Takwir|التكوير;Al-Infitar|الانفطار;Al-Mutaffifin|المطففين;Al-Inshiqaq|الانشقاق;Al-Buruj|البروج;At-Tariq|الطارق;Al-A'la|الأعلى;Al-Ghashiyah|الغاشية;Al-Fajr|الفجر;Al-Balad|البلد;Ash-Shams|الشمس;Al-Layl|الليل;Ad-Duha|الضحى;Ash-Sharh|الشرح;At-Tin|التين;Al-Alaq|العلق;Al-Qadr|القدر;Al-Bayyinah|البينة;Az-Zalzalah|الزلزلة;Al-Adiyat|العاديات;Al-Qari'ah|القارعة;At-Takathur|التكاثر;Al-Asr|العصر;Al-Humazah|الهمزة;Al-Fil|الفيل;Quraysh|قريش;Al-Ma'un|الماعون;Al-Kawthar|الكوثر;Al-Kafirun|الكافرون;An-Nasr|النصر;Al-Masad|المسد;Al-Ikhlas|الإخلاص;Al-Falaq|الفلق;An-Nas|الناس";
+const SURAHS=SURAH_DATA.split(';').map((x,i)=>{const [en,ar]=x.split('|');return{n:i+1,en,ar};});
+// first ayah of each juz, as [surah, ayah]
+const JUZ_START=[[1,1],[2,142],[2,253],[3,93],[4,24],[4,148],[5,82],[6,111],[7,88],[8,41],[9,93],[11,6],[12,53],[15,1],[17,1],[18,75],[21,1],[23,1],[25,21],[27,56],[29,46],[33,31],[36,28],[39,32],[41,47],[46,1],[51,31],[58,1],[67,1],[78,1]];
+function juzOf(n,a){a=a||1;let j=1;JUZ_START.forEach(([s,b],i)=>{if(n>s||(n===s&&a>=b))j=i+1;});return j;}
+function normName(x){x=String(x||'').toLowerCase().normalize('NFKD').replace(/[̀-ًͯ-ٰٟۖ-ۭ]/g,'').replace(/^\s*(surah|surat|sura|سورة)\s+/,'');
+  const toks=x.split(/[\s\-'’`_.]+/).filter(Boolean);if(toks.length>1&&/^(al|an|ash|as|at|ad|adh|az|ar|ath|aal|el|ال)$/.test(toks[0]))toks.shift();
+  x=toks.join('').replace(/[^a-z؀-ۿ0-9]/g,'').replace(/ee/g,'i').replace(/oo|ou/g,'u').replace(/([aeiou])y/g,'$1i').replace(/(.)\1+/g,'$1');
+  if(/^[a-z]{4,}h$/.test(x))x=x.slice(0,-1);return x;}
+const SURAH_IDX=new Map();SURAHS.forEach(x=>{SURAH_IDX.set(normName(x.en),x);SURAH_IDX.set(normName(x.ar),x);});
+function surahInfo(name){if(!name)return null;const t=String(name).trim();if(/^\d+$/.test(t))return SURAHS[+t-1]||null;return SURAH_IDX.get(normName(t))||null;}
+const J_NAMES={30:"'Amma",29:'Tabarak',28:"Qad Sami'a",1:'Alif Lam Mim'};
+const J_AR={30:'جزء عمّ',29:'جزء تبارك',28:'جزء قد سمع'};
+function juzName(j){return j?'Juz '+j+(J_NAMES[j]?' · '+J_NAMES[j]:''):'Other surahs';}
+let SJ=new Map();
+function defaultJuz(name,ayah){const i=surahInfo(name);return i?juzOf(i.n,ayah||1):0;}
+function indexData(){SJ=new Map();for(const [name,g] of bySurah(verses)){const ex=g.find(v=>v.juz);
+  SJ.set(name,ex?ex.juz:defaultJuz(name,(g.find(v=>v.ayah!=null)||{}).ayah||1));}}
+function juzOfSurah(name){return SJ.has(name)?SJ.get(name):defaultJuz(name,1);}
+function surahOrder(name){const i=surahInfo(name);return i?i.n:1000;}
+function sortSurahs(names){return names.sort((a,b)=>surahOrder(a)-surahOrder(b)||String(a).localeCompare(String(b)));}
+function byJuz(list){const m=new Map();for(const name of bySurah(list).keys()){const j=juzOfSurah(name);if(!m.has(j))m.set(j,[]);m.get(j).push(name);}
+  for(const a of m.values())sortSurahs(a);return new Map([...m.entries()].sort((x,y)=>(x[0]||99)-(y[0]||99)));}
+function setStatus(el,main,sub){el.innerHTML='';const a=document.createElement('span');a.textContent=main;el.append(a);if(sub){const b=document.createElement('span');b.className='sub';b.textContent=sub;el.append(b);}}
+async function playClip(src,start,end,tok,onT,rate){await useSrc(src);if(tok!==run)return;audio.playbackRate=rate||prefs.speed;audio.currentTime=start||0;await audio.play();await waitTo(end,tok,onT);audio.pause();}
+async function holdWake(){try{if(navigator.wakeLock)wake=await navigator.wakeLock.request('screen')}catch(e){wake=null}}
+
+/* ---------- juz mode ---------- */
+if(prefs.jSurah===undefined)prefs.jSurah=1;if(prefs.jRounds===undefined)prefs.jRounds=1;if(prefs.jIst===undefined)prefs.jIst=true;if(prefs.jBas===undefined)prefs.jBas=true;
+function jSurahNames(){return byJuz(verses).get(jNum)||[];}
+function surahPlayable(name){return (bySurah(verses).get(name)||[]).filter(v=>pickTrack(v));}
+function openJuz(j){stop();freeInfo();if(jNum!==j){jChecked=new Set();jKnown=new Set();}jNum=j;cur=null;
+  $('#jTitle').textContent=juzName(j);jSegs();jOpeners();renderJuz();$('#jStatus').textContent='';show('juzView');}
+function renderJuz(){const box=$('#jSurahs');box.innerHTML='';const names=jSurahNames();
+  for(const n of names)if(surahPlayable(n).length&&!jKnown.has(n)){jKnown.add(n);jChecked.add(n);}
+  for(const name of names){const g=bySurah(verses).get(name)||[],info=surahInfo(name),ok=surahPlayable(name).length>0;
+    const card=document.createElement('div');card.className='acard';card.dataset.name=name;
+    const lab=document.createElement('label');lab.className='acheck';
+    const cb=document.createElement('input');cb.type='checkbox';cb.checked=jChecked.has(name);cb.disabled=!ok;cb.setAttribute('aria-label','Include '+name);
+    cb.onchange=()=>{if(cb.checked)jChecked.add(name);else jChecked.delete(name);card.classList.toggle('off',!cb.checked);jSelCount();};lab.append(cb);
+    const body=document.createElement('button');body.type='button';body.className='abody';
+    const top=document.createElement('div');top.style.cssText='display:flex;justify-content:space-between;align-items:baseline;gap:8px';
+    const nm=document.createElement('span');nm.className='sname';nm.textContent=name;top.append(nm);
+    if(info){const ar=document.createElement('span');ar.className='jar';ar.lang='ar';ar.textContent=info.ar;top.append(ar);}
+    const nt=document.createElement('div');nt.className='anote';
+    const l=document.createElement('span');l.textContent=g.length+(g.length===1?' ayah':' ayahs')+(ok?'':' · no recordings yet');
+    const r=document.createElement('span');r.textContent='Open ›';nt.append(l,r);
+    body.append(top,nt);onTap(body,()=>openSurah(name));
+    card.classList.toggle('off',!cb.checked);card.append(lab,body);box.append(card);}
+  if(!names.length){const e=document.createElement('div');e.className='empty';e.textContent='No surahs in this juz yet.';box.append(e);}
+  jSelCount();}
+function jSelCount(){const all=jSurahNames().filter(n=>surahPlayable(n).length).length;$('#jSelCount').textContent=jChecked.size+' of '+all+' surahs selected';$('#jPlay').disabled=!jChecked.size||playing;}
+onTap($('#jAll'),()=>{jChecked=new Set(jSurahNames().filter(n=>surahPlayable(n).length));renderJuz();});
+onTap($('#jNone'),()=>{jChecked.clear();renderJuz();});
+onTap($('#jBack'),()=>{stop();show('listView');});
+function jOpeners(){for(const [key,id,pk,txt] of [['istiadha','#jIst','jIst','Plays once at the start'],['basmala','#jBas','jBas','Not before Al-Fatiha or At-Tawbah']]){
+  const has=openerHas(key),t=$(id);t.disabled=!has;t.checked=has&&prefs[pk];
+  t.closest('.toggle').querySelector('.note').textContent=has?txt:'Record it first on the main page, under Opening recitations';}}
+$('#jIst').onchange=e=>{prefs.jIst=e.target.checked;savePrefs();};
+$('#jBas').onchange=e=>{prefs.jBas=e.target.checked;savePrefs();};
+function jSummary(){$('#jSum').textContent=(prefs.sTrack==='hm'?'Al-Husary':prefs.sTrack==='word'?'Word by word':'Recitation')+' · each ayah '+prefs.sEach+'× · each surah '+(prefs.jSurah===1?'once':prefs.jSurah+'×')+' · '+({1:'once through',2:'2 rounds',3:'3 rounds',0:'non-stop'}[prefs.jRounds])+' · '+prefs.speed+'× speed';}
+function jSegs(){
+  seg('#segJTrack',[['recite','Recitation'],['word','Word by word'],['hm','Al-Husary']],'sTrack',()=>{jSummary();if(!playing)renderJuz();});
+  seg('#segJEach',[[1,'1×'],[2,'2×'],[3,'3×'],[5,'5×']],'sEach',jSummary);
+  seg('#segJSurah',[[1,'Once'],[2,'2×'],[3,'3×']],'jSurah',jSummary);
+  seg('#segJRounds',[[1,'Once'],[2,'2×'],[3,'3×'],[0,'∞']],'jRounds',jSummary);
+  seg('#segJGap',[[0,'None'],[1,'1 s'],[2,'2 s']],'gap',jSummary);
+  seg('#segJSpeed',[[0.6,'0.6×'],[0.8,'0.8×'],[1,'1×'],[1.25,'1.25×']],'speed',jSummary);jSummary();}
+function jPaint(name){document.querySelectorAll('#jSurahs .acard').forEach(c=>c.classList.toggle('on',c.dataset.name===name));}
+onTap($('#jStop'),()=>{stop();jPaint(null);$('#jStatus').textContent='';});
+onTap($('#jPlay'),async()=>{
+  const names=jSurahNames().filter(n=>jChecked.has(n)&&surahPlayable(n).length);if(!names.length)return;
+  stop();const tok=++run;playing=true;$('#jStop').disabled=false;$('#jPlay').disabled=true;await holdWake();
+  const rounds=prefs.jRounds===0?Infinity:prefs.jRounds,sReps=prefs.jSurah||1,each=prefs.sEach,gapMs=prefs.gap*1000,st=$('#jStatus');
+  const opener=async(key,label,sub)=>{if(tok!==run||!openerHas(key))return;const src=await openerSrc(key);if(!src)return;setStatus(st,label,sub);await playClip(src,0,Infinity,tok);if(tok===run&&gapMs)await sleep(gapMs,tok);};
+  try{
+    if($('#jIst').checked){jPaint(null);await opener('istiadha',"A'udhu billahi");}
+    for(let r=0;r<rounds&&tok===run;r++){
+      for(let si=0;si<names.length&&tok===run;si++){const name=names[si],list=surahPlayable(name),info=surahInfo(name);
+        jPaint(name);const card=document.querySelector('#jSurahs .acard[data-name="'+CSS.escape(name)+'"]');if(card)card.scrollIntoView({block:'center',behavior:'smooth'});
+        for(let sr=0;sr<sReps&&tok===run;sr++){
+          const sub='Surah '+(si+1)+' of '+names.length+(sReps>1?' · time '+(sr+1)+' of '+sReps:'')+(rounds>1?' · round '+(r+1)+(rounds===Infinity?'':' of '+rounds):'');
+          if($('#jBas').checked&&!(info&&(info.n===1||info.n===9)))await opener('basmala',name+' · Bismillah',sub);
+          for(let a=0;a<list.length&&tok===run;a++){const v=list[a],k=pickTrack(v),t=trk(v,k),m=t.ext?null:t.marks;
+            const start=m&&m.length?m[0].s:0,end=m&&m.length&&m[m.length-1].e?m[m.length-1].e:Infinity;
+            for(let n=0;n<each&&tok===run;n++){setStatus(st,name+' · Ayah '+(v.ayah??a+1)+' · '+(n+1)+' of '+each,sub);
+              await playClip(await trackUrl(t),start,end,tok);if(tok!==run)return;if(gapMs)await sleep(gapMs,tok);}}}}}
+  }catch(e){if(tok===run)setStatus(st,"Couldn't play a recording.",'Check your internet connection.');}
+  if(tok===run){stop();jPaint(null);setStatus(st,'Done');}
+});
+
+/* ---------- admin control panel ---------- */
+function sortedVerses(){return verses.slice().sort((a,b)=>(juzOfSurah(a.surah)||99)-(juzOfSurah(b.surah)||99)||surahOrder(a.surah)-surahOrder(b.surah)||String(a.surah).localeCompare(String(b.surah))||(a.ayah??1e9)-(b.ayah??1e9));}
+function allRecs(){const out=[];for(const v of sortedVerses())for(const k of ['word','recite']){if(v.tracks[k])out.push({v,k,t:v.tracks[k],draft:false});if(v.drafts&&v.drafts[k])out.push({v,k,t:v.drafts[k],draft:true});}return out;}
+function draftCount(){let n=0;for(const v of verses)if(v.drafts)for(const k of ['word','recite'])if(v.drafts[k])n++;return n;}
+function updatePanelBadge(){const n=role==='admin'?draftCount():0;$('#teamBtn').textContent='Panel'+(n?' · '+n:'');$('#ptRec').textContent='Recordings'+(n?' ('+n+')':'');}
+function whoKey(t){return t&&t.by?((t.by.email||'').toLowerCase()||t.by.name):'';}
+function byShort(t){return (t&&t.by?(t.by.name||t.by.email):'Unknown')+(t&&t.at?' · '+new Date(t.at).toLocaleDateString(undefined,{day:'numeric',month:'short'}):'');}
+function confirmTap(btn,label,fn){onTap(btn,()=>{if(btn.dataset.sure!=='1'){btn.dataset.sure='1';btn.textContent='Tap again to confirm';setTimeout(()=>{btn.dataset.sure='';btn.textContent=label;},3000);return;}btn.dataset.sure='';fn();});}
+const PT=[['ptRec','rec'],['ptGaps','gaps'],['ptTeam','team'],['ptSet','set']];
+for(const [id,k] of PT)onTap($('#'+id),()=>{pTab=k;stop();renderPanel();});
+function openPanel(){if(role!=='admin')return;stop();show('panelView');renderPanel();loadCode();}
+function renderPanel(){if($('#panelView').hidden)return;
+  for(const [id,k] of PT){$('#'+id).setAttribute('aria-selected',pTab===k);$('#pp-'+k).hidden=pTab!==k;}
+  if(pTab==='rec')renderRecs();else if(pTab==='gaps')renderGaps();else if(pTab==='team')renderTeam();else renderSettings();}
+function fillSelect(sel,opts,val){sel.innerHTML='';for(const [v,l] of opts){const o=document.createElement('option');o.value=v;o.textContent=l;sel.append(o);}sel.value=opts.some(o=>o[0]===val)?val:'';return sel.value;}
+function renderRecs(){const recs=allRecs();
+  const juzs=[...new Set(recs.map(r=>String(juzOfSurah(r.v.surah))))].sort((a,b)=>(+a||99)-(+b||99));
+  pf.juz=fillSelect($('#fJ'),[['','All juz'],...juzs.map(j=>[j,juzName(+j)])],pf.juz);
+  const inJ=recs.filter(r=>!pf.juz||String(juzOfSurah(r.v.surah))===pf.juz);
+  pf.surah=fillSelect($('#fS'),[['','All surahs'],...sortSurahs([...new Set(inJ.map(r=>r.v.surah))]).map(x=>[x,x])],pf.surah);
+  const people=[...new Map(recs.filter(r=>r.t.by).map(r=>[whoKey(r.t),r.t.by.name||r.t.by.email])).entries()];
+  pf.by=fillSelect($('#fB'),[['','Everyone'],...people],pf.by);
+  pf.status=fillSelect($('#fSt'),[['','All recordings'],['draft','Waiting for approval'],['pub','Published']],pf.status);
+  const rows=inJ.filter(r=>(!pf.surah||r.v.surah===pf.surah)&&(!pf.by||whoKey(r.t)===pf.by)&&(!pf.status||(pf.status==='draft')===r.draft));
+  rows.sort((a,b)=>b.draft-a.draft);
+  $('#recCount').textContent=rows.length+(rows.length===1?' recording':' recordings');
+  $('#approveAll').hidden=!rows.some(r=>r.draft);
+  const box=$('#recList');box.innerHTML='';
+  for(const r of rows){const row=document.createElement('div');row.className='rrow'+(r.draft?' wait':'');
+    const top=document.createElement('div');top.className='rtop';
+    const pb=document.createElement('button');pb.type='button';pb.className='rplay';pb.textContent='▶';pb.setAttribute('aria-label','Play');onTap(pb,()=>panelPlay(r.t,pb));
+    const meta=document.createElement('div');meta.className='rmeta';const b=document.createElement('b');b.textContent=r.v.surah+' · Ayah '+(r.v.ayah??'?');
+    const n=document.createElement('span');n.className='note';n.textContent=TRACKS[r.k]+' · '+byShort(r.t);meta.append(b,n);
+    const c=document.createElement('span');c.className='chip '+(r.draft?'warn':'ok');c.textContent=r.draft?'Waiting':'Published';
+    top.append(pb,meta,c);
+    const act=document.createElement('div');act.className='ractions';
+    if(r.draft){const ap=document.createElement('button');ap.type='button';ap.className='btn primary small';ap.textContent='Approve';onTap(ap,()=>approve(r.v,r.k));
+      const rj=document.createElement('button');rj.type='button';rj.className='btn danger small';rj.textContent='Reject';confirmTap(rj,'Reject',()=>rejectDraft(r.v,r.k));act.append(ap,rj);}
+    else{const op=document.createElement('button');op.type='button';op.className='btn small';op.textContent='Open';onTap(op,()=>openPlayer(r.v));
+      const rp=document.createElement('button');rp.type='button';rp.className='btn small';rp.textContent='Replace';onTap(rp,()=>openEdit(r.v));
+      const dl=document.createElement('button');dl.type='button';dl.className='btn danger small';dl.textContent='Delete';confirmTap(dl,'Delete',()=>deletePub(r.v,r.k));act.append(op,rp,dl);}
+    row.append(top,act);box.append(row);}
+  if(!rows.length){const e=document.createElement('div');e.className='empty';e.textContent=recs.length?'No recordings match these filters.':'No recordings yet.';box.append(e);}}
+['#fJ','#fS','#fB','#fSt'].forEach((id,i)=>{$(id).onchange=e=>{pf[['juz','surah','by','status'][i]]=e.target.value;if(i===0)pf.surah='';renderRecs();};});
+async function panelPlay(t,btn){if(pPlayingBtn===btn){stop();return;}stop();const tok=++run;playing=true;pPlayingBtn=btn;btn.textContent='■';
+  try{await playClip(await trackUrl(t),0,Infinity,tok,null,1);}catch(e){toast("Couldn't play it.");}if(tok===run)stop();}
+async function approve(v,k){const d=v.drafts&&v.drafts[k];if(!d)return;const old=v.tracks[k];
+  const nv={...v,tracks:{...v.tracks,[k]:d},drafts:{...v.drafts,[k]:null}};
+  try{await putVerse(nv);await putDraft(nv);if(old&&old.path&&old.path!==d.path)FB.deleteObject(FB.ref(FB.st,old.path)).catch(()=>{});toast('Approved. Students can hear it now.');}catch(e){}}
+async function rejectDraft(v,k){const d=v.drafts&&v.drafts[k];if(!d)return;
+  try{await putDraft({...v,drafts:{...v.drafts,[k]:null}});FB.deleteObject(FB.ref(FB.st,d.path)).catch(()=>{});toast('Draft removed');}catch(e){toast("Couldn't remove it: "+(e.code||'error'));}}
+async function deletePub(v,k){const t=v.tracks[k];if(!t)return;
+  try{await putVerse({...v,tracks:{...v.tracks,[k]:null}});FB.deleteObject(FB.ref(FB.st,t.path)).catch(()=>{});toast('Recording deleted');}catch(e){}}
+onTap($('#approveAll'),async()=>{const list=allRecs().filter(r=>r.draft);if(!list.length)return;$('#approveAll').disabled=true;
+  const byV=new Map();for(const r of list){if(!byV.has(r.v.id))byV.set(r.v.id,{v:r.v,ks:[]});byV.get(r.v.id).ks.push(r.k);}
+  try{for(const {v,ks} of byV.values()){const nv={...v,tracks:{...v.tracks},drafts:{...v.drafts}};const olds=[];
+      for(const k of ks){if(nv.tracks[k]&&nv.tracks[k].path!==nv.drafts[k].path)olds.push(nv.tracks[k].path);nv.tracks[k]=nv.drafts[k];nv.drafts[k]=null;}
+      await putVerse(nv);await putDraft(nv);olds.forEach(p=>FB.deleteObject(FB.ref(FB.st,p)).catch(()=>{}));}
+    toast('Approved '+list.length+(list.length===1?' recording':' recordings'));}catch(e){}
+  finally{$('#approveAll').disabled=false;}});
+function renderGaps(){const box=$('#gapList');box.innerHTML='';let total=0,full=0,any=false;
+  for(const [j,names] of byJuz(verses))for(const name of names){const g=bySurah(verses).get(name)||[];const issues=[];
+    for(const v of g){total++;const miss=[];if(!v.tracks.word)miss.push('word by word');if(!v.tracks.recite)miss.push('recitation');
+      const dr=v.drafts&&(v.drafts.word||v.drafts.recite);if(!miss.length)full++;else issues.push({a:v.ayah??1e9,v,text:'Ayah '+(v.ayah??'?')+' · needs '+miss.join(' and ')+(dr?' (draft waiting)':'')});}
+    const nums=g.map(v=>v.ayah).filter(x=>x!=null);if(nums.length){const max=Math.max(...nums);for(let a=1;a<=max;a++)if(!nums.includes(a))issues.push({a,add:a,text:'Ayah '+a+' · not added yet'});}
+    if(!issues.length)continue;any=true;issues.sort((x,y)=>x.a-y.a);
+    if(!g.some(v=>v.tracks.word||v.tracks.recite)&&issues.every(x=>x.v)){const h=document.createElement('div');h.className='gaphead';h.textContent=name+' · '+juzName(j);box.append(h);
+      const b=document.createElement('button');b.type='button';b.className='gaprow';const l=document.createElement('span');l.textContent='All '+g.length+' ayahs · no recordings of yours yet (Al-Husary plays instead)';
+      const r=document.createElement('span');r.className='note';r.textContent='Open ›';b.append(l,r);onTap(b,()=>openSurah(name));box.append(b);continue;}
+    const h=document.createElement('div');h.className='gaphead';h.textContent=name+' · '+juzName(j);box.append(h);
+    for(const it of issues){const b=document.createElement('button');b.type='button';b.className='gaprow';
+      const l=document.createElement('span');l.textContent=it.text;const r=document.createElement('span');r.className='note';r.textContent=it.v?'Fix ›':'Add ›';b.append(l,r);
+      onTap(b,()=>{if(it.v)openEdit(it.v);else{lastSurah=name;openEdit(null);$('#fAyah').value=it.add;$('#fJuz').value=juzOfSurah(name)||'';}});box.append(b);}}
+  $('#gapSum').textContent=total?full+' of '+total+' ayahs have both recordings published.':'No ayahs yet.';
+  if(!any&&total){const e=document.createElement('div');e.className='empty';e.textContent='Nothing missing. Every ayah has both recordings.';box.append(e);}}
+function renderTeam(){const box=$('#teamList');box.innerHTML='';const c=new Map();
+  for(const r of allRecs()){const k=whoKey(r.t);if(!k)continue;const x=c.get(k)||{pub:0,draft:0};r.draft?x.draft++:x.pub++;c.set(k,x);}
+  const meE=(me&&me.email||'').toLowerCase();
+  const rows=[{id:meE,name:(me&&me.displayName||meE)+' (you, admin)',self:true},...teamDocs];
+  for(const m of rows){const row=document.createElement('div');row.className='member';
+    const who=document.createElement('div');who.className='who';const b=document.createElement('b');b.textContent=m.name||m.email||m.id;
+    const em=document.createElement('span');em.className='note';const x=c.get(m.id)||{pub:0,draft:0};
+    em.textContent=m.id+' · '+x.pub+' published'+(x.draft?' · '+x.draft+' waiting':'');who.append(b,em);row.append(who);
+    if(!m.self){const rm=document.createElement('button');rm.type='button';rm.className='btn danger small';rm.textContent='Remove';
+      confirmTap(rm,'Remove',async()=>{try{await FB.deleteDoc(FB.doc(FB.db,'team',m.id));toast('Removed '+m.id);}catch(e){toast("Couldn't remove: "+(e.code||'error'));}});row.append(rm);}
+    box.append(row);}}
+function renderSettings(){renderReciters();
+  const box=$('#segKid');box.innerHTML='';for(const n of [1,2,3,5]){const b=document.createElement('button');b.type='button';b.textContent=n+'×';b.setAttribute('aria-pressed',(settings.kidRepeat||3)===n);
+    onTap(b,async()=>{try{await FB.setDoc(FB.doc(FB.db,'config','settings'),{...settings,kidRepeat:n,updated:Date.now()});settings.kidRepeat=n;renderSettings();toast('Students will hear each word '+n+'×');}catch(e){toast("Couldn't save: "+(e.code||'error'));}});box.append(b);}
+  const sj=$('#sjList');sj.innerHTML='';
+  for(const [,names] of byJuz(verses))for(const name of names){const row=document.createElement('label');row.className='sjrow';
+    const l=document.createElement('span');l.textContent=name;const inp=document.createElement('input');inp.type='text';inp.inputMode='numeric';inp.value=juzOfSurah(name)||'';inp.setAttribute('aria-label','Juz for '+name);
+    inp.onchange=()=>{const j=parseInt(inp.value,10);if(!(j>=1&&j<=30)){toast('Juz should be a number from 1 to 30.');inp.value=juzOfSurah(name)||'';return;}setSurahJuz(name,j);};
+    row.append(l,inp);sj.append(row);}
+  if(!verses.length){const e=document.createElement('p');e.className='note';e.textContent='No surahs yet.';sj.append(e);}}
+async function setSurahJuz(name,j){const g=bySurah(verses).get(name)||[];try{for(const v of g)if(v.juz!==j)await putVerse({...v,juz:j});toast(name+' is now in '+juzName(j));}catch(e){}}
+async function deliverFiles(files){
+  if(navigator.canShare&&navigator.canShare({files})){try{await navigator.share({files,title:'Tikrar'});return true;}catch(e){if(e&&e.name==='AbortError')return false;}}
+  for(let i=0;i<files.length;i++){const a=document.createElement('a');a.href=URL.createObjectURL(files[i]);a.download=files[i].name;document.body.append(a);a.click();
+    const h=a.href;setTimeout(()=>{URL.revokeObjectURL(h);a.remove();},6000);if(i<files.length-1)await new Promise(r=>setTimeout(r,700));}
+  return true;}
+onTap($('#backupBtn'),async()=>{if(!verses.length){toast('Nothing to back up yet.');return;}const btn=$('#backupBtn');btn.disabled=true;btn.textContent='Preparing…';
+  try{const d=new Date();const name='tikrar-backup-'+d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')+'.json';
+    if(await deliverFiles([await makeFile(name,verses)]))toast('Backup saved: '+name);}
+  catch(e){toast(e instanceof TypeError?"Backup couldn't download the recordings. It needs the one-time download setup.":'Backup failed. Try again.');}
+  finally{btn.disabled=false;btn.textContent='Back up everything';}});
+onTap($('#previewKid'),()=>{kidPreview=true;stop();showHome();});
+onTap($('#kidExit'),()=>{kidPreview=false;stop();if(role==='admin')openPanel();else showHome();});
+
+/* ---------- Quran text from the web ---------- */
+const TEXT_CACHE={};
+function stripBasmala(t){const ws=t.split(/\s+/);if(ws.length>4&&bareAr(ws.slice(0,4).join(' '))==='بسم الله الرحمن الرحيم')return ws.slice(4).join(' ');return t;}
+async function getJson(u){const ctl=new AbortController(),tm=setTimeout(()=>ctl.abort(),15000);try{const r=await fetch(u,{signal:ctl.signal});if(!r.ok)throw new Error('http '+r.status);return await r.json();}finally{clearTimeout(tm);}}
+async function fetchSurahText(n){if(TEXT_CACHE[n])return TEXT_CACHE[n];let ayahs=null;
+  try{const j=await getJson('https://api.alquran.cloud/v1/surah/'+n+'/quran-uthmani');ayahs=j.data.ayahs.map(a=>a.text);}catch(e){}
+  if(!ayahs||ayahs.length!==AYAH_COUNTS[n-1]){try{const j=await getJson('https://api.quran.com/api/v4/quran/verses/uthmani?chapter_number='+n);ayahs=j.verses.map(v=>v.text_uthmani);}catch(e){}}
+  if(!ayahs||ayahs.length!==AYAH_COUNTS[n-1])throw new Error('text');
+  ayahs=ayahs.map(x=>String(x).replace(/\s+/g,' ').trim());if(n!==1&&n!==9)ayahs[0]=stripBasmala(ayahs[0]);
+  return TEXT_CACHE[n]=ayahs;}
+onTap($('#getText'),async()=>{const i=surahInfo($('#fSurah').value),a=parseInt(String($('#fAyah').value).replace(/[٠-٩]/g,d=>AR_DIG.indexOf(d)),10);
+  if(!i){toast('Type a surah name Tikrar knows, like Al-Mulk.');return;}if(!(a>=1&&a<=AYAH_COUNTS[i.n-1])){toast(i.en+' has '+AYAH_COUNTS[i.n-1]+' ayahs. Type an ayah number first.');return;}
+  const b=$('#getText');b.disabled=true;b.textContent='Getting…';
+  try{const t=await fetchSurahText(i.n);$('#fText').value=t[a-1];toast('Text filled in for '+i.en+' '+a);}catch(e){toast("Couldn't get the text. Check your internet, or paste it in.");}
+  finally{b.disabled=false;b.textContent='Fill in the text';}});
+let adding=false;
+async function addSurahs(nums){if(adding||role!=='admin')return;adding=true;const prog=$('#addProg');let made=0;
+  for(const id of ['#addAmma','#addOneBtn'])$(id).disabled=true;
+  try{for(const n of nums){const info=SURAHS[n-1];prog.textContent='Getting '+info.en+'…';
+      const ayahs=await fetchSurahText(n);
+      const existing=verses.filter(v=>{const i=surahInfo(v.surah);return i&&i.n===n;});
+      const name=existing.length?existing[0].surah:info.en,have=new Set(existing.map(v=>v.ayah)),juz=(existing.find(v=>v.juz)||{}).juz||juzOf(n,1);
+      const todo=[];for(let a=1;a<=ayahs.length;a++)if(!have.has(a))todo.push(a);
+      for(let k=0;k<todo.length;k+=20){await Promise.all(todo.slice(k,k+20).map(a=>putVerse({id:'q'+pad3(n)+pad3(a),surah:name,ayah:a,title:name+' '+a,text:ayahs[a-1],juz,
+          created:Date.UTC(2026,0,1)+n*1000+a,tracks:{word:null,recite:null},extMarks:null})));
+        made+=Math.min(20,todo.length-k);prog.textContent=info.en+' · '+Math.min(k+20,todo.length)+' of '+todo.length+' new ayahs';}}
+    prog.textContent='Done. Added '+made+(made===1?' ayah':' ayahs')+'.';toast('Added '+made+' ayahs');}
+  catch(e){prog.textContent=e&&e.message==='text'?"Couldn't get the Quran text. Check your internet and try again; ayahs already added are kept.":'Stopped: '+(e&&e.code||e&&e.message||'error')+'. Ayahs already added are kept.';}
+  finally{adding=false;for(const id of ['#addAmma','#addOneBtn'])$(id).disabled=false;}}
+onTap($('#addAmma'),()=>{const a=[];for(let n=78;n<=114;n++)a.push(n);addSurahs(a);});
+onTap($('#addOneBtn'),()=>{const i=surahInfo($('#addOne').value);if(!i){toast('Type a surah name or number, like Al-Mulk or 67.');return;}addSurahs([i.n]);});
+function renderReciters(){$('#ownName').value=settings.ownName||'';const box=$('#recList2');box.innerHTML='';
+  for(const [name,note] of [[ownName()+' (you)','Your recordings. Students hear these first.'],["Al-Husary · Mu'allim",'Slow teaching recitation, ayah by ayah from EveryAyah. Plays where you have no recording.']]){
+    const r=document.createElement('div');r.className='recitem';const w=document.createElement('div');w.className='who';const b=document.createElement('b');b.textContent=name;
+    const n=document.createElement('span');n.className='note';n.textContent=note;w.append(b,n);r.append(w);box.append(r);}}
+onTap($('#ownNameSave'),async()=>{const v=$('#ownName').value.trim();if(!v){toast('Type your name.');return;}
+  try{await FB.setDoc(FB.doc(FB.db,'config','settings'),{...settings,ownName:v,updated:Date.now()});settings.ownName=v;renderReciters();toast('Saved. Students see you as '+v+'.');}catch(e){toast("Couldn't save: "+(e.code||'error'));}});
+
+/* ---------- student screen for kids ---------- */
+function kOk(v){return hasPub(v)||extAvail(v);}
+function kVerses(name){return (bySurah(verses).get(name)||[]).filter(kOk);}
+let kidRec='own';try{kidRec=localStorage.getItem('tikrar-kid-rec')||'own';}catch(e){}
+function renderKidRec(){const box=$('#kidRec');box.innerHTML='';for(const [k,l] of [['own',ownName()],['hm','Al-Husary']]){const b=document.createElement('button');b.type='button';b.textContent=l;b.setAttribute('aria-pressed',kidRec===k);
+  onTap(b,()=>{kidRec=k;try{localStorage.setItem('tikrar-kid-rec',k)}catch(e){}renderKidRec();});box.append(b);}}
+function kTrack(v,kind){const hm=extTrack(v,'hm');if(kidRec==='hm'&&hm)return hm;const own=kind==='words'?(v.tracks.word||v.tracks.recite):(v.tracks.recite||v.tracks.word);return own||hm;}
+function renderKidHome(){renderKidRec();const box=$('#kidList');box.innerHTML='';const groups=byJuz(verses.filter(kOk));let i=0;
+  if(!groups.size){const e=document.createElement('div');e.className='empty';e.style.gridColumn='1/-1';e.textContent=dataOk?'No surahs yet. Ask your teacher.':'Loading…';box.append(e);return;}
+  const multi=groups.size>1;
+  for(const [j,names] of groups){
+    if(multi){const h=document.createElement('div');h.className='kjuz';const a=document.createElement('span');a.textContent=juzName(j);h.append(a);
+      if(J_AR[j]||j){const b=document.createElement('span');b.className='ar';b.lang='ar';b.textContent=J_AR[j]||('الجزء '+arNum(j));h.append(b);}box.append(h);}
+    for(const name of names){const info=surahInfo(name),n=kVerses(name).length;
+      const b=document.createElement('button');b.type='button';b.className='kcard'+(i++%2?' alt':'');
+      const ar=document.createElement('span');ar.className='ar';ar.lang='ar';ar.textContent=info?info.ar:name;
+      const en=document.createElement('span');en.className='en';en.textContent=name;
+      const c=document.createElement('span');c.className='n';c.textContent=n+(n===1?' ayah':' ayahs');
+      b.append(ar,en,c);onTap(b,()=>openKid(name));box.append(b);}}}
+function openKid(name){stop();kName=name;kIdx=0;const info=surahInfo(name);$('#kTitle').textContent=info?info.ar:name;$('#kSub').textContent=name;renderKid();show('kidSurah');}
+function kCur(){const list=kVerses(kName);return list[Math.min(kIdx,list.length-1)];}
+function renderKid(){const list=kVerses(kName);if(!list.length){showHome();return;}kIdx=Math.min(kIdx,list.length-1);const v=list[kIdx];
+  $('#kCount').textContent='Ayah '+(v.ayah??kIdx+1)+' · '+(kIdx+1)+' of '+list.length;
+  const box=$('#kAyah');box.innerHTML='';
+  words(v.text).forEach((w,i)=>{const b=document.createElement('button');b.type='button';b.className='w';b.textContent=w;onTap(b,()=>kWord(i));box.append(b,document.createTextNode(' '));});
+  if(v.ayah!=null){const n=document.createElement('span');n.className='anum';n.textContent='﴿'+arNum(v.ayah)+'﴾';box.append(n);}
+  $('#kPrev').disabled=kIdx===0;$('#kNext').disabled=kIdx>=list.length-1;$('#kWords').disabled=!kTrack(v,'words');
+  const t=kTrack(v,'listen');$('#kWho').textContent=!t?'':t.ext?(kidRec==='hm'?'Recited by Al-Husary':'Recited by Al-Husary · '+ownName()+" hasn't recorded this ayah yet"):'Recited by '+ownName();kIdle();}
+function kMarks(v,t){const n=words(v.text).length;if(t.marks&&t.marks.length===n)return t.marks;if(!t._km)t._km=t.ext&&!t.env?lenSplit(t.duration||0,words(v.text)):autoFind(t.env,t.duration||0,n);return t._km;}
+function kPaint(i){document.querySelectorAll('#kAyah .w').forEach((el,j)=>el.classList.toggle('now',j===i));}
+function kIdle(){kMode=null;const L=$('#kListen'),W=$('#kWords');if(L)L.textContent='▶ Listen';if(W)W.textContent='Word by word';kPaint(-1);}
+function kReps(){return settings.kidRepeat||3;}
+async function kRun(mode,steps){if(kMode===mode){stop();return;}stop();const tok=++run;playing=true;kMode=mode;
+  if(mode==='listen')$('#kListen').textContent='■ Stop';if(mode==='words')$('#kWords').textContent='■ Stop';await holdWake();
+  try{for(const s of steps){const url=await trackUrl(s.t);
+      for(let n=0;n<s.count&&tok===run;n++){await playClip(url,s.start,s.end,tok,t=>kPaint(s.word!=null?s.word:s.marks.findIndex(m=>t>=m.s+0.03&&t<m.e)),1);if(tok!==run)return;await sleep(650,tok);}}}
+  catch(e){if(tok===run)toast("Couldn't play. Check your internet.");}
+  if(tok===run)stop();}
+async function kWord(i){const v=kCur();if(!v)return;const t=kTrack(v,'words');if(!t)return;try{await ensureDur(t);}catch(e){}const m=kMarks(v,t);if(!m[i])return;
+  kRun('w'+i,[{t,start:m[i].s,end:m[i].e,count:kReps(),word:i}]);}
+onTap($('#kListen'),async()=>{const v=kCur();if(!v)return;const t=kTrack(v,'listen');if(!t)return;if(kMode==='listen'){stop();return;}try{await ensureDur(t);}catch(e){}const m=kMarks(v,t);
+  kRun('listen',[{t,start:m.length?m[0].s:0,end:m.length?m[m.length-1].e:Infinity,count:kReps(),marks:m}]);});
+onTap($('#kWords'),async()=>{const v=kCur();if(!v)return;const t=kTrack(v,'words');if(!t)return;if(kMode==='words'){stop();return;}try{await ensureDur(t);}catch(e){}const m=kMarks(v,t);
+  const steps=m.map((x,i)=>({t,start:x.s,end:x.e,count:kReps(),word:i}));
+  const r=kTrack(v,'listen');if(r){try{await ensureDur(r);}catch(e){}const mr=kMarks(v,r);steps.push({t:r,start:mr.length?mr[0].s:0,end:mr.length?mr[mr.length-1].e:Infinity,count:1,marks:mr});}
+  kRun('words',steps);});
+onTap($('#kPrev'),()=>{if(kIdx>0){stop();kIdx--;renderKid();}});
+onTap($('#kNext'),()=>{if(kIdx<kVerses(kName).length-1){stop();kIdx++;renderKid();}});
+onTap($('#kBack'),()=>{stop();showHome();});
 
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&playing&&!wake&&navigator.wakeLock)navigator.wakeLock.request('screen').then(w=>wake=w).catch(()=>{});});
 load();
