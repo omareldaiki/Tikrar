@@ -367,13 +367,14 @@ details.panel[open]>summary::after{content:"▴"}
     <div class="selbar"><span class="label" id="selCount"></span>
       <div style="display:flex;gap:6px"><button class="btn small" id="selAll" type="button">All</button><button class="btn small" id="selNone" type="button">None</button></div></div>
     <p class="note" style="margin:0">Tick the ayahs to play together. Tap an ayah's text to practise it word by word.</p>
+    <div class="group"><span class="label">Reciter</span><div class="seg" id="segSRec"></div></div>
     <div class="ayahs" id="ayahs"></div>
     <label class="toggle" for="istTog"><span><b>Start with A'udhu billahi</b><br><span class="note"></span></span><input type="checkbox" id="istTog"></label>
     <label class="toggle" for="basTog"><span><b>Then Bismillah</b><br><span class="note"></span></span><input type="checkbox" id="basTog"></label>
     <details class="panel" id="sSettings">
       <summary><b>Repeat settings</b><span class="note" id="sSum"></span></summary>
       <div class="group" style="gap:12px;margin-top:10px">
-        <div class="group"><span class="label">Recording</span><div class="seg" id="segSTrack"></div></div>
+        <div class="group"><span class="label">Your recording</span><div class="seg" id="segSTrack"></div></div>
         <div class="group"><span class="label">Repeat each ayah before moving on</span><div class="seg" id="segEach"></div></div>
         <div class="group"><span class="label">Then repeat the selected ayahs</span><div class="seg" id="segRounds"></div></div>
         <div class="group"><span class="label">Pause between</span><div class="seg" id="segSGap"></div></div>
@@ -381,6 +382,7 @@ details.panel[open]>summary::after{content:"▴"}
       </div>
     </details>
     <div class="status" id="sStatus" aria-live="polite"></div>
+    <button class="btn danger admin-only admin-strict" id="sDelete" type="button">Delete this whole surah</button>
     <div class="dock">
       <button class="btn primary" id="sPlay" type="button">▶ Play selected</button>
       <button class="btn" id="sStop" type="button" disabled>■ Stop</button>
@@ -408,13 +410,14 @@ details.panel[open]>summary::after{content:"▴"}
     <div class="selbar"><span class="label" id="jSelCount"></span>
       <div style="display:flex;gap:6px"><button class="btn small" id="jAll" type="button">All</button><button class="btn small" id="jNone" type="button">None</button></div></div>
     <p class="note" style="margin:0">Tick the surahs to play back to back. Tap a surah's name to open its ayahs.</p>
+    <div class="group"><span class="label">Reciter</span><div class="seg" id="segJRec"></div></div>
     <div class="ayahs" id="jSurahs"></div>
     <label class="toggle" for="jIst"><span><b>Start with A'udhu billahi</b><br><span class="note"></span></span><input type="checkbox" id="jIst"></label>
     <label class="toggle" for="jBas"><span><b>Bismillah before each surah</b><br><span class="note"></span></span><input type="checkbox" id="jBas"></label>
     <details class="panel" id="jSettings">
       <summary><b>Repeat settings</b><span class="note" id="jSum"></span></summary>
       <div class="group" style="gap:12px;margin-top:10px">
-        <div class="group"><span class="label">Recording</span><div class="seg" id="segJTrack"></div></div>
+        <div class="group"><span class="label">Your recording</span><div class="seg" id="segJTrack"></div></div>
         <div class="group"><span class="label">Repeat each ayah before moving on</span><div class="seg" id="segJEach"></div></div>
         <div class="group"><span class="label">Repeat each surah</span><div class="seg" id="segJSurah"></div></div>
         <div class="group"><span class="label">Then repeat the whole selection</span><div class="seg" id="segJRounds"></div></div>
@@ -877,7 +880,7 @@ function notes(){const n=$('#pNote');const t=T();$('#byLine').textContent=byText
   if(t.approx){n.hidden=false;n.textContent='Word timing for '+(tk==='hm'?'Al-Husary':'the '+tname(tk))+' was found automatically. If a word cuts off, fix it in Adjust words.';return;}
   n.hidden=true;}
 function renderTrackSeg(){const box=$('#segTrack');box.innerHTML='';
-  for(const k of (cur&&extAvail(cur)?['word','recite','hm']:['word','recite'])){const b=document.createElement('button');b.type='button';b.textContent=TRACKS[k]+(cur&&!trk(cur,k)?' (none)':isDraft(cur,k)?' (draft)':'');
+  for(const k of (cur&&extAvail(cur)?['word','recite','hm']:['word','recite'])){const b=document.createElement('button');b.type='button';b.textContent=(k==='hm'?'Al-Husary':k==='word'?ownName()+' · slow':ownName())+(cur&&!trk(cur,k)?' (none)':isDraft(cur,k)?' (draft)':'');
     b.setAttribute('aria-pressed',tk===k);onTap(b,()=>{if(tk===k)return;stop();endMark(true);tk=k;wi=0;zoom=false;renderTrackSeg();notes();paint(-1);drawWave();updateCard();
       $('#tabAdjust').disabled=!T();if(tab==='adjust'&&!T())setTab('practice');});box.append(b);}}
 function renderWords(){const m=$('#mushaf');m.innerHTML='';
@@ -1212,9 +1215,20 @@ onTap($('#selAll'),()=>{sChecked=new Set(sVerses().filter(hasAny).map(v=>v.id));
 onTap($('#selNone'),()=>{sChecked.clear();renderAyahs();});
 onTap($('#sBack'),()=>{stop();openJuz(juzOfSurah(sName));});
 onTap($('#sAdd'),()=>{lastSurah=sName;openEdit(null);});
-function sSummary(){$('#sSum').textContent=(prefs.sTrack==='hm'?'Al-Husary':prefs.sTrack==='word'?'Word by word':'Recitation')+' · each ayah '+prefs.sEach+'× · '+({1:'once through',2:'2 rounds',3:'3 rounds',0:'non-stop'}[prefs.sRounds])+' · '+(prefs.gap?prefs.gap+' s pause':'no pause')+' · '+prefs.speed+'× speed';}
+confirmTap($('#sDelete'),'Delete this whole surah',async()=>{if(role!=='admin'||!sName)return;const name=sName,list=(bySurah(verses).get(name)||[]).slice(),j=juzOfSurah(name);
+  const btn=$('#sDelete');btn.disabled=true;stop();
+  try{let n=0;for(const v of list){btn.textContent='Deleting '+(++n)+' of '+list.length+'…';await delVerse(v.id);}
+    verses=verses.filter(v=>!list.includes(v));toast(name+' deleted');renderList();if(byJuz(verses).has(j))openJuz(j);else show('listView');}
+  catch(e){toast("Couldn't finish: "+(e&&e.code||'error')+'. Try again.');}
+  finally{btn.disabled=false;btn.textContent='Delete this whole surah';}});
+function sSummary(){$('#sSum').textContent=(prefs.sTrack==='hm'?'Al-Husary':ownName()+(prefs.sTrack==='word'?' · word by word':' · recitation'))+' · each ayah '+prefs.sEach+'× · '+({1:'once through',2:'2 rounds',3:'3 rounds',0:'non-stop'}[prefs.sRounds])+' · '+(prefs.gap?prefs.gap+' s pause':'no pause')+' · '+prefs.speed+'× speed';}
+if(!prefs.sOwn)prefs.sOwn=prefs.sTrack==='word'?'word':'recite';
+function recSeg(el,after){const box=$(el);box.innerHTML='';const isHm=prefs.sTrack==='hm';
+  for(const [k,l] of [['own',ownName()],['hm','Al-Husary']]){const b=document.createElement('button');b.type='button';b.textContent=l;b.setAttribute('aria-pressed',(k==='hm')===isHm);
+    onTap(b,()=>{prefs.sTrack=k==='hm'?'hm':prefs.sOwn;savePrefs();recSeg(el,after);after();});box.append(b);}}
+function ownSeg(el,after){seg(el,[['recite','Recitation'],['word','Word by word']],'sOwn',()=>{if(prefs.sTrack!=='hm')prefs.sTrack=prefs.sOwn;savePrefs();after();});}
 function sSegs(){
-  seg('#segSTrack',[['recite','Recitation'],['word','Word by word'],['hm','Al-Husary']],'sTrack',()=>{sSummary();if(sName&&!playing)renderAyahs();});
+  const after=()=>{sSegs();if(sName&&!playing)renderAyahs();};recSeg('#segSRec',after);ownSeg('#segSTrack',after);
   seg('#segEach',[[1,'1×'],[2,'2×'],[3,'3×'],[5,'5×'],[10,'10×']],'sEach',sSummary);
   seg('#segRounds',[[1,'Once'],[2,'2×'],[3,'3×'],[0,'∞']],'sRounds',sSummary);
   seg('#segSGap',[[0,'None'],[1,'1 s'],[2,'2 s'],[4,'4 s']],'gap',sSummary);
@@ -1313,9 +1327,9 @@ function jOpeners(){for(const [key,id,pk,txt] of [['istiadha','#jIst','jIst','Pl
   t.closest('.toggle').querySelector('.note').textContent=has?txt:'Record it first on the main page, under Opening recitations';}}
 $('#jIst').onchange=e=>{prefs.jIst=e.target.checked;savePrefs();};
 $('#jBas').onchange=e=>{prefs.jBas=e.target.checked;savePrefs();};
-function jSummary(){$('#jSum').textContent=(prefs.sTrack==='hm'?'Al-Husary':prefs.sTrack==='word'?'Word by word':'Recitation')+' · each ayah '+prefs.sEach+'× · each surah '+(prefs.jSurah===1?'once':prefs.jSurah+'×')+' · '+({1:'once through',2:'2 rounds',3:'3 rounds',0:'non-stop'}[prefs.jRounds])+' · '+prefs.speed+'× speed';}
+function jSummary(){$('#jSum').textContent=(prefs.sTrack==='hm'?'Al-Husary':ownName()+(prefs.sTrack==='word'?' · word by word':' · recitation'))+' · each ayah '+prefs.sEach+'× · each surah '+(prefs.jSurah===1?'once':prefs.jSurah+'×')+' · '+({1:'once through',2:'2 rounds',3:'3 rounds',0:'non-stop'}[prefs.jRounds])+' · '+prefs.speed+'× speed';}
 function jSegs(){
-  seg('#segJTrack',[['recite','Recitation'],['word','Word by word'],['hm','Al-Husary']],'sTrack',()=>{jSummary();if(!playing)renderJuz();});
+  const after=()=>{jSegs();if(!playing)renderJuz();};recSeg('#segJRec',after);ownSeg('#segJTrack',after);
   seg('#segJEach',[[1,'1×'],[2,'2×'],[3,'3×'],[5,'5×']],'sEach',jSummary);
   seg('#segJSurah',[[1,'Once'],[2,'2×'],[3,'3×']],'jSurah',jSummary);
   seg('#segJRounds',[[1,'Once'],[2,'2×'],[3,'3×'],[0,'∞']],'jRounds',jSummary);
